@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "EE CIST 2023 : Données de recensement harmonisées par IPUMS",
+    "objectID": "d0002summary.html",
+    "href": "d0002summary.html",
+    "title": "Résumé",
     "section": "",
-    "text": "tbd : rappel des objectifs de l’EE CIST 2023"
+    "text": "tbd : ajouter un résumé"
   },
   {
     "objectID": "d0001intro.html",
@@ -12,13 +12,6 @@
     "title": "Introduction",
     "section": "",
     "text": "des données individuelles harmonisées sous la forme d’échantillons de taille maximale 10 pct.\ndes fonds de carte des divisions administratives aux niveaux 1 et 2 avec des codes compatibles avec les données individuelles.\nL’objectif est de construire pour chaque pays des procédures reproductibles permettant typiquement de construire un cours à partir de l’un des pays àune date de recensement puis de repliquer l’analyse sur les autres paysou sur d’autres dates de recensement."
-  },
-  {
-    "objectID": "d0002summary.html",
-    "href": "d0002summary.html",
-    "title": "Résumé",
-    "section": "",
-    "text": "tbd : ajouter un résumé"
   },
   {
     "objectID": "d0101import.html",
@@ -47,5 +40,12 @@
     "title": "1  Importation",
     "section": "1.3 Données géométriques de niveaux 1 et 2",
     "text": "1.3 Données géométriques de niveaux 1 et 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "EE CIST 2023 : Données de recensement harmonisées par IPUMS",
+    "section": "",
+    "text": "tbd : rappel des objectifs de l’EE CIST 2023"
   }
 ]
