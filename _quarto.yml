@@ -3,8 +3,8 @@ project:
   output-dir: docs
 
 book:
-  title: "data_RP"
-  author: "Jane Doe"
+  title: "EE CIST 2023 : Données de recensement harmonisées par IPUMS"
+  author: "Claude Grasland"
   date: "22/08/2022"
   chapters:
     - index.qmd
