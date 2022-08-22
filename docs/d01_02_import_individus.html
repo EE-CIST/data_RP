@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>IPUMS INTERNATIONAL - 2&nbsp; Données individuelles</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./d01_03_import_geometries.html" rel="next">
+<link href="./d01_01_import_conditions.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Données individuelles</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">IPUMS INTERNATIONAL</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Préface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d00_02_intro_resume.html" class="sidebar-item-text sidebar-link">Résumé</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_00_import_introduction.html" class="sidebar-item-text sidebar-link">IMPORTATION DES DONNEES</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_01_import_conditions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conditions d’utilisation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_02_import_individus.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Données individuelles</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_03_import_geometries.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Données géométriques</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d09_01_references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#choix-des-recensements" id="toc-choix-des-recensements" class="nav-link active" data-scroll-target="#choix-des-recensements"> <span class="header-section-number">2.1</span> Choix des recensements</a></li>
+  <li><a href="#choix-des-variables" id="toc-choix-des-variables" class="nav-link" data-scroll-target="#choix-des-variables"> <span class="header-section-number">2.2</span> Choix des variables</a></li>
+  <li><a href="#choix-du-niveau-déchantillonage" id="toc-choix-du-niveau-déchantillonage" class="nav-link" data-scroll-target="#choix-du-niveau-déchantillonage"> <span class="header-section-number">2.3</span> Choix du niveau d’échantillonage</a></li>
+  <li><a href="#importation-dans-r" id="toc-importation-dans-r" class="nav-link" data-scroll-target="#importation-dans-r"> <span class="header-section-number">2.4</span> Importation dans R</a></li>
+  <li><a href="#conversion-de-format-dans-r" id="toc-conversion-de-format-dans-r" class="nav-link" data-scroll-target="#conversion-de-format-dans-r"> <span class="header-section-number">2.5</span> Conversion de format dans R</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Données individuelles</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+
+</div>
+<p>Après avoir créé votre compte, vous pourrez accéder à l’onglet appelé “<em>browse and select data</em>” dans la barre latérale gauche :</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/ipums_002.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">lien vers les micro-données</figcaption><p></p>
+</figure>
+</div>
+<p>Il vous amènera à la fenêtre de sélection des micro-données qui doit ressembler à ceci :</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/ipums_003.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">tableau de bord des requêtes de microdonnées</figcaption><p></p>
+</figure>
+</div>
+<p>Vous allez alors devoir effectuer successivement trois choix pour constituer votre requête :</p>
+<ul>
+<li><em>choix de l’échantillon</em> : quels recensements pour quels pays et à quelle date ?</li>
+<li><em>choix des variables</em> : quelles variables voulez vous extraire ? harmonisées ou propres au pays ?</li>
+<li><em>choix de la taille des échantillons</em> : le maximum autorisé est de 10% mais vous pouvez choisir un taux plus faible.</li>
+</ul>
+<section id="choix-des-recensements" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="choix-des-recensements"><span class="header-section-number">2.1</span> Choix des recensements</h2>
+<p>En cliquant sur le bouton “<em>SELECT SAMPLES</em>” on va tout d’abord choisir les recensements qui nous intéressent. On peut en retenir soit un seul soit plusieurs à la fois. Ici, nous avons retenu cinq recensements correspondant aux pays africains qui participent à l’EE CIST 2023, en retenant à chaque fois le dernier disponible dans IPUMS.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/ipums_004.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Recensements africains disponibles dans IPUMS International</figcaption><p></p>
+</figure>
+</div>
+<p>On constate qu’il n’existe malheureusement pas de données pour la Côte d’Ivoire et le Niger dans IPUMS. Par ailleurs les recensements les plus récents ne sont pas forcément disponibles pour les autres pays. Mais il existe une contrepartie positive majeure qui est le travail d’harmonistation des variables qui a été réalisé par IPUMS.</p>
+</section>
+<section id="choix-des-variables" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="choix-des-variables"><span class="header-section-number">2.2</span> Choix des variables</h2>
+<p>Il existe deux options différentes pour extraire des variables, selon qu’on souhaite utiliser les données originales propres à chaque pays et chaque date (“<em>Source variables</em>”) ou que l’on préfère utiliser des données harmonisées par IPUMS (“<em>Harmonized variables</em>”) qui utilisent les même code et les même catégories.</p>
+<p>La seconde solution apparaît de loin la plus intéressante pour l’EE CIST 2023 puisqu’elle va permettre de proposer des séquences pédagogiques qui seront facilement reproductibles d’un pays à l’autre. A condition évidemment que les variables harmonisées soient disponibles dans tous les pays, ce qui n’est bien évidemment pas toujours vrai.</p>
+<p>Des écrans permettent de visualiser pour chacune des variables ou des groupes de variables si elle est disponible pour les différents recensements. Les variables dites “techniques” sont proposées par défaut et il est en général préférable de les garder puisque c’est grâce à elle qu’on pourra ensuite effectuer les pondérations, mettre en relation les individus et les ménages etc.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/ipums_006.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Variables par défaut : ménages</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/ipums_007.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Variables par défaut : individus</figcaption><p></p>
+</figure>
+</div>
+<p>En cliquant sur la colonne (“<em>Add to cart</em>”) on choisit les autres variables que l’on souhaite retenir. Par exemple, on peut regarder quelles variables harmonisées sont disponibles pour l’équipement des ménages et en choisir trois :</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/ipums_005.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Exemple de sélection de variables sur l’équipement des ménages</figcaption><p></p>
+</figure>
+</div>
+<p>Nous avons effectué une sélection assez large de variables pour l’EE CIST 2023 en privilégiant celles qui étaient disponibles pour au moins 4 des 5 pays. Nous ya vons ajouté des variables plus spécifiques à chaque pays pour l’analyse des migrations. Au total, nous avons retenu 65 variables qui sont décrites en abrégées ci-dessous mais dont on pourra trouver la description détaillée sur le site IPUMS</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Liste de variables retenus pour les 5 recensements</caption>
+<colgroup>
+<col style="width: 4%">
+<col style="width: 17%">
+<col style="width: 78%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">COUNTRY</td>
+<td style="text-align: left;">Country</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">YEAR</td>
+<td style="text-align: left;">Year</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">SAMPLE</td>
+<td style="text-align: left;">IPUMS sample identifier</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">SERIAL</td>
+<td style="text-align: left;">Household serial number</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">PERSONS</td>
+<td style="text-align: left;">Number of person records in the household</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">HHWT</td>
+<td style="text-align: left;">Household weight</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">URBAN</td>
+<td style="text-align: left;">Urban-rural status</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">REGIONW</td>
+<td style="text-align: left;">Continent and region of country</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">GEOLEV1</td>
+<td style="text-align: left;">1st subnational geographic level, world [consistent boundaries over time]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">GEOLEV2</td>
+<td style="text-align: left;">2nd subnational geographic level, world [consistent boundaries over time]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">OWNERSHIP (general)</td>
+<td style="text-align: left;">Ownership of dwelling [general version]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">OWNERSHIPD (detailed)</td>
+<td style="text-align: left;">Ownership of dwelling [detailed version]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">ELECTRIC</td>
+<td style="text-align: left;">Electricity</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">WATSUP</td>
+<td style="text-align: left;">Water supply</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">TRASH</td>
+<td style="text-align: left;">Trash disposal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">TOILET</td>
+<td style="text-align: left;">Toilet</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">PERNUM</td>
+<td style="text-align: left;">Person number</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">PERWT</td>
+<td style="text-align: left;">Person weight</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">RESIDENT</td>
+<td style="text-align: left;">Residence status: de facto, de jure</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">RELATE (general)</td>
+<td style="text-align: left;">Relationship to household head [general version]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">RELATED (detailed)</td>
+<td style="text-align: left;">Relationship to household head [detailed version]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">AGE</td>
+<td style="text-align: left;">Age</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">AGE2</td>
+<td style="text-align: left;">Age, grouped into intervals</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">SEX</td>
+<td style="text-align: left;">Sex</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MARST (general)</td>
+<td style="text-align: left;">Marital status [general version]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MARSTD (detailed)</td>
+<td style="text-align: left;">Marital status [detailed version]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">BIRTHYR</td>
+<td style="text-align: left;">Year of birth</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">BPLCOUNTRY</td>
+<td style="text-align: left;">Country of birth</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">NATION</td>
+<td style="text-align: left;">Country of citizenship</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">BPLBJ1</td>
+<td style="text-align: left;">Department of birth, Benin</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">BPLBJ2</td>
+<td style="text-align: left;">Commune of birth, Benin</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">BPLBF</td>
+<td style="text-align: left;">Province of birth, Burkina Faso</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">BPLML</td>
+<td style="text-align: left;">Circle of birth, Mali</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">BPLSN</td>
+<td style="text-align: left;">Department of birth, Senegal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">RELIGION (general)</td>
+<td style="text-align: left;">Religion [general version]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">RELIGIOND (detailed)</td>
+<td style="text-align: left;">Religion [detailed version]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">SCHOOL</td>
+<td style="text-align: left;">School attendance</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">LIT</td>
+<td style="text-align: left;">Literacy</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">EDATTAIN (general)</td>
+<td style="text-align: left;">Educational attainment, international recode [general version]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">EDATTAIND (detailed)</td>
+<td style="text-align: left;">Educational attainment, international recode [detailed version]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">YRSCHOOL</td>
+<td style="text-align: left;">Years of schooling</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">EMPSTAT (general)</td>
+<td style="text-align: left;">Activity status (employment status) [general version]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">EMPSTATD (detailed)</td>
+<td style="text-align: left;">Activity status (employment status) [detailed version]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">LABFORCE</td>
+<td style="text-align: left;">Labor force participation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIGRATEP</td>
+<td style="text-align: left;">Migration status, previous residence</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIGCTRYP</td>
+<td style="text-align: left;">Country of previous residence</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">GEOMIG1_P</td>
+<td style="text-align: left;">1st subnational geographic level of previous residence, world [consistent boundaries over time]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIGYRS1</td>
+<td style="text-align: left;">Years residing in current locality</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIG1_P_BJ</td>
+<td style="text-align: left;">Department of previous residence, Benin; consistent boundaries, GIS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIG2_P_BJ</td>
+<td style="text-align: left;">Commune of previous residence, Benin; consistent boundaries, GIS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIGBF</td>
+<td style="text-align: left;">Province of residence one year ago, Burkina Faso</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIG1_P_ML</td>
+<td style="text-align: left;">Region of previous residence, Mali; consistent boundaries, GIS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIG2_P_ML</td>
+<td style="text-align: left;">Circle of previous residence, Mali; consistent boundaries, GIS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIG1_1_SN</td>
+<td style="text-align: left;">Region of residence 1 years ago, Senegal; consistent boundaries, GIS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIG1_5_SN</td>
+<td style="text-align: left;">Region of residence 5 years ago, Senegal; consistent boundaries, GIS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIG1_10_SN</td>
+<td style="text-align: left;">Region of residence 10 years ago, Senegal; consistent boundaries, GIS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIG2_1_SN</td>
+<td style="text-align: left;">Department of residence 1 years ago, Senegal; consistent boundaries, GIS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIG2_5_SN</td>
+<td style="text-align: left;">Department of residence 5 years ago, Senegal; consistent boundaries, GIS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIG2_10_SN</td>
+<td style="text-align: left;">Department of residence 10 years ago, Senegal; consistent boundaries, GIS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIG1_P_TG</td>
+<td style="text-align: left;">Region of previous residence, Togo; consistent boundaries, GIS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">MIG2_P_TG</td>
+<td style="text-align: left;">Prefecture of previous residence, Togo; consistent boundaries, GIS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">DISABLED</td>
+<td style="text-align: left;">Disability status</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">DISBLND</td>
+<td style="text-align: left;">Blind or vision-impaired</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">DISDEAF</td>
+<td style="text-align: left;">Deaf or hearing-impaired</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">DISMUTE</td>
+<td style="text-align: left;">Mute or speech impaired</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="choix-du-niveau-déchantillonage" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="choix-du-niveau-déchantillonage"><span class="header-section-number">2.3</span> Choix du niveau d’échantillonage</h2>
+<p>Une fois définis les échantillons et les variables vous êtes prêts à télécharger les données mais il reste encore à définir le niveau d’échantillonnage souhaité.</p>
+<p><img src="img/ipums_008.png" class="img-fluid" alt="Exemple de sélection de variables sur l'équipement des ménages"> La valeur initiale qui correspond au maximum autorisé par IPUMS et les organismes producteurs des recensement est en générale égale à 10% des individus et/ou des ménages. Mais on peut opter pour un échantillon plus réduit en fixant un autre pourcentage ou un nombre précis d’individus. On peut par exemple se ramener à 1% seulement des observations ce qui divise par 10 la taille du fichier :</p>
+<p><img src="img/ipums_009.png" class="img-fluid" alt="Exemple de réduction de la densité d'échantillonage de 10% à 1%"> ### Récupération des données et métadonnées</p>
+<p>Une fois lancée la requête à l’aide du bouton “<em>SUBMIT EXTRACT</em>” il faut attendre quelques minutes (généralement 2 ou 3) pour accèder au résultat. Celui-ci est annoncé par un courriel mais peut aussi être suivi directement par le navigateur :</p>
+<p><img src="img/ipums_010.png" class="img-fluid" alt="Exemple de réduction de la densité d'échantillonage de 10% à 1%"> On peut utiliser une requête existante pour en construire une autre. Dans l’exemple ci-dessus, nous avons construit d’abord une requête pour une extraction de densité 1% puis une seconde requête pour une extraction de densité maximale (10%) afin de pouvoir comparer les résultats obtenus.</p>
+<p>Pour pouvoir charger ensuite les données dans R ou un autre logiciel, nous aurons besoin à chaque fois de deux fichiers :</p>
+<ul>
+<li>le fichier .DAT qui contient les données au format compressé .gz</li>
+<li>le fichier DDI qui contient les métadonnées au format .xml</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/ipums_011.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Récupération des fichiers IPUMS</figcaption><p></p>
+</figure>
+</div>
+<p><strong>- N.B. :</strong> Il est inutile de décompresser les fichiers de données au format .gz car cela accroîtrait inutilement leur place et risquerait de bloquer l’opération suivante d’importation.</p>
+</section>
+<section id="importation-dans-r" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="importation-dans-r"><span class="header-section-number">2.4</span> Importation dans R</h2>
+<p>Pour importer les données dans R, il faut installer le package <em>ipumsr</em> qui va nous permettre de lire les métadonnées puis d’importer les données en une seule opération.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ipumsr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Importation de l'échantillon à 1%</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ddi <span class="ot">&lt;-</span> <span class="fu">read_ipums_ddi</span>(<span class="st">"ipums/rp/ipumsi_00015.xml"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_ipums_micro</span>(ddi)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(data,<span class="st">"ipums/rp/samp1pct.RDS"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Importation de l'échantillon à 10%</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ddi <span class="ot">&lt;-</span> <span class="fu">read_ipums_ddi</span>(<span class="st">"ipums/rp/ipumsi_00016.xml"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_ipums_micro</span>(ddi)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(data,<span class="st">"ipums/rp/samp10pct.RDS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="conversion-de-format-dans-r" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="conversion-de-format-dans-r"><span class="header-section-number">2.5</span> Conversion de format dans R</h2>
+<p>Nous reviendrons ultérieurement sur le format du tableau R obtenu qui n’est pas un <em>data.frame</em> standard car il comporte des labels supplémentaire donnant à la fois le nom des variables et le code de leurs modalités. On retiendra juste ici que les données initialement de type <em>haven_labelled</em> peuvent être converties en type <em>factor</em> à l’aide du package <em>haven</em> ce qui permet de visualiser plus facilement.</p>
+<p>A titre d’exemple, le petit programme ci-dessous convertit l’ensemble des données en factor et affiche les premières lignes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Lit le fichier enregistré</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"ipums/rp/samp1pct.RDS"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertit les variables haven_labelled en factors</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span><span class="fu">as_factor</span>(rp, <span class="at">only_labelled=</span>T)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(rp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertit le tableau en pur data.frame</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(rp)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(rp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Affiche les 10 premières lignes (soit 2 ménages de 5 personnes )</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(rp,<span class="dv">10</span>), <span class="at">caption =</span> <span class="st">"Extrait des données IPUMS International"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Extrait des données IPUMS International</caption>
+<colgroup>
+<col style="width: 1%">
+<col style="width: 0%">
+<col style="width: 2%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 1%">
+<col style="width: 0%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 0%">
+<col style="width: 5%">
+<col style="width: 1%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 0%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 0%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 0%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">COUNTRY</th>
+<th style="text-align: right;">YEAR</th>
+<th style="text-align: left;">SAMPLE</th>
+<th style="text-align: right;">SERIAL</th>
+<th style="text-align: right;">PERSONS</th>
+<th style="text-align: right;">HHWT</th>
+<th style="text-align: left;">URBAN</th>
+<th style="text-align: left;">REGIONW</th>
+<th style="text-align: right;">GEOLEV1</th>
+<th style="text-align: right;">GEOLEV2</th>
+<th style="text-align: left;">OWNERSHIP</th>
+<th style="text-align: left;">OWNERSHIPD</th>
+<th style="text-align: left;">ELECTRIC</th>
+<th style="text-align: left;">WATSUP</th>
+<th style="text-align: left;">TRASH</th>
+<th style="text-align: left;">TOILET</th>
+<th style="text-align: right;">PERNUM</th>
+<th style="text-align: right;">PERWT</th>
+<th style="text-align: left;">RESIDENT</th>
+<th style="text-align: left;">RELATE</th>
+<th style="text-align: left;">RELATED</th>
+<th style="text-align: left;">AGE</th>
+<th style="text-align: left;">AGE2</th>
+<th style="text-align: left;">SEX</th>
+<th style="text-align: left;">MARST</th>
+<th style="text-align: left;">MARSTD</th>
+<th style="text-align: left;">BIRTHYR</th>
+<th style="text-align: left;">BPLCOUNTRY</th>
+<th style="text-align: left;">NATION</th>
+<th style="text-align: left;">BPLBJ1</th>
+<th style="text-align: left;">BPLBJ2</th>
+<th style="text-align: left;">BPLBF</th>
+<th style="text-align: left;">BPLML</th>
+<th style="text-align: left;">BPLSN</th>
+<th style="text-align: left;">RELIGION</th>
+<th style="text-align: left;">RELIGIOND</th>
+<th style="text-align: left;">SCHOOL</th>
+<th style="text-align: left;">LIT</th>
+<th style="text-align: left;">EDATTAIN</th>
+<th style="text-align: left;">EDATTAIND</th>
+<th style="text-align: left;">YRSCHOOL</th>
+<th style="text-align: left;">EMPSTAT</th>
+<th style="text-align: left;">EMPSTATD</th>
+<th style="text-align: left;">LABFORCE</th>
+<th style="text-align: left;">MIGRATEP</th>
+<th style="text-align: left;">MIGCTRYP</th>
+<th style="text-align: left;">GEOMIG1_P</th>
+<th style="text-align: left;">MIGYRS1</th>
+<th style="text-align: left;">MIG1_P_BJ</th>
+<th style="text-align: left;">MIG2_P_BJ</th>
+<th style="text-align: left;">MIGBF</th>
+<th style="text-align: left;">MIG1_P_ML</th>
+<th style="text-align: left;">MIG2_P_ML</th>
+<th style="text-align: left;">MIG1_1_SN</th>
+<th style="text-align: left;">MIG1_5_SN</th>
+<th style="text-align: left;">MIG1_10_SN</th>
+<th style="text-align: left;">MIG2_1_SN</th>
+<th style="text-align: left;">MIG2_5_SN</th>
+<th style="text-align: left;">MIG2_10_SN</th>
+<th style="text-align: left;">MIG1_P_TG</th>
+<th style="text-align: left;">MIG2_P_TG</th>
+<th style="text-align: left;">DISABLED</th>
+<th style="text-align: left;">DISBLND</th>
+<th style="text-align: left;">DISDEAF</th>
+<th style="text-align: left;">DISMUTE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">Burkina Faso 2006</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: left;">Western Africa</td>
+<td style="text-align: right;">854001</td>
+<td style="text-align: right;">854001013</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Thrown into street, vacant land, or common area</td>
+<td style="text-align: left;">No toilet</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Present resident</td>
+<td style="text-align: left;">Head</td>
+<td style="text-align: left;">Head</td>
+<td style="text-align: left;">33</td>
+<td style="text-align: left;">30 to 34</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Married/in union</td>
+<td style="text-align: left;">Married, monogamous</td>
+<td style="text-align: left;">1973</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">No, never attended</td>
+<td style="text-align: left;">No, illiterate</td>
+<td style="text-align: left;">Less than primary completed</td>
+<td style="text-align: left;">No schooling</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Employed</td>
+<td style="text-align: left;">Employed, not specified</td>
+<td style="text-align: left;">Yes, in the labor force</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">No, not disabled</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">Burkina Faso 2006</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: left;">Western Africa</td>
+<td style="text-align: right;">854001</td>
+<td style="text-align: right;">854001013</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Thrown into street, vacant land, or common area</td>
+<td style="text-align: left;">No toilet</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Present resident</td>
+<td style="text-align: left;">Spouse/partner</td>
+<td style="text-align: left;">Spouse/partner</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: left;">20 to 24</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Married/in union</td>
+<td style="text-align: left;">Married, monogamous</td>
+<td style="text-align: left;">1983</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">No, never attended</td>
+<td style="text-align: left;">No, illiterate</td>
+<td style="text-align: left;">Less than primary completed</td>
+<td style="text-align: left;">No schooling</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Employed</td>
+<td style="text-align: left;">Employed, not specified</td>
+<td style="text-align: left;">Yes, in the labor force</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">No, not disabled</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">Burkina Faso 2006</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: left;">Western Africa</td>
+<td style="text-align: right;">854001</td>
+<td style="text-align: right;">854001013</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Thrown into street, vacant land, or common area</td>
+<td style="text-align: left;">No toilet</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Present resident</td>
+<td style="text-align: left;">Child</td>
+<td style="text-align: left;">Child</td>
+<td style="text-align: left;">2 years</td>
+<td style="text-align: left;">0 to 4</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Single/never married</td>
+<td style="text-align: left;">Single/never married</td>
+<td style="text-align: left;">2004</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">No, not disabled</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">Burkina Faso 2006</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: left;">Western Africa</td>
+<td style="text-align: right;">854001</td>
+<td style="text-align: right;">854001013</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Thrown into street, vacant land, or common area</td>
+<td style="text-align: left;">No toilet</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Present resident</td>
+<td style="text-align: left;">Child</td>
+<td style="text-align: left;">Child</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">0 to 4</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Single/never married</td>
+<td style="text-align: left;">Single/never married</td>
+<td style="text-align: left;">2003</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">No, never attended</td>
+<td style="text-align: left;">No, illiterate</td>
+<td style="text-align: left;">Less than primary completed</td>
+<td style="text-align: left;">No schooling</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">No, not disabled</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">Burkina Faso 2006</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: left;">Western Africa</td>
+<td style="text-align: right;">854001</td>
+<td style="text-align: right;">854001013</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Thrown into street, vacant land, or common area</td>
+<td style="text-align: left;">No toilet</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Present resident</td>
+<td style="text-align: left;">Child</td>
+<td style="text-align: left;">Child</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">10 to 14</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Single/never married</td>
+<td style="text-align: left;">Single/never married</td>
+<td style="text-align: left;">1996</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">No, never attended</td>
+<td style="text-align: left;">Unknown/missing</td>
+<td style="text-align: left;">Less than primary completed</td>
+<td style="text-align: left;">No schooling</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Employed</td>
+<td style="text-align: left;">Employed, not specified</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">No, not disabled</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">Burkina Faso 2006</td>
+<td style="text-align: right;">12000</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: left;">Western Africa</td>
+<td style="text-align: right;">854001</td>
+<td style="text-align: right;">854001013</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Thrown into street, vacant land, or common area</td>
+<td style="text-align: left;">No toilet</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Present resident</td>
+<td style="text-align: left;">Head</td>
+<td style="text-align: left;">Head</td>
+<td style="text-align: left;">28</td>
+<td style="text-align: left;">25 to 29</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Married/in union</td>
+<td style="text-align: left;">Married, monogamous</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">No, never attended</td>
+<td style="text-align: left;">No, illiterate</td>
+<td style="text-align: left;">Less than primary completed</td>
+<td style="text-align: left;">No schooling</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Employed</td>
+<td style="text-align: left;">Employed, not specified</td>
+<td style="text-align: left;">Yes, in the labor force</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">No, not disabled</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">Burkina Faso 2006</td>
+<td style="text-align: right;">12000</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: left;">Western Africa</td>
+<td style="text-align: right;">854001</td>
+<td style="text-align: right;">854001013</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Thrown into street, vacant land, or common area</td>
+<td style="text-align: left;">No toilet</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Present resident</td>
+<td style="text-align: left;">Spouse/partner</td>
+<td style="text-align: left;">Spouse/partner</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">20 to 24</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Married/in union</td>
+<td style="text-align: left;">Married, monogamous</td>
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">No, never attended</td>
+<td style="text-align: left;">No, illiterate</td>
+<td style="text-align: left;">Less than primary completed</td>
+<td style="text-align: left;">No schooling</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Employed</td>
+<td style="text-align: left;">Employed, not specified</td>
+<td style="text-align: left;">Yes, in the labor force</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">No, not disabled</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">Burkina Faso 2006</td>
+<td style="text-align: right;">12000</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: left;">Western Africa</td>
+<td style="text-align: right;">854001</td>
+<td style="text-align: right;">854001013</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Thrown into street, vacant land, or common area</td>
+<td style="text-align: left;">No toilet</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Present resident</td>
+<td style="text-align: left;">Child</td>
+<td style="text-align: left;">Child</td>
+<td style="text-align: left;">Less than 1 year</td>
+<td style="text-align: left;">0 to 4</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Single/never married</td>
+<td style="text-align: left;">Single/never married</td>
+<td style="text-align: left;">2006</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NIU (Not in universe)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">No, not disabled</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">Burkina Faso 2006</td>
+<td style="text-align: right;">12000</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: left;">Western Africa</td>
+<td style="text-align: right;">854001</td>
+<td style="text-align: right;">854001013</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Thrown into street, vacant land, or common area</td>
+<td style="text-align: left;">No toilet</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Present resident</td>
+<td style="text-align: left;">Child</td>
+<td style="text-align: left;">Child</td>
+<td style="text-align: left;">2 years</td>
+<td style="text-align: left;">0 to 4</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Single/never married</td>
+<td style="text-align: left;">Single/never married</td>
+<td style="text-align: left;">2004</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">No, not disabled</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">Burkina Faso 2006</td>
+<td style="text-align: right;">12000</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: left;">Western Africa</td>
+<td style="text-align: right;">854001</td>
+<td style="text-align: right;">854001013</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">Owned</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Thrown into street, vacant land, or common area</td>
+<td style="text-align: left;">No toilet</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">98.3</td>
+<td style="text-align: left;">Present resident</td>
+<td style="text-align: left;">Child</td>
+<td style="text-align: left;">Child</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">5 to 9</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Single/never married</td>
+<td style="text-align: left;">Single/never married</td>
+<td style="text-align: left;">2001</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">Burkina Faso</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">Muslim</td>
+<td style="text-align: left;">No, never attended</td>
+<td style="text-align: left;">No, illiterate</td>
+<td style="text-align: left;">Less than primary completed</td>
+<td style="text-align: left;">No schooling</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Inactive</td>
+<td style="text-align: left;">Inactive, other reasons</td>
+<td style="text-align: left;">NIU (not in universe)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Kossi</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">No, not disabled</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./d01_01_import_conditions.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conditions d’utilisation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./d01_03_import_geometries.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Données géométriques</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

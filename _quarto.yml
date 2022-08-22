@@ -3,15 +3,18 @@ project:
   output-dir: docs
 
 book:
-  title: "EE CIST 2023 : Données de recensement harmonisées par IPUMS"
+  title: "IPUMS INTERNATIONAL"
+  subtitle: "Extraction de tableaux pour l'EE CIST 2023"
   author: "Claude Grasland"
   date: "22/08/2022"
   chapters:
     - index.qmd
-    - d0001intro.qmd
-    - d0002summary.qmd
-    - d0101import.qmd
-    - d0901references.qmd
+    - d00_02_intro_resume.qmd
+    - d01_00_import_introduction.qmd
+    - d01_01_import_conditions.qmd
+    - d01_02_import_individus.qmd  
+    - d01_03_import_geometries.qmd
+    - d09_01_references.qmd
 
 bibliography: references.bib
 

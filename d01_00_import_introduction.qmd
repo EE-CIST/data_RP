@@ -1,0 +1,5 @@
+# IMPORTATION DES DONNEES {.unnumbered}
+
+La première étape du travail est d'importer les fichiers dont nous aurons besoin à partir du sute IPUMS International. L'ensemble des données utilisées dans cet exercice sera téléchargée sur le site [IPUMS international](https://international.ipums.org/international/index.shtml) :
+
+![ipums homepage](img/ipums_001.png)

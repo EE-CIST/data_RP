@@ -1,0 +1,52 @@
+# Conditions d'utilisation
+
+```{r, echo=FALSE}
+library(knitr)
+library(data.table)
+library(readxl)
+```
+
+
+Les données fournies par IPUMS sont soumises à des [conditions d'utilisation](https://international.ipums.org/international/terms.shtml) qui doivent être respectées et que nous avons retraduites ici en français (merci à google translate).
+
+## Redistribution interdite
+
+> *"Toutes les données extraites de la base de données IPUMS International sont destinées au seul usage du licencié. En vertu des accords d'IPUMS International avec des agences collaboratrices, la redistribution des données à des tiers est interdite. Chaque membre d'une équipe de recherche utilisant les données doit demander l'accès et obtenir une licence individuelle"*.
+
+-   **Commentaire** : l'ensemble des participants à l'école d'été devra donc acquérir une licence individuelle IPUMS et sera réputé avoir effectué l'ensemble des opérations d'acquisitions décrites par la suite.
+
+## Usage : Limitation à la recherche et l'enseignement
+
+> *"Ces extraits de microdonnées sont fournis à des fins exclusives d'enseignement et de recherche scientifique et ne peuvent être utilisés à d'autres fins sans l'approbation écrite explicite de l'autorité statistique officielle compétente. Il est interdit aux utilisateurs d'utiliser les données d'IPUMS International ou d'autres distributeurs autorisés dans la poursuite de toute entreprise commerciale ou génératrice de revenus, à titre privé ou autre. La publication de résultats de recherche basés sur les microdonnées d'IPUMS International est autorisée dans les communications telles que les articles scientifiques, les revues, les rapports de recherche, etc. L'utilisation de ces données à des fins généalogiques est strictement interdite"*
+
+-   **Commentaire** : Les objectifs de l'EE CIST 2023 sont parfaitement en accord avec les règles d'usage de la base. Il faudra toutefois bien prendre garde de citer la source dans l'ensemble des documents pédagogiques ainsi que les éventuels articles de recherche
+
+## Confidentialité : interdiction d'identifier des individus
+
+> *"Les utilisateurs maintiendront la confidentialité des personnes et des ménages. Tous les identifiants directs, ainsi que toutes les caractéristiques qui pourraient conduire à une identification, sont omis des données. Toute tentative de vérifier l'identité des personnes ou des ménages à partir des microdonnées est interdite. Il est également interdit d'alléguer qu'une personne ou un ménage a été identifié dans ces données. Les résultats statistiques susceptibles de révéler l'identité de personnes ou d'entités ne peuvent être communiqués ou publiés sous quelque forme que ce soit."*
+
+-   **Commentaire** : Même si les données sont en général anciennes et portent sur des échantillons de 10% maximum, il est impératif de respecter systématiquement l'obligation de confidentialité et de tenter de repérer une personne si IPUMS n'a pas suffisamment assuré cette condition.
+
+## Sécurité : protection des micro-données
+
+> *"Les utilisateurs mettront en œuvre des mesures de sécurité pour empêcher tout accès non autorisé aux microdonnées acquises auprès d'IPUMS International, de ses partenaires ou distributeurs autorisés. À l'issue de cette recherche, les extraits de données ne peuvent être conservés que s'ils peuvent être sécurisés en toute sécurité. Si la sécurité ne peut être garantie, les microdonnées doivent être détruites."*
+
+-   **Commentaire** : Cette obligation signifie que les données individuelles ne pourront pas être mises à disposition via le serveur de l'EE CIST 2023 sauf si celui-ci est correctement sécurisé. Il faudra les faire télécharger par les stagiaires ou formateur au moment de celle-ci. On pourra en revanche stocker les indicateurs agrégés issus de l'agrégation des données individuelles.
+
+## Obligation de citation
+
+> *"Vous devez citer IPUMS International et l'autorité statistique officielle compétente comme source des microdonnées. Chaque extrait est accompagné d'un langage de citation approprié et pour plus d'informations sur la citation appropriée, reportez-vous à la [citation et à l'utilisation](https://international.ipums.org/international/citation.shtml). Les publications et les rapports de recherche utilisant IPUMS International doivent être ajoutés à la \[bibliographie du projet IPUMS\] (https://bibliography.ipums.org/)."*
+
+-   **Commentaire** : les documents pédagogiques de l'EE CIST 2023 utilisant les données IPUMS devront se conformer à cette obligation de même que les éventuels articles de recherche qui en seront issus.
+
+## Rapports d'erreurs
+
+> *"L'utilisateur accepte d'informer ipums\@umn.edu des erreurs dans les données"*
+
+-   **Commentaire** : c'est la moindre des choses dans une perspective éthique et collaborative.
+
+## Sanctions en cas de non respect
+
+> *"La violation de cet accord entraînera la révocation de cette licence, le rappel de toutes les microdonnées acquises, une motion de censure à la ou aux organisations professionnelles concernées et des poursuites civiles en vertu des lois nationales ou internationales, à la discrétion des régents de l'Université du Minnesota. et les agences statistiques officielles. Des sanctions peuvent également être prises contre l'institution à laquelle le contrevenant est affilié.*"
+
+-   **Commentaire** : sans commentaires ... il serait catastrophique pour le projet d'EE CIST 2023 de voir l'ensemble des cours mis à l'index ...
