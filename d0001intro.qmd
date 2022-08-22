@@ -1,0 +1,9 @@
+# Introduction  {.unnumbered}
+
+Ce document propose de construire un ensemble de données harmonisées à partir des recensements de cinq pays pour lesquels IPUMS fournit :
+
+des données individuelles harmonisées sous la forme d'échantillons de taille maximale 10 pct.
+
+des fonds de carte des divisions administratives aux niveaux 1 et 2 avec des codes compatibles avec les données individuelles.
+
+L'objectif est de construire pour chaque pays des procédures reproductibles permettant typiquement de construire un cours à partir de l'un des pays àune date de recensement puis de repliquer l'analyse sur les autres paysou sur d'autres dates de recensement.

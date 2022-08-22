@@ -8,9 +8,10 @@ book:
   date: "22/08/2022"
   chapters:
     - index.qmd
-    - intro.qmd
-    - summary.qmd
-    - references.qmd
+    - d0001intro.qmd
+    - d0002summary.qmd
+    - d0101import.qmd
+    - d0901references.qmd
 
 bibliography: references.bib
 

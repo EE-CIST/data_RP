@@ -1,0 +1,16 @@
+# Importation 
+
+La première étape du travail est d'importer les fichiers dont nous aurons besoin à partir du sute IPUMS International.
+
+## IPUMS International
+
+### Présentation
+
+### Conditions d'utilisation
+
+### Création d'un compte
+
+## Données individuelles de recensement
+
+
+## Données géométriques de niveaux 1 et 2 
