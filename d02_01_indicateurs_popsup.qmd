@@ -319,9 +319,10 @@ mapdon2<-left_join(map2,pop2) %>% select(code = GEOLEV2,
                                          pop = POP,
                                          geometry = geometry) %>%
                                   filter(nom !="Unknown") %>%
-                                  st_make_valid()
-## Save
-saveRDS(mapdon2,paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
+                                        st_make_valid()
+
+saveRDS(mapdon2,paste0("indic/",census,"/","pop_lev2_",census,".RDS"))                              
+
 
 
 
@@ -346,6 +347,8 @@ mf_layout(title = paste(census,"- Population au niveau II"),
 
 Maintenant que les variables de population sont incluses dans un fichier sf, on peut y ajouter la superficie à l'aide d'un simple calcul géométrique et en déduire la densité de population des unités territoriales. Le calcul des superficies est évidemment légèrement entaché d'erreur puisqu'il dépend de la précision du fonds de carte. Ainis, dans le cas Bénin, nous trouvons une superficie de 115768 km2 alors que la valeur donnée par la Banque Mondiale est de 114760 km2. 
 
+Les fichiers sont exportés au à la fois au format sf (en .RDS) et au format shapefile pour servir de point de départ à l'ensemble des analyses cartographiques ultérieures.
+
 ### RP Bénin, 2013
 
 ```{r den_bn2013, eval=TRUE, echo=TRUE}
@@ -356,13 +359,15 @@ census="bj2013"
 map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
 map1$sup<-as.numeric(st_area(map1)/(1000*1000))
 map1$den<- map1$pop/map1$sup
-saveRDS(map1, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+saveRDS(map1, paste0("indic/",census,"/","map_lev1_",census,".RDS"))
+st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T)
 
 # calcul des indicateurs au niveau II
 map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
 map2$sup<-as.numeric(st_area(map2)/(1000*1000))
 map2$den<- map2$pop/map2$sup
-saveRDS(map2, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+saveRDS(map2, paste0("indic/",census,"/","map_lev2_",census,".RDS"))
+st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T)
 
 # Vérification
 
@@ -409,13 +414,15 @@ census="bf2006"
 map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
 map1$sup<-as.numeric(st_area(map1)/(1000*1000))
 map1$den<- map1$pop/map1$sup
-saveRDS(map1, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+saveRDS(map1, paste0("indic/",census,"/","map_lev1_",census,".RDS"))
+st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T)
 
 # calcul des indicateurs au niveau II
 map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
 map2$sup<-as.numeric(st_area(map2)/(1000*1000))
 map2$den<- map2$pop/map2$sup
-saveRDS(map2, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+saveRDS(map2, paste0("indic/",census,"/","map_lev2_",census,".RDS"))
+st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T)
 
 # Vérification
 
@@ -460,13 +467,15 @@ census="ml2009"
 map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
 map1$sup<-as.numeric(st_area(map1)/(1000*1000))
 map1$den<- map1$pop/map1$sup
-saveRDS(map1, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+saveRDS(map1, paste0("indic/",census,"/","map_lev1_",census,".RDS"))
+st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T)
 
 # calcul des indicateurs au niveau II
 map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
 map2$sup<-as.numeric(st_area(map2)/(1000*1000))
 map2$den<- map2$pop/map2$sup
-saveRDS(map2, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+saveRDS(map2, paste0("indic/",census,"/","map_lev2_",census,".RDS"))
+st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T)
 
 # Vérification
 
@@ -511,13 +520,15 @@ census="sn2013"
 map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
 map1$sup<-as.numeric(st_area(map1)/(1000*1000))
 map1$den<- map1$pop/map1$sup
-saveRDS(map1, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+saveRDS(map1, paste0("indic/",census,"/","map_lev1_",census,".RDS"))
+st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T)
 
 # calcul des indicateurs au niveau II
 map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
 map2$sup<-as.numeric(st_area(map2)/(1000*1000))
 map2$den<- map2$pop/map2$sup
-saveRDS(map2, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+saveRDS(map2, paste0("indic/",census,"/","map_lev2_",census,".RDS"))
+st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T)
 
 # Vérification
 
@@ -555,7 +566,7 @@ mf_layout(title = paste(census,"- Densite de population au niveau II"),
 
 ### RP Togo, 2010
 
-```{r en_tg2010, eval=TRUE, echo=FALSE}
+```{r den_tg2010, eval=TRUE, echo=FALSE}
 library(sf)
 census="tg2010"
 
@@ -563,13 +574,15 @@ census="tg2010"
 map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
 map1$sup<-as.numeric(st_area(map1)/(1000*1000))
 map1$den<- map1$pop/map1$sup
-saveRDS(map1, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+saveRDS(map1, paste0("indic/",census,"/","map_lev1_",census,".RDS"))
+st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T)
 
 # calcul des indicateurs au niveau II
 map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
 map2$sup<-as.numeric(st_area(map2)/(1000*1000))
 map2$den<- map2$pop/map2$sup
-saveRDS(map2, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+saveRDS(map2, paste0("indic/",census,"/","map_lev2_",census,".RDS"))
+st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T)
 
 # Vérification
 
@@ -603,3 +616,217 @@ mf_layout(title = paste(census,"- Densite de population au niveau II"),
           scale = FALSE, arrow=FALSE)
 
 ```
+
+
+## Cartogrammes démographiques
+
+Nous procédons dans cette dernière étape à la création de cartogrammes où la surface des unité terrioriales est approximativement proportionelle à leur population à la date du recensement. L'opération de transformation est effectuée en dehors du logiciel R à l'aide du logiciel ScapeToad qui est l'un des plus performant. La transformation est réalisée sur le niveau administraif II puis celui-ci est agrégé dans R à l'aide du package sf pour reconstituer le niveau administratif I.
+
+- **N.B.** : le calcul de l'anamorphose avec Scapetoad a été assez long et coûteux en calcul pour le Sénégal en raison de la complexité du tracé des limites. Un fonds généralisé est en général plus rapide à transformer.
+
+### RP Bénin, 2013
+
+```{r cartog_bj2013, eval=TRUE, echo=TRUE}
+census = "bj2013"
+
+# Load level2 and remove columns created by scapetoad
+cartog2<-st_read(paste0("indic/",census,"/","cartog_lev2_",census,".shp"), quiet = T) %>%
+  select(code, nom, pays, pop, geometry)
+st_write(cartog2,paste0("indic/",census,"/","cartog_lev2_",census,".shp"),delete_dsn = T , quiet = T)
+
+# agregate level2 to level 1
+cartog1 <- cartog2 %>% mutate(code2 = code, code=substr(code2,1,6))%>%
+              select(code, geometry) %>%
+              group_by(code) %>%
+              summarize() %>% st_as_sf() %>%
+              st_buffer( dist=0.001)
+
+# load attribute from level1
+don1<-st_read(paste0("indic/",census,"/","map_lev1_",census,".shp"), quiet = T) %>% st_drop_geometry()
+cartog1 <- don1 %>% right_join(cartog1) %>% st_as_sf() %>% select(code, nom, pays, pop, geometry)
+st_write(cartog1,paste0("indic/",census,"/","cartog_lev1_",census,".shp"),delete_dsn = T , quiet = T)
+
+# Vérification
+
+par(mfrow=c(1,2))
+mf_map(cartog1, type="base", col="lightyellow")
+mf_map(cartog1,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Cartogramme  au niveau I"),
+          credits = "Source :  IPUMS, 2020 & INS Benin, 2013",
+          scale = FALSE, arrow=FALSE)
+mf_map(cartog2, type="base", col="lightyellow")
+mf_map(cartog2,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Cartogramme au niveau II"),
+          credits = "Source :  IPUMS, 2020 & INS Benin, 2013",
+          scale = FALSE, arrow=FALSE)
+                                        
+```
+
+
+
+
+### RP Burkina Faso, 2006
+
+```{r cartog_bf2006, eval=TRUE, echo=FALSE}
+census = "bf2006"
+
+# Load level2 and remove columns created by scapetoad
+cartog2<-st_read(paste0("indic/",census,"/","cartog_lev2_",census,".shp"), quiet = T) %>%
+  select(code, nom, pays, pop, geometry)
+st_write(cartog2,paste0("indic/",census,"/","cartog_lev2_",census,".shp"), quiet = T,delete_dsn = T )
+
+# agregate level2 to level 1
+cartog1 <- cartog2 %>% mutate(code2 = code, code=substr(code2,1,6))%>%
+              select(code, geometry) %>%
+              group_by(code) %>%
+              summarize() %>% st_as_sf() %>%
+              st_buffer( dist=0.001)
+
+# load attribute from level1
+don1<-st_read(paste0("indic/",census,"/","map_lev1_",census,".shp"), quiet = T) %>% st_drop_geometry()
+cartog1 <- don1 %>% right_join(cartog1) %>% st_as_sf() %>% select(code, nom, pays, pop, geometry)
+st_write(cartog1,paste0("indic/",census,"/","cartog_lev1_",census,".shp"), quiet = T,delete_dsn = T )
+
+# Vérification
+
+par(mfrow=c(1,2))
+mf_map(cartog1, type="base", col="lightyellow")
+mf_map(cartog1,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Cartogramme  au niveau I"),
+          credits = "Source :  IPUMS, 2020 & INS Benin, 2013",
+          scale = FALSE, arrow=FALSE)
+mf_map(cartog2, type="base", col="lightyellow")
+mf_map(cartog2,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Cartogramme au niveau II"),
+          credits = "Source :  IPUMS, 2020 & INS Benin, 2013",
+          scale = FALSE, arrow=FALSE)
+                                        
+```
+
+
+
+### RP Mali, 2009
+
+```{r cartog_ml2009, eval=TRUE, echo=FALSE}
+census = "ml2009"
+
+# Load level2 and remove columns created by scapetoad
+cartog2<-st_read(paste0("indic/",census,"/","cartog_lev2_",census,".shp"),  quiet = T) %>%
+  select(code, nom, pays, pop, geometry)
+st_write(cartog2,paste0("indic/",census,"/","cartog_lev2_",census,".shp"),delete_dsn = T, quiet = T)
+
+# agregate level2 to level 1
+cartog1 <- cartog2 %>% mutate(code2 = code, code=substr(code2,1,6))%>%
+              select(code, geometry) %>%
+              group_by(code) %>%
+              summarize() %>% st_as_sf() %>%
+              st_buffer( dist=0.001)
+
+# load attribute from level1
+don1<-st_read(paste0("indic/",census,"/","map_lev1_",census,".shp"),  quiet = T) %>% st_drop_geometry()
+cartog1 <- don1 %>% right_join(cartog1) %>% st_as_sf() %>% select(code, nom, pays, pop, geometry)
+st_write(cartog1,paste0("indic/",census,"/","cartog_lev1_",census,".shp"),delete_dsn = T , quiet=T)
+
+# Vérification
+
+par(mfrow=c(1,2))
+mf_map(cartog1, type="base", col="lightyellow")
+mf_map(cartog1,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Cartogramme  au niveau I"),
+          credits = "Source :  IPUMS, 2020 & INS Mali, 2009",
+          scale = FALSE, arrow=FALSE)
+mf_map(cartog2, type="base", col="lightyellow")
+mf_map(cartog2,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Cartogramme au niveau II"),
+          credits = "Source :  IPUMS, 2020 & INS Mali, 2009",
+          scale = FALSE, arrow=FALSE)
+                                        
+```
+
+
+
+
+### RP Sénégal, 2013
+
+```{r cartog_sn2013, eval=TRUE, echo=FALSE}
+census = "sn2013"
+
+# Load level2 and remove columns created by scapetoad
+cartog2<-st_read(paste0("indic/",census,"/","cartog_lev2_",census,".shp"), quiet = T) %>%
+  select(code, nom, pays, pop, geometry)
+st_write(cartog2,paste0("indic/",census,"/","cartog_lev2_",census,".shp"), quiet = T,delete_dsn = T )
+
+# agregate level2 to level 1
+cartog1 <- cartog2 %>% mutate(code2 = code, code=substr(code2,1,6))%>%
+              select(code, geometry) %>%
+              group_by(code) %>%
+              summarize() %>% st_as_sf() %>%
+              st_buffer( dist=0.001)
+
+# load attribute from level1
+don1<-st_read(paste0("indic/",census,"/","map_lev1_",census,".shp"), quiet = T) %>% st_drop_geometry()
+cartog1 <- don1 %>% right_join(cartog1) %>% st_as_sf() %>% select(code, nom, pays, pop, geometry)
+st_write(cartog1,paste0("indic/",census,"/","cartog_lev1_",census,".shp"), quiet = T,delete_dsn = T )
+
+# Vérification
+
+par(mfrow=c(1,2))
+mf_map(cartog1, type="base", col="lightyellow")
+mf_map(cartog1,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Cartogramme  au niveau I"),
+          credits = "Source :  IPUMS, 2020 & INS Sénégal, 2013",
+          scale = FALSE, arrow=FALSE)
+mf_map(cartog2, type="base", col="lightyellow")
+mf_map(cartog2,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Cartogramme au niveau II"),
+          credits = "Source :  IPUMS, 2020 & INS Sénégal, 2013",
+          scale = FALSE, arrow=FALSE)
+                                        
+```
+
+
+
+
+
+### RP Togo, 2010
+
+```{r cartog_tg2010, eval=TRUE, echo=FALSE}
+census = "tg2010"
+
+# Load level2 and remove columns created by scapetoad
+cartog2<-st_read(paste0("indic/",census,"/","cartog_lev2_",census,".shp"), quiet = T) %>%
+  select(code, nom, pays, pop, geometry)
+st_write(cartog2,paste0("indic/",census,"/","cartog_lev2_",census,".shp"), quiet = T,delete_dsn = T )
+
+# agregate level2 to level 1
+cartog1 <- cartog2 %>% mutate(code2 = code, code=substr(code2,1,6))%>%
+              select(code, geometry) %>%
+              group_by(code) %>%
+              summarize() %>% st_as_sf() %>%
+              st_buffer( dist=0.001)
+## Little bug
+cartog1$code[3]<-"768003"
+
+# load attribute from level1
+don1<-st_read(paste0("indic/",census,"/","map_lev1_",census,".shp"), quiet = T) %>% st_drop_geometry()
+cartog1 <- don1 %>% right_join(cartog1) %>% st_as_sf() %>% select(code, nom, pays, pop, geometry)
+st_write(cartog1,paste0("indic/",census,"/","cartog_lev1_",census,".shp"), quiet = T,delete_dsn = T )
+
+# Vérification
+
+par(mfrow=c(1,2))
+mf_map(cartog1, type="base", col="lightyellow")
+mf_map(cartog1,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Cartogramme  au niveau I"),
+          credits = "Source :  IPUMS, 2020 & INS Togo, 2010",
+          scale = FALSE, arrow=FALSE)
+mf_map(cartog2, type="base", col="lightyellow")
+mf_map(cartog2,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Cartogramme au niveau II"),
+          credits = "Source :  IPUMS, 2020 & INS Togo, 2010",
+          scale = FALSE, arrow=FALSE)
+                                        
+```
+
+
+

@@ -222,6 +222,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#rp-sénégal-2013" id="toc-rp-sénégal-2013" class="nav-link" data-scroll-target="#rp-sénégal-2013"> <span class="header-section-number">4.3.4</span> RP Sénégal, 2013</a></li>
   <li><a href="#rp-togo-2010" id="toc-rp-togo-2010" class="nav-link" data-scroll-target="#rp-togo-2010"> <span class="header-section-number">4.3.5</span> RP Togo, 2010</a></li>
   </ul></li>
+  <li><a href="#cartogrammes-démographiques" id="toc-cartogrammes-démographiques" class="nav-link" data-scroll-target="#cartogrammes-démographiques"> <span class="header-section-number">4.4</span> Cartogrammes démographiques</a>
+  <ul class="collapse">
+  <li><a href="#rp-bénin-2013-1" id="toc-rp-bénin-2013-1" class="nav-link" data-scroll-target="#rp-bénin-2013-1"> <span class="header-section-number">4.4.1</span> RP Bénin, 2013</a></li>
+  <li><a href="#rp-burkina-faso-2006-1" id="toc-rp-burkina-faso-2006-1" class="nav-link" data-scroll-target="#rp-burkina-faso-2006-1"> <span class="header-section-number">4.4.2</span> RP Burkina Faso, 2006</a></li>
+  <li><a href="#rp-mali-2009-1" id="toc-rp-mali-2009-1" class="nav-link" data-scroll-target="#rp-mali-2009-1"> <span class="header-section-number">4.4.3</span> RP Mali, 2009</a></li>
+  <li><a href="#rp-sénégal-2013-1" id="toc-rp-sénégal-2013-1" class="nav-link" data-scroll-target="#rp-sénégal-2013-1"> <span class="header-section-number">4.4.4</span> RP Sénégal, 2013</a></li>
+  <li><a href="#rp-togo-2010-1" id="toc-rp-togo-2010-1" class="nav-link" data-scroll-target="#rp-togo-2010-1"> <span class="header-section-number">4.4.5</span> RP Togo, 2010</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -416,6 +424,7 @@ Joining, by = "GEOLEV2"</code></pre>
 <section id="calcul-des-superficies-et-densités" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="calcul-des-superficies-et-densités"><span class="header-section-number">4.3</span> Calcul des superficies et densités</h2>
 <p>Maintenant que les variables de population sont incluses dans un fichier sf, on peut y ajouter la superficie à l’aide d’un simple calcul géométrique et en déduire la densité de population des unités territoriales. Le calcul des superficies est évidemment légèrement entaché d’erreur puisqu’il dépend de la précision du fonds de carte. Ainis, dans le cas Bénin, nous trouvons une superficie de 115768 km2 alors que la valeur donnée par la Banque Mondiale est de 114760 km2.</p>
+<p>Les fichiers sont exportés au à la fois au format sf (en .RDS) et au format shapefile pour servir de point de départ à l’ensemble des analyses cartographiques ultérieures.</p>
 <section id="rp-bénin-2013" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="rp-bénin-2013"><span class="header-section-number">4.3.1</span> RP Bénin, 2013</h3>
 <div class="cell">
@@ -426,44 +435,56 @@ Joining, by = "GEOLEV2"</code></pre>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>map1<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"pop_lev1_"</span>,census,<span class="st">".RDS"</span>))</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>map1<span class="sc">$</span>sup<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(<span class="fu">st_area</span>(map1)<span class="sc">/</span>(<span class="dv">1000</span><span class="sc">*</span><span class="dv">1000</span>))</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>map1<span class="sc">$</span>den<span class="ot">&lt;-</span> map1<span class="sc">$</span>pop<span class="sc">/</span>map1<span class="sc">$</span>sup</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(map1, <span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"popsup_lev1_"</span>,census,<span class="st">".RDS"</span>))</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># calcul des indicateurs au niveau II</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>map2<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"pop_lev2_"</span>,census,<span class="st">".RDS"</span>))</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>map2<span class="sc">$</span>sup<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(<span class="fu">st_area</span>(map2)<span class="sc">/</span>(<span class="dv">1000</span><span class="sc">*</span><span class="dv">1000</span>))</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>map2<span class="sc">$</span>den<span class="ot">&lt;-</span> map2<span class="sc">$</span>pop<span class="sc">/</span>map2<span class="sc">$</span>sup</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(map2, <span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"popsup_lev1_"</span>,census,<span class="st">".RDS"</span>))</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Vérification</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>mybreaks<span class="ot">=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">40</span>,<span class="dv">80</span>,<span class="dv">160</span>,<span class="dv">320</span>,<span class="dv">10000</span>)</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>mycols <span class="ot">=</span> <span class="fu">brewer.pal</span>(<span class="dv">8</span>,<span class="st">"YlOrBr"</span>)</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(map1,<span class="at">type=</span><span class="st">"choro"</span>, </span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">var=</span><span class="st">"den"</span>,</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">breaks=</span>mybreaks,</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">pal=</span>mycols,</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg_title =</span> <span class="st">"hab./km2"</span>,</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg_val_rnd =</span> <span class="dv">0</span>)</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_layout</span>(<span class="at">title =</span> <span class="fu">paste</span>(census,<span class="st">"- Densite de population au niveau I"</span>),</span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>          <span class="at">credits =</span> <span class="st">"Sources :  IPUMS, 2020 &amp; INS Bénin,2013"</span>,</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>          <span class="at">scale =</span> <span class="cn">FALSE</span>, <span class="at">arrow=</span><span class="cn">FALSE</span>)</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(map2,<span class="at">type=</span><span class="st">"choro"</span>, </span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>            <span class="at">var=</span><span class="st">"den"</span>,</span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>            <span class="at">breaks=</span>mybreaks,</span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>            <span class="at">pal=</span>mycols,</span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg_title =</span> <span class="st">"hab./km2"</span>,</span>
-<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg_val_rnd =</span> <span class="dv">0</span>,</span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>             <span class="at">lwd=</span><span class="fl">0.3</span>,</span>
-<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>             <span class="at">border =</span> <span class="st">"gray80"</span>)</span>
-<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(map1,<span class="at">type=</span><span class="st">"base"</span>, </span>
-<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>            <span class="at">add=</span>T,</span>
-<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd=</span><span class="dv">1</span>,</span>
-<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="cn">NA</span>,</span>
-<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>            <span class="at">border=</span><span class="st">"black"</span>)</span>
-<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_layout</span>(<span class="at">title =</span> <span class="fu">paste</span>(census,<span class="st">"- Densite de population au niveau II"</span>),</span>
-<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>          <span class="at">credits =</span> <span class="st">"Sources :  IPUMS, 2020 &amp; INS Bénin,2013"</span>,</span>
-<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>          <span class="at">scale =</span> <span class="cn">FALSE</span>, <span class="at">arrow=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(map1, <span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"map_lev1_"</span>,census,<span class="st">".RDS"</span>))</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(map1, <span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"map_lev1_"</span>,census,<span class="st">".shp"</span>),<span class="at">delete_dsn =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Deleting source `indic/bj2013/map_lev1_bj2013.shp' using driver `ESRI Shapefile'
+Writing layer `map_lev1_bj2013' to data source 
+  `indic/bj2013/map_lev1_bj2013.shp' using driver `ESRI Shapefile'
+Writing 12 features with 6 fields and geometry type Multi Polygon.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calcul des indicateurs au niveau II</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>map2<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"pop_lev2_"</span>,census,<span class="st">".RDS"</span>))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>map2<span class="sc">$</span>sup<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(<span class="fu">st_area</span>(map2)<span class="sc">/</span>(<span class="dv">1000</span><span class="sc">*</span><span class="dv">1000</span>))</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>map2<span class="sc">$</span>den<span class="ot">&lt;-</span> map2<span class="sc">$</span>pop<span class="sc">/</span>map2<span class="sc">$</span>sup</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(map2, <span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"map_lev2_"</span>,census,<span class="st">".RDS"</span>))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(map2, <span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"map_lev2_"</span>,census,<span class="st">".shp"</span>),<span class="at">delete_dsn =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Deleting source `indic/bj2013/map_lev2_bj2013.shp' using driver `ESRI Shapefile'
+Writing layer `map_lev2_bj2013' to data source 
+  `indic/bj2013/map_lev2_bj2013.shp' using driver `ESRI Shapefile'
+Writing 77 features with 6 fields and geometry type Multi Polygon.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vérification</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>mybreaks<span class="ot">=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">40</span>,<span class="dv">80</span>,<span class="dv">160</span>,<span class="dv">320</span>,<span class="dv">10000</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>mycols <span class="ot">=</span> <span class="fu">brewer.pal</span>(<span class="dv">8</span>,<span class="st">"YlOrBr"</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(map1,<span class="at">type=</span><span class="st">"choro"</span>, </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">var=</span><span class="st">"den"</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">breaks=</span>mybreaks,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">pal=</span>mycols,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg_title =</span> <span class="st">"hab./km2"</span>,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg_val_rnd =</span> <span class="dv">0</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_layout</span>(<span class="at">title =</span> <span class="fu">paste</span>(census,<span class="st">"- Densite de population au niveau I"</span>),</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">credits =</span> <span class="st">"Sources :  IPUMS, 2020 &amp; INS Bénin,2013"</span>,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">scale =</span> <span class="cn">FALSE</span>, <span class="at">arrow=</span><span class="cn">FALSE</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(map2,<span class="at">type=</span><span class="st">"choro"</span>, </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">var=</span><span class="st">"den"</span>,</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">breaks=</span>mybreaks,</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">pal=</span>mycols,</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg_title =</span> <span class="st">"hab./km2"</span>,</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg_val_rnd =</span> <span class="dv">0</span>,</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">lwd=</span><span class="fl">0.3</span>,</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">border =</span> <span class="st">"gray80"</span>)</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(map1,<span class="at">type=</span><span class="st">"base"</span>, </span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">add=</span>T,</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd=</span><span class="dv">1</span>,</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="cn">NA</span>,</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>            <span class="at">border=</span><span class="st">"black"</span>)</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_layout</span>(<span class="at">title =</span> <span class="fu">paste</span>(census,<span class="st">"- Densite de population au niveau II"</span>),</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>          <span class="at">credits =</span> <span class="st">"Sources :  IPUMS, 2020 &amp; INS Bénin,2013"</span>,</span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>          <span class="at">scale =</span> <span class="cn">FALSE</span>, <span class="at">arrow=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="d02_01_indicateurs_popsup_files/figure-html/den_bn2013-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -472,6 +493,18 @@ Joining, by = "GEOLEV2"</code></pre>
 <section id="rp-burkina-faso-2006" class="level3" data-number="4.3.2">
 <h3 data-number="4.3.2" class="anchored" data-anchor-id="rp-burkina-faso-2006"><span class="header-section-number">4.3.2</span> RP Burkina Faso, 2006</h3>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Deleting source `indic/bf2006/map_lev1_bf2006.shp' using driver `ESRI Shapefile'
+Writing layer `map_lev1_bf2006' to data source 
+  `indic/bf2006/map_lev1_bf2006.shp' using driver `ESRI Shapefile'
+Writing 13 features with 6 fields and geometry type Multi Polygon.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Deleting source `indic/bf2006/map_lev2_bf2006.shp' using driver `ESRI Shapefile'
+Writing layer `map_lev2_bf2006' to data source 
+  `indic/bf2006/map_lev2_bf2006.shp' using driver `ESRI Shapefile'
+Writing 45 features with 6 fields and geometry type Multi Polygon.</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="d02_01_indicateurs_popsup_files/figure-html/den_bf2006-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -480,6 +513,18 @@ Joining, by = "GEOLEV2"</code></pre>
 <section id="rp-mali-2009" class="level3" data-number="4.3.3">
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="rp-mali-2009"><span class="header-section-number">4.3.3</span> RP Mali, 2009</h3>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Deleting source `indic/ml2009/map_lev1_ml2009.shp' using driver `ESRI Shapefile'
+Writing layer `map_lev1_ml2009' to data source 
+  `indic/ml2009/map_lev1_ml2009.shp' using driver `ESRI Shapefile'
+Writing 8 features with 6 fields and geometry type Polygon.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Deleting source `indic/ml2009/map_lev2_ml2009.shp' using driver `ESRI Shapefile'
+Writing layer `map_lev2_ml2009' to data source 
+  `indic/ml2009/map_lev2_ml2009.shp' using driver `ESRI Shapefile'
+Writing 47 features with 6 fields and geometry type Multi Polygon.</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="d02_01_indicateurs_popsup_files/figure-html/den_ml2009-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -488,6 +533,18 @@ Joining, by = "GEOLEV2"</code></pre>
 <section id="rp-sénégal-2013" class="level3" data-number="4.3.4">
 <h3 data-number="4.3.4" class="anchored" data-anchor-id="rp-sénégal-2013"><span class="header-section-number">4.3.4</span> RP Sénégal, 2013</h3>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Deleting source `indic/sn2013/map_lev1_sn2013.shp' using driver `ESRI Shapefile'
+Writing layer `map_lev1_sn2013' to data source 
+  `indic/sn2013/map_lev1_sn2013.shp' using driver `ESRI Shapefile'
+Writing 8 features with 6 fields and geometry type Multi Polygon.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Deleting source `indic/sn2013/map_lev2_sn2013.shp' using driver `ESRI Shapefile'
+Writing layer `map_lev2_sn2013' to data source 
+  `indic/sn2013/map_lev2_sn2013.shp' using driver `ESRI Shapefile'
+Writing 27 features with 6 fields and geometry type Multi Polygon.</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="d02_01_indicateurs_popsup_files/figure-html/den_sn2013-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -496,8 +553,114 @@ Joining, by = "GEOLEV2"</code></pre>
 <section id="rp-togo-2010" class="level3" data-number="4.3.5">
 <h3 data-number="4.3.5" class="anchored" data-anchor-id="rp-togo-2010"><span class="header-section-number">4.3.5</span> RP Togo, 2010</h3>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Deleting source `indic/tg2010/map_lev1_tg2010.shp' using driver `ESRI Shapefile'
+Writing layer `map_lev1_tg2010' to data source 
+  `indic/tg2010/map_lev1_tg2010.shp' using driver `ESRI Shapefile'
+Writing 3 features with 6 fields and geometry type Polygon.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Deleting source `indic/tg2010/map_lev2_tg2010.shp' using driver `ESRI Shapefile'
+Writing layer `map_lev2_tg2010' to data source 
+  `indic/tg2010/map_lev2_tg2010.shp' using driver `ESRI Shapefile'
+Writing 37 features with 6 fields and geometry type Multi Polygon.</code></pre>
+</div>
 <div class="cell-output-display">
-<p><img src="d02_01_indicateurs_popsup_files/figure-html/en_tg2010-1.png" class="img-fluid" width="672"></p>
+<p><img src="d02_01_indicateurs_popsup_files/figure-html/den_tg2010-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="cartogrammes-démographiques" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="cartogrammes-démographiques"><span class="header-section-number">4.4</span> Cartogrammes démographiques</h2>
+<p>Nous procédons dans cette dernière étape à la création de cartogrammes où la surface des unité terrioriales est approximativement proportionelle à leur population à la date du recensement. L’opération de transformation est effectuée en dehors du logiciel R à l’aide du logiciel ScapeToad qui est l’un des plus performant. La transformation est réalisée sur le niveau administraif II puis celui-ci est agrégé dans R à l’aide du package sf pour reconstituer le niveau administratif I.</p>
+<ul>
+<li><strong>N.B.</strong> : le calcul de l’anamorphose avec Scapetoad a été assez long et coûteux en calcul pour le Sénégal en raison de la complexité du tracé des limites. Un fonds généralisé est en général plus rapide à transformer.</li>
+</ul>
+<section id="rp-bénin-2013-1" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="rp-bénin-2013-1"><span class="header-section-number">4.4.1</span> RP Bénin, 2013</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>census <span class="ot">=</span> <span class="st">"bj2013"</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load level2 and remove columns created by scapetoad</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>cartog2<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"cartog_lev2_"</span>,census,<span class="st">".shp"</span>), <span class="at">quiet =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(code, nom, pays, pop, geometry)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(cartog2,<span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"cartog_lev2_"</span>,census,<span class="st">".shp"</span>),<span class="at">delete_dsn =</span> T , <span class="at">quiet =</span> T)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co"># agregate level2 to level 1</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>cartog1 <span class="ot">&lt;-</span> cartog2 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">code2 =</span> code, <span class="at">code=</span><span class="fu">substr</span>(code2,<span class="dv">1</span>,<span class="dv">6</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(code, geometry) <span class="sc">%&gt;%</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(code) <span class="sc">%&gt;%</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>() <span class="sc">%&gt;%</span> <span class="fu">st_as_sf</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>              <span class="fu">st_buffer</span>( <span class="at">dist=</span><span class="fl">0.001</span>)</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a><span class="co"># load attribute from level1</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>don1<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"map_lev1_"</span>,census,<span class="st">".shp"</span>), <span class="at">quiet =</span> T) <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>()</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>cartog1 <span class="ot">&lt;-</span> don1 <span class="sc">%&gt;%</span> <span class="fu">right_join</span>(cartog1) <span class="sc">%&gt;%</span> <span class="fu">st_as_sf</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(code, nom, pays, pop, geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(cartog1,<span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"cartog_lev1_"</span>,census,<span class="st">".shp"</span>),<span class="at">delete_dsn =</span> T , <span class="at">quiet =</span> T)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Vérification</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(cartog1, <span class="at">type=</span><span class="st">"base"</span>, <span class="at">col=</span><span class="st">"lightyellow"</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(cartog1,<span class="at">type=</span><span class="st">"prop"</span>, <span class="at">var=</span><span class="st">"pop"</span>,<span class="at">inches =</span> <span class="fl">0.1</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_layout</span>(<span class="at">title =</span> <span class="fu">paste</span>(census,<span class="st">"- Cartogramme  au niveau I"</span>),</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">credits =</span> <span class="st">"Source :  IPUMS, 2020 &amp; INS Benin, 2013"</span>,</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">scale =</span> <span class="cn">FALSE</span>, <span class="at">arrow=</span><span class="cn">FALSE</span>)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(cartog2, <span class="at">type=</span><span class="st">"base"</span>, <span class="at">col=</span><span class="st">"lightyellow"</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(cartog2,<span class="at">type=</span><span class="st">"prop"</span>, <span class="at">var=</span><span class="st">"pop"</span>,<span class="at">inches =</span> <span class="fl">0.1</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_layout</span>(<span class="at">title =</span> <span class="fu">paste</span>(census,<span class="st">"- Cartogramme au niveau II"</span>),</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">credits =</span> <span class="st">"Source :  IPUMS, 2020 &amp; INS Benin, 2013"</span>,</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">scale =</span> <span class="cn">FALSE</span>, <span class="at">arrow=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="d02_01_indicateurs_popsup_files/figure-html/cartog_bj2013-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="rp-burkina-faso-2006-1" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="rp-burkina-faso-2006-1"><span class="header-section-number">4.4.2</span> RP Burkina Faso, 2006</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="d02_01_indicateurs_popsup_files/figure-html/cartog_bf2006-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="rp-mali-2009-1" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="rp-mali-2009-1"><span class="header-section-number">4.4.3</span> RP Mali, 2009</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="d02_01_indicateurs_popsup_files/figure-html/cartog_ml2009-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="rp-sénégal-2013-1" class="level3" data-number="4.4.4">
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="rp-sénégal-2013-1"><span class="header-section-number">4.4.4</span> RP Sénégal, 2013</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="d02_01_indicateurs_popsup_files/figure-html/cartog_sn2013-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="rp-togo-2010-1" class="level3" data-number="4.4.5">
+<h3 data-number="4.4.5" class="anchored" data-anchor-id="rp-togo-2010-1"><span class="header-section-number">4.4.5</span> RP Togo, 2010</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="d02_01_indicateurs_popsup_files/figure-html/cartog_tg2010-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
