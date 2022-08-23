@@ -1,0 +1,605 @@
+# Population, surface, densité
+
+Le premier exemple de création d'indicateur concerne l'établissement de cartes de densité ce qui suppose de mobiliser à la fois les données individuelles (pour agréger la population) et les données géographiques (pour calculer la superficie). 
+```{r, echo=TRUE}
+library(knitr)
+library(dplyr)
+library(sf)
+library(mapsf)
+library(RColorBrewer)
+```
+
+## Agrégation de la population
+
+Une question intéressante concerne la marge d'erreur du calcul des populations selon que l'on part d'un échantillon plus ou moins dense (ici, à 1 pct ou 10 pct). Ce point méritera d'être discuté avec les spécialistes de statistique inférentielle du projet. Nous nous bornerons ici à calculer les indicateurs tirés de l'échantillon à 10%
+
+On calcule pour chacune des unités territoriales de niveau I ou II la somme des individus pondérée par le poids des ménages (HHWT) et on stocke le résultat dans un dossier commun à tous les recensments appelés all. Ceci évitera d'avoir à refaire le calcul dans les étapes suivantes. 
+
+```{r agregpop}
+## Chargement des données
+rp <-readRDS(file = "ipums/rp/samp10pct.RDS")
+
+## Calcul des populations au niveau administratif I
+pop1<-rp      %>% group_by(GEOLEV1) %>% 
+                  summarise(POP=sum(HHWT))  %>%
+                  mutate(GEOLEV1 = as.character(GEOLEV1))
+saveRDS(pop1, "indic/all/POP_LEV1.RDS")
+
+## Calcul des populations au niveau administratif II
+pop2<-rp      %>% group_by(GEOLEV2) %>% 
+                  summarise(POP=sum(HHWT))  %>%
+                  mutate(GEOLEV2 = as.character(GEOLEV2))
+saveRDS(pop2, "indic/all/POP_LEV2.RDS")
+```
+
+## Jointure avec les géométries
+
+On va maintenant procéder à la jointure des données avec les fonds de carte puis stocker ces derniers enrichis par la population au format sf. On crée pour cela une procédure semi-automatique qu'on va applique au RP Bénin 2013 et qui sera ensuite répliquée sur les autres recensements étudiés. 
+
+
+### Bénin, RP 2013
+
+```{r pop_bj2013, eval = TRUE, echo=TRUE}
+
+library(sf)
+census="bj2013"
+refmap="bj1979_2013"
+
+# --------------- Niveau administratif I ----------------------
+
+## Load population
+pop1<-readRDS("indic/all/POP_LEV1.RDS")
+## Read Geometry and create code
+map1<-readRDS(paste0("ipums/geom/geo1_", refmap,".RDS")) %>% rename(GEOLEV1=GEOLEVEL1)
+
+## Join
+mapdon1<-left_join(map1,pop1) %>% select(code = GEOLEV1,
+                                         nom  = ADMIN_NAME,
+                                         pays = CNTRY_NAME,
+                                         pop = POP,
+                                         geometry = geometry)%>%
+                                  filter(nom !="Unknown") %>%
+                                  st_make_valid()
+## Save
+saveRDS(mapdon1,paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
+
+# --------------- Niveau administratif II ----------------------                            ## Load population
+pop2<-readRDS("indic/all/POP_LEV2.RDS")
+## Read Geometry and create code
+map2<-readRDS(paste0("ipums/geom/geo2_", refmap,".RDS")) %>% rename(GEOLEV2=GEOLEVEL2)
+## Join
+mapdon2<-left_join(map2,pop2) %>% select(code = GEOLEV2,
+                                         nom  = ADMIN_NAME,
+                                         pays = CNTRY_NAME,
+                                         pop = POP,
+                                         geometry = geometry)%>%
+                                  filter(nom !="Unknown") %>%
+                                  st_make_valid()
+## Save
+saveRDS(mapdon2,paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
+
+
+
+# Vérification
+par(mfrow=c(1,2))
+mf_map(mapdon1, type="base", col="lightyellow")
+mf_map(mapdon1,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Population au niveau I"),
+          credits = "Source :  IPUMS, 2020 & INS Benin, 2013",
+          scale = FALSE, arrow=FALSE)
+mf_map(mapdon2, type="base", col="lightyellow")
+mf_map(mapdon2,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Population au niveau II"),
+          credits = "Source :  IPUMS, 2020 & INS Benin, 2013",
+          scale = FALSE, arrow=FALSE)
+                                         
+                                                                              
+
+```
+
+
+
+
+### Burkina Faso, RP 2006
+
+```{r pop_bf2006, eval = TRUE, echo=FALSE}
+library(sf)
+census="bf2006"
+refmap="bf1996_2006"
+
+# --------------- Niveau administratif I ----------------------
+
+## Load population
+pop1<-readRDS("indic/all/POP_LEV1.RDS")
+## Read Geometry and create code
+map1<-readRDS(paste0("ipums/geom/geo1_", refmap,".RDS")) %>% rename(GEOLEV1=GEOLEVEL1)
+
+## Join
+mapdon1<-left_join(map1,pop1) %>% select(code = GEOLEV1,
+                                         nom  = ADMIN_NAME,
+                                         pays = CNTRY_NAME,
+                                         pop = POP,
+                                         geometry = geometry)%>%
+                                  filter(nom !="Unknown") %>%
+                                  st_make_valid()
+## Save
+saveRDS(mapdon1,paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
+
+# --------------- Niveau administratif II ----------------------                            ## Load population
+pop2<-readRDS("indic/all/POP_LEV2.RDS")
+## Read Geometry and create code
+map2<-readRDS(paste0("ipums/geom/geo2_", refmap,".RDS")) %>% rename(GEOLEV2=GEOLEVEL2)
+## Join
+mapdon2<-left_join(map2,pop2) %>% select(code = GEOLEV2,
+                                         nom  = ADMIN_NAME,
+                                         pays = CNTRY_NAME,
+                                         pop = POP,
+                                         geometry = geometry)%>%
+                                  filter(nom !="Unknown") %>%
+                                  st_make_valid()
+## Save
+saveRDS(mapdon2,paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
+
+
+
+
+# Vérification
+par(mfrow=c(1,2))
+mf_map(mapdon1, type="base", col="lightyellow")
+mf_map(mapdon1,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Population au niveau I"),
+          credits = "Source :  IPUMS, 2020 & INS Burkina Faso, 2006",
+          scale = FALSE, arrow=FALSE)
+mf_map(mapdon2, type="base", col="lightyellow")
+mf_map(mapdon2,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Population au niveau II"),
+          credits = "Source :  IPUMS, 2020 & INS Burkina Faso, 2006",
+          scale = FALSE, arrow=FALSE)
+                                                                              
+
+```
+
+
+
+### Mali, RP 2009
+
+```{r pop_ml2009, eval = TRUE, echo=FALSE}
+library(sf)
+census="ml2009"
+refmap="ml1987_2009"
+
+# --------------- Niveau administratif I ----------------------
+
+## Load population
+pop1<-readRDS("indic/all/POP_LEV1.RDS")
+## Read Geometry and create code
+map1<-readRDS(paste0("ipums/geom/geo1_", refmap,".RDS")) %>% rename(GEOLEV1=GEOLEVEL1)
+
+## Join
+mapdon1<-left_join(map1,pop1) %>% select(code = GEOLEV1,
+                                         nom  = ADMIN_NAME,
+                                         pays = CNTRY_NAME,
+                                         pop = POP,
+                                         geometry = geometry)%>%
+                                  filter(nom !="Unknown") %>%
+                                  st_make_valid()
+## Save
+saveRDS(mapdon1,paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
+
+# --------------- Niveau administratif II ----------------------                            ## Load population
+pop2<-readRDS("indic/all/POP_LEV2.RDS")
+## Read Geometry and create code
+map2<-readRDS(paste0("ipums/geom/geo2_", refmap,".RDS")) %>% rename(GEOLEV2=GEOLEVEL2)
+## Join
+mapdon2<-left_join(map2,pop2) %>% select(code = GEOLEV2,
+                                         nom  = ADMIN_NAME,
+                                         pays = CNTRY_NAME,
+                                         pop = POP,
+                                         geometry = geometry) %>%
+                                  filter(nom !="Unknown") %>%
+                                  st_make_valid()
+## Save
+saveRDS(mapdon2,paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
+
+
+# Vérification
+par(mfrow=c(1,2))
+mf_map(mapdon1, type="base", col="lightyellow")
+mf_map(mapdon1,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Population au niveau I"),
+          credits = "Sources :  IPUMS, 2020 & INS Mali 2009",
+          scale = FALSE, arrow=FALSE)
+mf_map(mapdon2, type="base", col="lightyellow")
+mf_map(mapdon2,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Population au niveau II"),
+          credits = "Sources :  IPUM,S 2020 & INS Mali, 2009",
+          scale = FALSE, arrow=FALSE)
+
+                                                                   
+```
+
+- **N.B.** : il a fallu supprimer un polygone vide concernant les valeurs "*Unknown*" et réparer la géométrie d'une unité en appliquant la fonction *st_make_valid()* du package *sf*.
+
+### Togo, RP 2010
+
+```{r pop_tg2010, eval = TRUE, echo=FALSE}
+library(sf)
+census="tg2010"
+refmap1="tg1970_2010"
+refmap2="tg2010_2010"
+
+# --------------- Niveau administratif I ----------------------
+
+## Load population
+pop1<-readRDS("indic/all/POP_LEV1.RDS")
+## Read Geometry and create code
+map1<-readRDS(paste0("ipums/geom/geo1_", refmap1,".RDS")) %>% rename(GEOLEV1=GEOLEVEL1)
+
+## Join
+mapdon1<-left_join(map1,pop1) %>% select(code = GEOLEV1,
+                                         nom  = ADMIN_NAME,
+                                         pays = CNTRY_NAME,
+                                         pop = POP,
+                                         geometry = geometry)%>%
+                                  filter(nom !="Unknown") %>%
+                                  st_make_valid()
+## Save
+saveRDS(mapdon1,paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
+
+# --------------- Niveau administratif II ----------------------                            ## Load population
+pop2<-readRDS("indic/all/POP_LEV2.RDS")
+## Read Geometry and create code
+map2<-readRDS(paste0("ipums/geom/geo2_", refmap2,".RDS")) %>% rename(GEOLEV2=GEOLEVEL2)
+## Join
+mapdon2<-left_join(map2,pop2) %>% select(code = GEOLEV2,
+                                         nom  = ADMIN_NAME,
+                                         pays = CNTRY_NAME,
+                                         pop = POP,
+                                         geometry = geometry) %>%
+                                  filter(nom !="Unknown") %>%
+                                  st_make_valid()
+
+## Save
+saveRDS(mapdon2,paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
+
+
+# Vérification
+par(mfrow=c(1,2))
+mf_map(mapdon1, type="base", col="lightyellow")
+mf_map(mapdon1,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Population au niveau I"),
+          credits = "Sources :  IPUMS, 2020 & INS Togo, 2010",
+          scale = FALSE, arrow=FALSE)
+mf_map(mapdon2, type="base", col="lightyellow")
+mf_map(mapdon2,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Population au niveau II"),
+          credits = "Sources :  IPUM,S 2020 & INS Togo, 2010",
+          scale = FALSE, arrow=FALSE)
+                                                                              
+
+```
+
+- **N.B.** : il a fallu supprimer un polygone vide concernant les valeurs "*Unknown*" et réparer la géométrie d'une unité en appliquant la fonction *st_make_valid()* du package *sf*.
+
+
+### Sénégal, RP 2013
+
+```{r pop_sn2013, eval = TRUE, echo=FALSE}
+
+library(sf)
+census="sn2013"
+refmap="sn1988_2013"
+
+# --------------- Niveau administratif I ----------------------
+
+## Load population
+pop1<-readRDS("indic/all/POP_LEV1.RDS")
+## Read Geometry and create code
+map1<-readRDS(paste0("ipums/geom/geo1_", refmap,".RDS")) %>% rename(GEOLEV1=GEOLEVEL1)
+
+## Join
+mapdon1<-left_join(map1,pop1) %>% select(code = GEOLEV1,
+                                         nom  = ADMIN_NAME,
+                                         pays = CNTRY_NAME,
+                                         pop = POP,
+                                         geometry = geometry) %>%
+                                  filter(nom !="Unknown") %>%
+                                  st_make_valid()
+## Save
+saveRDS(mapdon1,paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
+
+# --------------- Niveau administratif II ----------------------                            ## Load population
+pop2<-readRDS("indic/all/POP_LEV2.RDS")
+## Read Geometry and create code
+map2<-readRDS(paste0("ipums/geom/geo2_", refmap,".RDS")) %>% rename(GEOLEV2=GEOLEVEL2)
+## Join
+mapdon2<-left_join(map2,pop2) %>% select(code = GEOLEV2,
+                                         nom  = ADMIN_NAME,
+                                         pays = CNTRY_NAME,
+                                         pop = POP,
+                                         geometry = geometry) %>%
+                                  filter(nom !="Unknown") %>%
+                                  st_make_valid()
+## Save
+saveRDS(mapdon2,paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
+
+
+
+# Vérification
+par(mfrow=c(1,2))
+mf_map(mapdon1, type="base", col="lightyellow")
+mf_map(mapdon1,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Population au niveau I"),
+          credits = "Sources :  IPUMS, 2020 & INS Sénégal,2013",
+          scale = FALSE, arrow=FALSE)
+mf_map(mapdon2, type="base", col="lightyellow")
+mf_map(mapdon2,type="prop", var="pop",inches = 0.1)
+mf_layout(title = paste(census,"- Population au niveau II"),
+          credits = "Sources :  IPUM,S 2020 & INS Sénégal,2013",
+          scale = FALSE, arrow=FALSE)
+                                                                              
+
+```
+
+## Calcul des superficies et densités
+
+
+Maintenant que les variables de population sont incluses dans un fichier sf, on peut y ajouter la superficie à l'aide d'un simple calcul géométrique et en déduire la densité de population des unités territoriales. Le calcul des superficies est évidemment légèrement entaché d'erreur puisqu'il dépend de la précision du fonds de carte. Ainis, dans le cas Bénin, nous trouvons une superficie de 115768 km2 alors que la valeur donnée par la Banque Mondiale est de 114760 km2. 
+
+### RP Bénin, 2013
+
+```{r den_bn2013, eval=TRUE, echo=TRUE}
+library(sf)
+census="bj2013"
+
+# calcul des indicateurs au niveau I
+map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
+map1$sup<-as.numeric(st_area(map1)/(1000*1000))
+map1$den<- map1$pop/map1$sup
+saveRDS(map1, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+
+# calcul des indicateurs au niveau II
+map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
+map2$sup<-as.numeric(st_area(map2)/(1000*1000))
+map2$den<- map2$pop/map2$sup
+saveRDS(map2, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+
+# Vérification
+
+mybreaks=c(0,5,10,20,40,80,160,320,10000)
+mycols = brewer.pal(8,"YlOrBr")
+par(mfrow=c(1,2))
+mf_map(map1,type="choro", 
+            var="den",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "hab./km2",
+            leg_val_rnd = 0)
+mf_layout(title = paste(census,"- Densite de population au niveau I"),
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,2013",
+          scale = FALSE, arrow=FALSE)
+mf_map(map2,type="choro", 
+            var="den",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "hab./km2",
+            leg_val_rnd = 0,
+             lwd=0.3,
+             border = "gray80")
+mf_map(map1,type="base", 
+            add=T,
+            lwd=1,
+            col = NA,
+            border="black")
+mf_layout(title = paste(census,"- Densite de population au niveau II"),
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,2013",
+          scale = FALSE, arrow=FALSE)
+
+
+```
+
+
+### RP Burkina Faso, 2006
+
+```{r den_bf2006, eval=TRUE, echo=FALSE}
+library(sf)
+census="bf2006"
+
+# calcul des indicateurs au niveau I
+map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
+map1$sup<-as.numeric(st_area(map1)/(1000*1000))
+map1$den<- map1$pop/map1$sup
+saveRDS(map1, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+
+# calcul des indicateurs au niveau II
+map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
+map2$sup<-as.numeric(st_area(map2)/(1000*1000))
+map2$den<- map2$pop/map2$sup
+saveRDS(map2, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+
+# Vérification
+
+mybreaks=c(0,5,10,20,40,80,160,320,10000)
+mycols = brewer.pal(8,"YlOrBr")
+par(mfrow=c(1,2))
+mf_map(map1,type="choro", 
+            var="den",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "hab./km2",
+            leg_val_rnd = 0)
+mf_layout(title = paste(census,"- Densite de population au niveau I"),
+          credits = "Sources :  IPUMS, 2020 & INS Burkina Faso, 2016",
+          scale = FALSE, arrow=FALSE)
+mf_map(map2,type="choro", 
+            var="den",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "hab./km2",
+            leg_val_rnd = 0,
+             lwd=0.3,
+             border = "gray80")
+mf_map(map1,type="base", 
+            add=T,
+            lwd=1,
+            col = NA,
+            border="black")
+mf_layout(title = paste(census,"- Densite de population au niveau II"),
+          credits = "Sources :  IPUMS, 2020 & INS Burkina Faso, 2006",
+          scale = FALSE, arrow=FALSE)
+
+```
+
+### RP Mali, 2009
+
+```{r den_ml2009, eval=TRUE, echo=FALSE}
+library(sf)
+census="ml2009"
+
+# calcul des indicateurs au niveau I
+map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
+map1$sup<-as.numeric(st_area(map1)/(1000*1000))
+map1$den<- map1$pop/map1$sup
+saveRDS(map1, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+
+# calcul des indicateurs au niveau II
+map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
+map2$sup<-as.numeric(st_area(map2)/(1000*1000))
+map2$den<- map2$pop/map2$sup
+saveRDS(map2, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+
+# Vérification
+
+mybreaks=c(0,5,10,20,40,80,160,320,10000)
+mycols = brewer.pal(8,"YlOrBr")
+par(mfrow=c(1,2))
+mf_map(map1,type="choro", 
+            var="den",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "hab./km2",
+            leg_val_rnd = 0)
+mf_layout(title = paste(census,"- Densite de population au niveau I"),
+          credits = "Sources :  IPUMS, 2020 & INS Mali,2009",
+          scale = FALSE, arrow=FALSE)
+mf_map(map2,type="choro", 
+            var="den",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "hab./km2",
+            leg_val_rnd = 0,
+             lwd=0.3,
+             border = "gray80")
+mf_map(map1,type="base", 
+            add=T,
+            lwd=1,
+            col = NA,
+            border="black")
+mf_layout(title = paste(census,"- Densite de population au niveau II"),
+          credits = "Sources :  IPUMS, 2020 & INS Mali,2009",
+          scale = FALSE, arrow=FALSE)
+
+```
+
+### RP Sénégal, 2013
+
+```{r den_sn2013, eval=TRUE, echo=FALSE}
+library(sf)
+census="sn2013"
+
+# calcul des indicateurs au niveau I
+map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
+map1$sup<-as.numeric(st_area(map1)/(1000*1000))
+map1$den<- map1$pop/map1$sup
+saveRDS(map1, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+
+# calcul des indicateurs au niveau II
+map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
+map2$sup<-as.numeric(st_area(map2)/(1000*1000))
+map2$den<- map2$pop/map2$sup
+saveRDS(map2, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+
+# Vérification
+
+mybreaks=c(0,5,10,20,40,80,160,320,15000)
+mycols = brewer.pal(8,"YlOrBr")
+par(mfrow=c(1,2))
+mf_map(map1,type="choro", 
+            var="den",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "hab./km2",
+            leg_val_rnd = 0)
+mf_layout(title = paste(census,"- Densite de population au niveau I"),
+          credits = "Sources :  IPUMS, 2020 & INS Sénégal, 2013",
+          scale = FALSE, arrow=FALSE)
+mf_map(map2,type="choro", 
+            var="den",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "hab./km2",
+            leg_val_rnd = 0,
+             lwd=0.3,
+             border = "gray80")
+mf_map(map1,type="base", 
+            add=T,
+            lwd=1,
+            col = NA,
+            border="black")
+mf_layout(title = paste(census,"- Densite de population au niveau II"),
+          credits = "Sources :  IPUMS, 2020 & INS Sénégal,2013",
+          scale = FALSE, arrow=FALSE)
+
+```
+
+
+### RP Togo, 2010
+
+```{r en_tg2010, eval=TRUE, echo=FALSE}
+library(sf)
+census="tg2010"
+
+# calcul des indicateurs au niveau I
+map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
+map1$sup<-as.numeric(st_area(map1)/(1000*1000))
+map1$den<- map1$pop/map1$sup
+saveRDS(map1, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+
+# calcul des indicateurs au niveau II
+map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
+map2$sup<-as.numeric(st_area(map2)/(1000*1000))
+map2$den<- map2$pop/map2$sup
+saveRDS(map2, paste0("indic/",census,"/","popsup_lev1_",census,".RDS"))
+
+# Vérification
+
+mybreaks=c(0,5,10,20,40,80,160,320,15000)
+mycols = brewer.pal(8,"YlOrBr")
+par(mfrow=c(1,2))
+mf_map(map1,type="choro", 
+            var="den",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "hab./km2",
+            leg_val_rnd = 0)
+mf_layout(title = paste(census,"- Densite de population au niveau I"),
+          credits = "Sources :  IPUMS, 2020 & INS Togo, 2010",
+          scale = FALSE, arrow=FALSE)
+mf_map(map2,type="choro", 
+            var="den",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "hab./km2",
+            leg_val_rnd = 0,
+             lwd=0.3,
+             border = "gray80")
+mf_map(map1,type="base", 
+            add=T,
+            lwd=1,
+            col = NA,
+            border="black")
+mf_layout(title = paste(census,"- Densite de population au niveau II"),
+          credits = "Sources :  IPUMS, 2020 & INS Togo,2010",
+          scale = FALSE, arrow=FALSE)
+
+```

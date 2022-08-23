@@ -88,7 +88,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./d09_01_references.html" rel="next">
+<link href="./d02_00_indicateurs_introduction.html" rel="next">
 <link href="./d01_02_import_individus.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -183,6 +183,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./d02_00_indicateurs_introduction.html" class="sidebar-item-text sidebar-link">CREATION D’INDICATEURS</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_01_indicateurs_popsup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Population, surface, densité</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./d09_01_references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
@@ -205,7 +215,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#sénégal-2013" id="toc-sénégal-2013" class="nav-link" data-scroll-target="#sénégal-2013"> <span class="header-section-number">3.3.4</span> Sénégal 2013</a></li>
   <li><a href="#togo-2010" id="toc-togo-2010" class="nav-link" data-scroll-target="#togo-2010"> <span class="header-section-number">3.3.5</span> Togo 2010</a></li>
   </ul></li>
-  <li><a href="#visualisation-des-résultats" id="toc-visualisation-des-résultats" class="nav-link" data-scroll-target="#visualisation-des-résultats"> <span class="header-section-number">3.4</span> Visualisation des résultats</a></li>
+  <li><a href="#géométries-harmonisées-dans-le-temps" id="toc-géométries-harmonisées-dans-le-temps" class="nav-link" data-scroll-target="#géométries-harmonisées-dans-le-temps"> <span class="header-section-number">3.4</span> Géométries harmonisées dans le temps</a>
+  <ul class="collapse">
+  <li><a href="#bénin-1979-2013" id="toc-bénin-1979-2013" class="nav-link" data-scroll-target="#bénin-1979-2013"> <span class="header-section-number">3.4.1</span> Bénin, 1979-2013</a></li>
+  <li><a href="#burkina_faso-1996-2006" id="toc-burkina_faso-1996-2006" class="nav-link" data-scroll-target="#burkina_faso-1996-2006"> <span class="header-section-number">3.4.2</span> Burkina_Faso, 1996-2006</a></li>
+  <li><a href="#mali-1987-2009" id="toc-mali-1987-2009" class="nav-link" data-scroll-target="#mali-1987-2009"> <span class="header-section-number">3.4.3</span> Mali, 1987-2009</a></li>
+  <li><a href="#sénégal-1988-2013" id="toc-sénégal-1988-2013" class="nav-link" data-scroll-target="#sénégal-1988-2013"> <span class="header-section-number">3.4.4</span> Sénégal 1988-2013</a></li>
+  <li><a href="#togo-1970-2010" id="toc-togo-1970-2010" class="nav-link" data-scroll-target="#togo-1970-2010"> <span class="header-section-number">3.4.5</span> Togo 1970-2010</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -254,7 +271,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Sur chacune des deux pages on va ensuite télécharger les fonds de carte qui correspondent à des dossiers au format .zip ce qui en réduit la taille. On les décompressera uniquement au moment de leur importation vers R, Qgis ou Geoda.</p>
 <p>Au total nous devons récupérer 10 fichiers correspondant aux 2 niveaux de découpages de chacun des 5 recensements pour lesquels nous avons collecté des échantillons de données individuelles.</p>
-<p><img src="img/ipums_014.png" class="img-fluid" alt="Fichiers géométriques à deux niveauxs"> - <strong>N.B. </strong> Chaque fichier correspond à une date précise et un pays précis. Dans le cas d’un pays dont les régions ont change, il faut télécharger autant de fichiers qu’il y a de géométries différentes. Précisons par ailleurs que les fonds de carte proposés sont assez généralisées et ne se prête pas à des opérations précises de repérage de terrain : ils ne servent qu’à visualiser les résultats de recensement.</p>
+<p><img src="img/ipums_014.png" class="img-fluid" alt="Fichiers géométriques à deux niveauxs"> - <strong>N.B.</strong> Chaque fichier correspond à une date précise et un pays précis. Dans le cas d’un pays dont les régions ont change, il faut télécharger autant de fichiers qu’il y a de géométries différentes. Précisons par ailleurs que les fonds de carte proposés sont assez généralisées et ne se prête pas à des opérations précises de repérage de terrain : ils ne servent qu’à visualiser les résultats de recensement.</p>
 </section>
 <section id="conversion-au-format-sf" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="conversion-au-format-sf"><span class="header-section-number">3.3</span> Conversion au format sf</h2>
@@ -274,7 +291,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(<span class="fu">paste0</span>(<span class="st">"ipums/geom/geo2_"</span>,census,<span class="st">".zip"</span>), <span class="at">exdir=</span><span class="st">"ipums/geom/tmp"</span>)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>map2<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="fu">paste0</span>(<span class="st">"ipums/geom/tmp/geo2_"</span>,census,<span class="st">".shp"</span>),<span class="at">quiet=</span>T)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(map1,<span class="fu">paste0</span>(<span class="st">"ipums/geom/geo2_"</span>,census,<span class="st">".RDS"</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(map2,<span class="fu">paste0</span>(<span class="st">"ipums/geom/geo2_"</span>,census,<span class="st">".RDS"</span>))</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>))</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(map2<span class="sc">$</span>geometry, <span class="at">col=</span><span class="st">"lightyellow"</span>, <span class="at">border=</span><span class="st">"gray80"</span>, <span class="at">lwd=</span><span class="fl">0.4</span>, <span class="at">main=</span>census)</span>
@@ -317,13 +334,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 </section>
-<section id="visualisation-des-résultats" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="visualisation-des-résultats"><span class="header-section-number">3.4</span> Visualisation des résultats</h2>
+<section id="géométries-harmonisées-dans-le-temps" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="géométries-harmonisées-dans-le-temps"><span class="header-section-number">3.4</span> Géométries harmonisées dans le temps</h2>
+<p>IPUMS propose pour chaque pays des géométries harmonisées permettant de comparer les situations à plusieurs dates et, du même coup, de procéder à des analyses de migrations. La résolution spatiale est évidemment plus faible mais l’intérêt beaucoup plus grand en terme d’utilisations pédagogiques multiples.</p>
+<section id="bénin-1979-2013" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="bénin-1979-2013"><span class="header-section-number">3.4.1</span> Bénin, 1979-2013</h3>
 <div class="cell">
-
+<div class="cell-output-display">
+<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="burkina_faso-1996-2006" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="burkina_faso-1996-2006"><span class="header-section-number">3.4.2</span> Burkina_Faso, 1996-2006</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="mali-1987-2009" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="mali-1987-2009"><span class="header-section-number">3.4.3</span> Mali, 1987-2009</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="sénégal-1988-2013" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="sénégal-1988-2013"><span class="header-section-number">3.4.4</span> Sénégal 1988-2013</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="togo-1970-2010" class="level3" data-number="3.4.5">
+<h3 data-number="3.4.5" class="anchored" data-anchor-id="togo-1970-2010"><span class="header-section-number">3.4.5</span> Togo 1970-2010</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -431,8 +486,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./d09_01_references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./d02_00_indicateurs_introduction.html" class="pagination-link">
+        <span class="nav-page-text">CREATION D’INDICATEURS</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

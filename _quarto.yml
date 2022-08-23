@@ -14,6 +14,8 @@ book:
     - d01_01_import_conditions.qmd
     - d01_02_import_individus.qmd  
     - d01_03_import_geometries.qmd
+    - d02_00_indicateurs_introduction.qmd
+    - d02_01_indicateurs_popsup.qmd
     - d09_01_references.qmd
 
 bibliography: references.bib
