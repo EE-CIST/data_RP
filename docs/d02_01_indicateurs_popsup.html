@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>IPUMS INTERNATIONAL - 4&nbsp; Population, surface, densité</title>
+<title>L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL - 4&nbsp; Population, surface, densité</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -88,7 +88,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./d09_01_references.html" rel="next">
+<link href="./d02_02_indicateurs_equipt.html" rel="next">
 <link href="./d02_00_indicateurs_introduction.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">IPUMS INTERNATIONAL</a> 
+      <a href="./">L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL</a> 
     </div>
       </div>
       <div class="mt-2 flex-shrink-0 align-items-center">
@@ -189,6 +189,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./d02_01_indicateurs_popsup.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Population, surface, densité</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_02_indicateurs_equipt.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Equipement des ménages</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_02_indicateurs_tabcont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sexe, âge et urbanité</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -280,20 +290,20 @@ Attachement du package : 'dplyr'</code></pre>
 <section id="agrégation-de-la-population" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="agrégation-de-la-population"><span class="header-section-number">4.1</span> Agrégation de la population</h2>
 <p>Une question intéressante concerne la marge d’erreur du calcul des populations selon que l’on part d’un échantillon plus ou moins dense (ici, à 1 pct ou 10 pct). Ce point méritera d’être discuté avec les spécialistes de statistique inférentielle du projet. Nous nous bornerons ici à calculer les indicateurs tirés de l’échantillon à 10%</p>
-<p>On calcule pour chacune des unités territoriales de niveau I ou II la somme des individus pondérée par le poids des ménages (HHWT) et on stocke le résultat dans un dossier commun à tous les recensments appelés all. Ceci évitera d’avoir à refaire le calcul dans les étapes suivantes.</p>
+<p>On calcule pour chacune des unités territoriales de niveau I ou II la somme des individus pondérée par le poids des individus (PERWT) et on stocke le résultat dans un dossier commun à tous les recensments appelés all. Ceci évitera d’avoir à refaire le calcul dans les étapes suivantes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Chargement des données</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">"ipums/rp/samp10pct.RDS"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">"ipums/rp/rp_fivecountries_samp10pct.RDS"</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Calcul des populations au niveau administratif I</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>pop1<span class="ot">&lt;-</span>rp      <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(GEOLEV1) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">summarise</span>(<span class="at">POP=</span><span class="fu">sum</span>(HHWT))  <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">summarise</span>(<span class="at">POP=</span><span class="fu">sum</span>(PERWT))  <span class="sc">%&gt;%</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">mutate</span>(<span class="at">GEOLEV1 =</span> <span class="fu">as.character</span>(GEOLEV1))</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(pop1, <span class="st">"indic/all/POP_LEV1.RDS"</span>)</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Calcul des populations au niveau administratif II</span></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>pop2<span class="ot">&lt;-</span>rp      <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(GEOLEV2) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">summarise</span>(<span class="at">POP=</span><span class="fu">sum</span>(HHWT))  <span class="sc">%&gt;%</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">summarise</span>(<span class="at">POP=</span><span class="fu">sum</span>(PERWT))  <span class="sc">%&gt;%</span></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">mutate</span>(<span class="at">GEOLEV2 =</span> <span class="fu">as.character</span>(GEOLEV2))</span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(pop2, <span class="st">"indic/all/POP_LEV2.RDS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -773,8 +783,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./d09_01_references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./d02_02_indicateurs_equipt.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Equipement des ménages</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

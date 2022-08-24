@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>IPUMS INTERNATIONAL - 3&nbsp; Données géométriques</title>
+<title>L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL - 3&nbsp; Données géométriques</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">IPUMS INTERNATIONAL</a> 
+      <a href="./">L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL</a> 
     </div>
       </div>
       <div class="mt-2 flex-shrink-0 align-items-center">
@@ -193,6 +193,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./d02_02_indicateurs_equipt.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Equipement des ménages</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_02_indicateurs_tabcont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sexe, âge et urbanité</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./d09_01_references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
@@ -205,23 +215,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#accès-aux-fichiers-de-géométrie" id="toc-accès-aux-fichiers-de-géométrie" class="nav-link active" data-scroll-target="#accès-aux-fichiers-de-géométrie"> <span class="header-section-number">3.1</span> Accès aux fichiers de géométrie</a></li>
-  <li><a href="#téléchargement-des-géométries-de-niveau-i-et-ii" id="toc-téléchargement-des-géométries-de-niveau-i-et-ii" class="nav-link" data-scroll-target="#téléchargement-des-géométries-de-niveau-i-et-ii"> <span class="header-section-number">3.2</span> Téléchargement des géométries de niveau I et II</a></li>
-  <li><a href="#conversion-au-format-sf" id="toc-conversion-au-format-sf" class="nav-link" data-scroll-target="#conversion-au-format-sf"> <span class="header-section-number">3.3</span> Conversion au format sf</a>
+  <li><a href="#cas-de-recensements-isolé" id="toc-cas-de-recensements-isolé" class="nav-link active" data-scroll-target="#cas-de-recensements-isolé"> <span class="header-section-number">3.1</span> Cas de recensements isolé</a>
   <ul class="collapse">
-  <li><a href="#bénin-2013" id="toc-bénin-2013" class="nav-link" data-scroll-target="#bénin-2013"> <span class="header-section-number">3.3.1</span> Bénin, 2013</a></li>
-  <li><a href="#burkina-faso-2006" id="toc-burkina-faso-2006" class="nav-link" data-scroll-target="#burkina-faso-2006"> <span class="header-section-number">3.3.2</span> Burkina Faso 2006</a></li>
-  <li><a href="#mali-2009" id="toc-mali-2009" class="nav-link" data-scroll-target="#mali-2009"> <span class="header-section-number">3.3.3</span> Mali 2009</a></li>
-  <li><a href="#sénégal-2013" id="toc-sénégal-2013" class="nav-link" data-scroll-target="#sénégal-2013"> <span class="header-section-number">3.3.4</span> Sénégal 2013</a></li>
-  <li><a href="#togo-2010" id="toc-togo-2010" class="nav-link" data-scroll-target="#togo-2010"> <span class="header-section-number">3.3.5</span> Togo 2010</a></li>
+  <li><a href="#accès-aux-données" id="toc-accès-aux-données" class="nav-link" data-scroll-target="#accès-aux-données"> <span class="header-section-number">3.1.1</span> Accès aux données</a></li>
+  <li><a href="#bénin-rp-2013" id="toc-bénin-rp-2013" class="nav-link" data-scroll-target="#bénin-rp-2013"> <span class="header-section-number">3.1.2</span> Bénin RP 2013</a></li>
+  <li><a href="#burkina-faso-rp-2006" id="toc-burkina-faso-rp-2006" class="nav-link" data-scroll-target="#burkina-faso-rp-2006"> <span class="header-section-number">3.1.3</span> Burkina Faso RP 2006</a></li>
+  <li><a href="#mali-rp-2009" id="toc-mali-rp-2009" class="nav-link" data-scroll-target="#mali-rp-2009"> <span class="header-section-number">3.1.4</span> Mali RP 2009</a></li>
+  <li><a href="#sénégal-rp-2013" id="toc-sénégal-rp-2013" class="nav-link" data-scroll-target="#sénégal-rp-2013"> <span class="header-section-number">3.1.5</span> Sénégal RP 2013</a></li>
+  <li><a href="#togo-rp-2010" id="toc-togo-rp-2010" class="nav-link" data-scroll-target="#togo-rp-2010"> <span class="header-section-number">3.1.6</span> Togo RP 2010</a></li>
   </ul></li>
-  <li><a href="#géométries-harmonisées-dans-le-temps" id="toc-géométries-harmonisées-dans-le-temps" class="nav-link" data-scroll-target="#géométries-harmonisées-dans-le-temps"> <span class="header-section-number">3.4</span> Géométries harmonisées dans le temps</a>
+  <li><a href="#géométries-harmonisées-dans-le-temps" id="toc-géométries-harmonisées-dans-le-temps" class="nav-link" data-scroll-target="#géométries-harmonisées-dans-le-temps"> <span class="header-section-number">3.2</span> Géométries harmonisées dans le temps</a>
   <ul class="collapse">
-  <li><a href="#bénin-1979-2013" id="toc-bénin-1979-2013" class="nav-link" data-scroll-target="#bénin-1979-2013"> <span class="header-section-number">3.4.1</span> Bénin, 1979-2013</a></li>
-  <li><a href="#burkina_faso-1996-2006" id="toc-burkina_faso-1996-2006" class="nav-link" data-scroll-target="#burkina_faso-1996-2006"> <span class="header-section-number">3.4.2</span> Burkina_Faso, 1996-2006</a></li>
-  <li><a href="#mali-1987-2009" id="toc-mali-1987-2009" class="nav-link" data-scroll-target="#mali-1987-2009"> <span class="header-section-number">3.4.3</span> Mali, 1987-2009</a></li>
-  <li><a href="#sénégal-1988-2013" id="toc-sénégal-1988-2013" class="nav-link" data-scroll-target="#sénégal-1988-2013"> <span class="header-section-number">3.4.4</span> Sénégal 1988-2013</a></li>
-  <li><a href="#togo-1970-2010" id="toc-togo-1970-2010" class="nav-link" data-scroll-target="#togo-1970-2010"> <span class="header-section-number">3.4.5</span> Togo 1970-2010</a></li>
+  <li><a href="#accès-aux-données-1" id="toc-accès-aux-données-1" class="nav-link" data-scroll-target="#accès-aux-données-1"> <span class="header-section-number">3.2.1</span> Accès aux données</a></li>
+  <li><a href="#bénin-harmonisé-rp-1979-1992-2002-2013" id="toc-bénin-harmonisé-rp-1979-1992-2002-2013" class="nav-link" data-scroll-target="#bénin-harmonisé-rp-1979-1992-2002-2013"> <span class="header-section-number">3.2.2</span> Bénin harmonisé : RP 1979, 1992, 2002 &amp; 2013</a></li>
+  <li><a href="#burkina-faso-harmonisé-rp-1996-2006" id="toc-burkina-faso-harmonisé-rp-1996-2006" class="nav-link" data-scroll-target="#burkina-faso-harmonisé-rp-1996-2006"> <span class="header-section-number">3.2.3</span> Burkina Faso harmonisé : RP 1996 &amp; 2006</a></li>
+  <li><a href="#mali-harmonisé-rp-1987-1998-2009" id="toc-mali-harmonisé-rp-1987-1998-2009" class="nav-link" data-scroll-target="#mali-harmonisé-rp-1987-1998-2009"> <span class="header-section-number">3.2.4</span> Mali harmonisé : RP 1987, 1998 &amp; 2009</a></li>
+  <li><a href="#sénégal-harmonisé-rp-1988-2002-2013" id="toc-sénégal-harmonisé-rp-1988-2002-2013" class="nav-link" data-scroll-target="#sénégal-harmonisé-rp-1988-2002-2013"> <span class="header-section-number">3.2.5</span> Sénégal harmonisé : RP 1988, 2002 &amp; 2013</a></li>
+  <li><a href="#togo-harmonisé-rp-1970-2010" id="toc-togo-harmonisé-rp-1970-2010" class="nav-link" data-scroll-target="#togo-harmonisé-rp-1970-2010"> <span class="header-section-number">3.2.6</span> Togo harmonisé : RP 1970 &amp; 2010</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -249,8 +259,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </div>
 <p>Un des grands avantages d’IPUMS International pour l’EE CIST 2023 est constitué par la mise à disposition de fonds de carte au format shapefile dont les codes correspondent avec les variables individuelles poue deux niveaux administratifs en dessous du nivau national. On peut donc théoriquement agréger les données individuelles, en déduire des indicateurs agrégés à deux niveaux administratifs différents et en faire la cartographie. L’objectif de cette note est de vérifier que tout ceci fonctionne bien et que les fonds de carte sont de bonne qualité.</p>
-<section id="accès-aux-fichiers-de-géométrie" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="accès-aux-fichiers-de-géométrie"><span class="header-section-number">3.1</span> Accès aux fichiers de géométrie</h2>
+<section id="cas-de-recensements-isolé" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="cas-de-recensements-isolé"><span class="header-section-number">3.1</span> Cas de recensements isolé</h2>
+<p>Le premier cas concerne la géométrie d’un recensement précis relatif à un seul pays et une seule date. Par exemple la géométrie du Togo lors du RP 2010.</p>
+<section id="accès-aux-données" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="accès-aux-données"><span class="header-section-number">3.1.1</span> Accès aux données</h3>
 <p>Une fois que vous êtes connecté en tant qu’utilisateur, vous pouvez accéder aux données géométriques en cliquant dans la barre latérale gauche sur le lien <em>“GEOGRAPHY &amp; GIS”</em> :</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -258,11 +271,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p></p><figcaption class="figure-caption">Lien vers les données géométriques</figcaption><p></p>
 </figure>
 </div>
-<p>Ce dernier vous conduit à une page comportant de nombreuses possibilités d’obtention de données géométriques pour chacun des recensements de tous les pays à toutes les dates. On utilisera ici uniquement les géométries associées aux données de recensement, mais la page offre d’autres possibilités, notamment pour la constitution de découpages à plusieurs dates ou pour les liens vers les données DHS.</p>
-</section>
-<section id="téléchargement-des-géométries-de-niveau-i-et-ii" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="téléchargement-des-géométries-de-niveau-i-et-ii"><span class="header-section-number">3.2</span> Téléchargement des géométries de niveau I et II</h2>
-<p>Pour assurer une correspondance exacte avec les données de recensement, on utilise uniquement les shapefile correspondant aux indicateurs contenus dans les données individuelles :</p>
+<p>Ce dernier vous conduit à une page comportant de nombreuses possibilités d’obtention de données géométriques pour chacun des recensements de tous les pays à toutes les dates. On utilisera ici uniquement les géométries associées aux données de recensement, mais la page offre d’autres possibilités, notamment pour la constitution de découpages à plusieurs dates ou pour les liens vers les données DHS. Pour assurer une correspondance exacte avec les données de recensement, on utilise uniquement les shapefile correspondant aux indicateurs contenus dans les données individuelles :</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/ipums_013.png" class="img-fluid figure-img"></p>
@@ -272,12 +281,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Sur chacune des deux pages on va ensuite télécharger les fonds de carte qui correspondent à des dossiers au format .zip ce qui en réduit la taille. On les décompressera uniquement au moment de leur importation vers R, Qgis ou Geoda.</p>
 <p>Au total nous devons récupérer 10 fichiers correspondant aux 2 niveaux de découpages de chacun des 5 recensements pour lesquels nous avons collecté des échantillons de données individuelles.</p>
 <p><img src="img/ipums_014.png" class="img-fluid" alt="Fichiers géométriques à deux niveauxs"> - <strong>N.B.</strong> Chaque fichier correspond à une date précise et un pays précis. Dans le cas d’un pays dont les régions ont change, il faut télécharger autant de fichiers qu’il y a de géométries différentes. Précisons par ailleurs que les fonds de carte proposés sont assez généralisées et ne se prête pas à des opérations précises de repérage de terrain : ils ne servent qu’à visualiser les résultats de recensement.</p>
-</section>
-<section id="conversion-au-format-sf" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="conversion-au-format-sf"><span class="header-section-number">3.3</span> Conversion au format sf</h2>
 <p>Les fichiers obtenus sont directement utilisables par Qgis ou GeoDa mais ils doivent être convertis au format sf pour être utilisés dans R. On peut utiliser pour cela un programme qui automatise la tâche du type de celui qui est présenté ci-dessous pour le Burkina et qui sera ensuite appliqué à tous les autres recensements :</p>
-<section id="bénin-2013" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="bénin-2013"><span class="header-section-number">3.3.1</span> Bénin, 2013</h3>
+</section>
+<section id="bénin-rp-2013" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="bénin-rp-2013"><span class="header-section-number">3.1.2</span> Bénin RP 2013</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -297,85 +304,112 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(map2<span class="sc">$</span>geometry, <span class="at">col=</span><span class="st">"lightyellow"</span>, <span class="at">border=</span><span class="st">"gray80"</span>, <span class="at">lwd=</span><span class="fl">0.4</span>, <span class="at">main=</span>census)</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(map1<span class="sc">$</span>geometry,<span class="at">add=</span>T, <span class="at">col=</span><span class="cn">NA</span>, <span class="at">border =</span> <span class="st">"black"</span>,<span class="at">lwd=</span><span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<p><img src="d01_03_import_geometries_files/figure-html/map_bj2013-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="burkina-faso-2006" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="burkina-faso-2006"><span class="header-section-number">3.3.2</span> Burkina Faso 2006</h3>
+<section id="burkina-faso-rp-2006" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="burkina-faso-rp-2006"><span class="header-section-number">3.1.3</span> Burkina Faso RP 2006</h3>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="d01_03_import_geometries_files/figure-html/map_bf2006-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="mali-2009" class="level3" data-number="3.3.3">
-<h3 data-number="3.3.3" class="anchored" data-anchor-id="mali-2009"><span class="header-section-number">3.3.3</span> Mali 2009</h3>
+<section id="mali-rp-2009" class="level3" data-number="3.1.4">
+<h3 data-number="3.1.4" class="anchored" data-anchor-id="mali-rp-2009"><span class="header-section-number">3.1.4</span> Mali RP 2009</h3>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="d01_03_import_geometries_files/figure-html/map_ml2009-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="sénégal-2013" class="level3" data-number="3.3.4">
-<h3 data-number="3.3.4" class="anchored" data-anchor-id="sénégal-2013"><span class="header-section-number">3.3.4</span> Sénégal 2013</h3>
+<section id="sénégal-rp-2013" class="level3" data-number="3.1.5">
+<h3 data-number="3.1.5" class="anchored" data-anchor-id="sénégal-rp-2013"><span class="header-section-number">3.1.5</span> Sénégal RP 2013</h3>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="d01_03_import_geometries_files/figure-html/map_sn2013-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="togo-2010" class="level3" data-number="3.3.5">
-<h3 data-number="3.3.5" class="anchored" data-anchor-id="togo-2010"><span class="header-section-number">3.3.5</span> Togo 2010</h3>
+<section id="togo-rp-2010" class="level3" data-number="3.1.6">
+<h3 data-number="3.1.6" class="anchored" data-anchor-id="togo-rp-2010"><span class="header-section-number">3.1.6</span> Togo RP 2010</h3>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="d01_03_import_geometries_files/figure-html/map_tg2010-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 </section>
-<section id="géométries-harmonisées-dans-le-temps" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="géométries-harmonisées-dans-le-temps"><span class="header-section-number">3.4</span> Géométries harmonisées dans le temps</h2>
-<p>IPUMS propose pour chaque pays des géométries harmonisées permettant de comparer les situations à plusieurs dates et, du même coup, de procéder à des analyses de migrations. La résolution spatiale est évidemment plus faible mais l’intérêt beaucoup plus grand en terme d’utilisations pédagogiques multiples.</p>
-<section id="bénin-1979-2013" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="bénin-1979-2013"><span class="header-section-number">3.4.1</span> Bénin, 1979-2013</h3>
+<section id="géométries-harmonisées-dans-le-temps" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="géométries-harmonisées-dans-le-temps"><span class="header-section-number">3.2</span> Géométries harmonisées dans le temps</h2>
+<p>IPUMS propose pour chaque pays des géométries harmonisées permettant de comparer les situations à plusieurs dates et, du même coup, de procéder à des analyses de migrations. La résolution spatiale est évidemment plus faible mais l’intérêt beaucoup plus grand si l’on souhaite par exemple construire des séries chronologiques ou étudier les migrations entre deux dates. L’inconvénient est évidemment d’aboutir parfois à des unités administratives fictives qui sont un compromis entre plusieurs redécoupages.</p>
+<section id="accès-aux-données-1" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="accès-aux-données-1"><span class="header-section-number">3.2.1</span> Accès aux données</h3>
+<p>La procédure est la même que précédemment mais en suivant un autre chemin pour accéder aux fonds de carte harmonisés dans le temps. Le lien avec les données individuelles de recnsement sera désormais effectué à l’aide de codes standard portant les noms respectifs de <strong>GEOLEV1</strong> et <strong>GEOLEV2</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/ipums_016.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Lien vers les données géométriques harmonisées</figcaption><p></p>
+</figure>
+</div>
+<p>Pour les pays qui n’ont pas connu de changement administratif, les données harmonisées correspondent au données du dernier recensement (<em>Bénin</em>). Dans le cas où il y a eu des fragmentations mais sans remise en cause des limites, le découpage harmonisé sera en général celui d’un recensement plus ancien (<em>Sénégal</em>). Enfin, dans le cas où le redécoupage conduit à des découpages avec interesections, il faut agréger les unités problématiques en ensembles plus vastes qui ne correspondent à aucune date précise de recensement (<em>Togo</em>). Lorsqu’un recensement est manifestement non compatible avec les précédents, IPUMS renonce à chercher un plus petit commun dénominateur</p>
+</section>
+<section id="bénin-harmonisé-rp-1979-1992-2002-2013" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="bénin-harmonisé-rp-1979-1992-2002-2013"><span class="header-section-number">3.2.2</span> Bénin harmonisé : RP 1979, 1992, 2002 &amp; 2013</h3>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="d01_03_import_geometries_files/figure-html/map_bj1979_2013-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<ul>
+<li><strong>Validation ?</strong> : à faire par les formateurs du pays concernés</li>
+</ul>
 </section>
-<section id="burkina_faso-1996-2006" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="burkina_faso-1996-2006"><span class="header-section-number">3.4.2</span> Burkina_Faso, 1996-2006</h3>
+<section id="burkina-faso-harmonisé-rp-1996-2006" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="burkina-faso-harmonisé-rp-1996-2006"><span class="header-section-number">3.2.3</span> Burkina Faso harmonisé : RP 1996 &amp; 2006</h3>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="d01_03_import_geometries_files/figure-html/map_bf1996_2006-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<ul>
+<li><strong>Validation ?</strong> : à faire par les formateurs du pays concernés</li>
+</ul>
 </section>
-<section id="mali-1987-2009" class="level3" data-number="3.4.3">
-<h3 data-number="3.4.3" class="anchored" data-anchor-id="mali-1987-2009"><span class="header-section-number">3.4.3</span> Mali, 1987-2009</h3>
+<section id="mali-harmonisé-rp-1987-1998-2009" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="mali-harmonisé-rp-1987-1998-2009"><span class="header-section-number">3.2.4</span> Mali harmonisé : RP 1987, 1998 &amp; 2009</h3>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="d01_03_import_geometries_files/figure-html/map_ml1987_2009-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<ul>
+<li><strong>Validation ?</strong> : à faire par les formateurs du pays concernés</li>
+</ul>
 </section>
-<section id="sénégal-1988-2013" class="level3" data-number="3.4.4">
-<h3 data-number="3.4.4" class="anchored" data-anchor-id="sénégal-1988-2013"><span class="header-section-number">3.4.4</span> Sénégal 1988-2013</h3>
+<section id="sénégal-harmonisé-rp-1988-2002-2013" class="level3" data-number="3.2.5">
+<h3 data-number="3.2.5" class="anchored" data-anchor-id="sénégal-harmonisé-rp-1988-2002-2013"><span class="header-section-number">3.2.5</span> Sénégal harmonisé : RP 1988, 2002 &amp; 2013</h3>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="d01_03_import_geometries_files/figure-html/map_sn1988_2013-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<ul>
+<li><strong>Validation ?</strong> : à faire par les formateurs du pays concernés</li>
+</ul>
 </section>
-<section id="togo-1970-2010" class="level3" data-number="3.4.5">
-<h3 data-number="3.4.5" class="anchored" data-anchor-id="togo-1970-2010"><span class="header-section-number">3.4.5</span> Togo 1970-2010</h3>
+<section id="togo-harmonisé-rp-1970-2010" class="level3" data-number="3.2.6">
+<h3 data-number="3.2.6" class="anchored" data-anchor-id="togo-harmonisé-rp-1970-2010"><span class="header-section-number">3.2.6</span> Togo harmonisé : RP 1970 &amp; 2010</h3>
+<p>Dans le cas du Togo, il n’est pas possible d’harmoniser le niveau géographique II entre les différentes dates de recensement. Le seul découpage haronisé concerne le niveau I mais il réduit le pays à trois régions seulement. On peut donc estimer que, dans ce cas il n’est pas vraiment possible de constituer des séries chronologiques.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="d01_03_import_geometries_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="d01_03_import_geometries_files/figure-html/map_tg1970_2010-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<ul>
+<li><strong>Validation ?</strong> : à faire par les formateurs du pays concernés</li>
+</ul>
 
 
 </section>

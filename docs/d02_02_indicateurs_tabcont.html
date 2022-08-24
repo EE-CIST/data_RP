@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL - 6&nbsp; Sexe, âge et urbanité</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./d09_01_references.html" rel="next">
+<link href="./d02_02_indicateurs_equipt.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sexe, âge et urbanité</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Préface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d00_02_intro_resume.html" class="sidebar-item-text sidebar-link">Résumé</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_00_import_introduction.html" class="sidebar-item-text sidebar-link">IMPORTATION DES DONNEES</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_01_import_conditions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conditions d’utilisation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_02_import_individus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Données individuelles</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_03_import_geometries.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Données géométriques</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_00_indicateurs_introduction.html" class="sidebar-item-text sidebar-link">CREATION D’INDICATEURS</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_01_indicateurs_popsup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Population, surface, densité</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_02_indicateurs_equipt.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Equipement des ménages</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_02_indicateurs_tabcont.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sexe, âge et urbanité</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d09_01_references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#création-des-tableaux" id="toc-création-des-tableaux" class="nav-link active" data-scroll-target="#création-des-tableaux"> <span class="header-section-number">6.1</span> Création des tableaux</a>
+  <ul class="collapse">
+  <li><a href="#niveau-i" id="toc-niveau-i" class="nav-link" data-scroll-target="#niveau-i"> <span class="header-section-number">6.1.1</span> niveau I</a></li>
+  <li><a href="#niveau-ii" id="toc-niveau-ii" class="nav-link" data-scroll-target="#niveau-ii"> <span class="header-section-number">6.1.2</span> niveau II</a></li>
+  </ul></li>
+  <li><a href="#utilisation-pédagogique" id="toc-utilisation-pédagogique" class="nav-link" data-scroll-target="#utilisation-pédagogique"> <span class="header-section-number">6.2</span> Utilisation pédagogique</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sexe, âge et urbanité</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attachement du package : 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.9.1, GDAL 3.4.3, PROJ 7.2.1; sf_use_s2() is TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapsf)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(explor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nous allons prendre ici un exemple de croisement de trois indicateurs classiques auquels on ajoute une dimension territoriale :</p>
+<ul>
+<li>AGE3 : Distribution de la population en trois classes d’âges</li>
+<li>SEX : Répartition de la population entre hommes et femmes</li>
+<li>URBAN : Classification du logement en zone rurale ou urbaine</li>
+<li>GEOLEV1 ou GEOLEV2 : code de l’unité géographique</li>
+</ul>
+<p>On y ajoute deux autres variables facilitant le tri ultérieur du tableau</p>
+<ul>
+<li>COUNTRY : nom du pays</li>
+<li>YEAR : date de recensement</li>
+</ul>
+<p>Après avoir stocké le tableau de contingence en format “long” ou “large” on donne un exemple d’utilisation avec la réalisation d’une analyse factorielle des correspondance (AFC) et une classification ascendante hiararchique (CAH) sur la structure par âge et par sexe des populations au niveau administratif I.</p>
+<section id="création-des-tableaux" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="création-des-tableaux"><span class="header-section-number">6.1</span> Création des tableaux</h2>
+<p>La première étape consiste à établir des tableaux croisés qui énumèrent tous les croisements possibles en ayant retirer les individus auxquels il manque une des caractéristique. Il s’agit en général d’un petit nombre de cas.</p>
+<section id="niveau-i" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="niveau-i"><span class="header-section-number">6.1.1</span> niveau I</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Chargement des données</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">"ipums/rp/rp_fivecountries_samp10pct.RDS"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Création des classes d'âges</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>rp<span class="sc">$</span>AGE3<span class="ot">&lt;-</span><span class="fu">cut</span>(rp<span class="sc">$</span>AGE,<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">14</span>,<span class="dv">59</span>,<span class="dv">100</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(rp<span class="sc">$</span>AGE3)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"0014"</span>,<span class="st">"1559"</span>,<span class="st">"60XX"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Calcul  au niveau administratif I</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>tc1 <span class="ot">&lt;-</span>rp      <span class="sc">%&gt;%</span>  <span class="fu">filter</span>(URBAN <span class="sc">!=</span><span class="dv">9</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">group_by</span>(COUNTRY, YEAR,GEOLEV1, AGE3, SEX, URBAN) <span class="sc">%&gt;%</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarise</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">as_factor</span>(<span class="at">only_labelled=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'COUNTRY', 'YEAR', 'GEOLEV1', 'AGE3',
+'SEX'. You can override using the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tc1, <span class="st">"indic/all/GEOLEV1_POP_AGE_SEX_URB_long.RDS"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(tc1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">COUNTRY</th>
+<th style="text-align: right;">YEAR</th>
+<th style="text-align: right;">GEOLEV1</th>
+<th style="text-align: left;">AGE3</th>
+<th style="text-align: left;">SEX</th>
+<th style="text-align: left;">URBAN</th>
+<th style="text-align: right;">N</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001</td>
+<td style="text-align: left;">0014</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: right;">165950</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001</td>
+<td style="text-align: left;">0014</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Urban</td>
+<td style="text-align: right;">49390</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001</td>
+<td style="text-align: left;">0014</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: right;">157890</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001</td>
+<td style="text-align: left;">0014</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Urban</td>
+<td style="text-align: right;">47670</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001</td>
+<td style="text-align: left;">1559</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: right;">137410</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001</td>
+<td style="text-align: left;">1559</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Urban</td>
+<td style="text-align: right;">50210</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Ce tableau qui est au format “long” est pratique pour certaines application mais pas pour d’autres où l’on préférera un format “large”. On va donc le transformer en une seconde version qui conserve les valeurs mais les range différemment dans les colonnes. Dans ce nouveau format le nom des colonnes permet de repérer le croisement opéré (e.g.&nbsp;<em>HU0014</em> est la population d’hommes résidant en milieu urbain d’âge 0-14 ans, <em>FR85XX</em> est la population de femmes de 85ans et plus résidant en milieu rural, etc)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>HU <span class="ot">&lt;-</span> tc1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(SEX<span class="sc">==</span><span class="st">"Male"</span>, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                     URBAN <span class="sc">==</span> <span class="st">"Urban"</span>, </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">is.na</span>(AGE3)<span class="sc">==</span>F) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(COUNTRY, YEAR, GEOLEV1, AGE3) <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N=</span><span class="fu">sum</span>(N)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="fu">c</span>(COUNTRY, YEAR,GEOLEV1),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                          <span class="at">names_from =</span> AGE3,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                          <span class="at">values_from =</span> N,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                          <span class="at">names_prefix =</span> <span class="st">"HU"</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                          <span class="at">values_fill =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'COUNTRY', 'YEAR', 'GEOLEV1'. You can
+override using the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>HR <span class="ot">&lt;-</span> tc1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(SEX<span class="sc">==</span><span class="st">"Male"</span>, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                     URBAN <span class="sc">==</span> <span class="st">"Rural"</span>, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">is.na</span>(AGE3)<span class="sc">==</span>F) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(COUNTRY, YEAR, GEOLEV1, AGE3) <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N=</span><span class="fu">sum</span>(N)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span>  <span class="fu">c</span>(COUNTRY, YEAR,GEOLEV1),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">names_from =</span> AGE3,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">values_from =</span> N,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                          <span class="at">names_prefix =</span> <span class="st">"HR"</span>,   </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                          <span class="at">values_fill =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'COUNTRY', 'YEAR', 'GEOLEV1'. You can
+override using the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>FU <span class="ot">&lt;-</span> tc1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(SEX<span class="sc">==</span><span class="st">"Female"</span>, </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                     URBAN <span class="sc">==</span> <span class="st">"Urban"</span>, </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">is.na</span>(AGE3)<span class="sc">==</span>F) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(COUNTRY, YEAR, GEOLEV1, AGE3) <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N=</span><span class="fu">sum</span>(N)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span>  <span class="fu">c</span>(COUNTRY, YEAR,GEOLEV1),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">names_from =</span> AGE3,<span class="at">values_from =</span> N,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">names_prefix =</span> <span class="st">"FU"</span>,  </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                          <span class="at">values_fill =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'COUNTRY', 'YEAR', 'GEOLEV1'. You can
+override using the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>FR <span class="ot">&lt;-</span> tc1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(SEX<span class="sc">==</span><span class="st">"Female"</span>, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                     URBAN <span class="sc">==</span> <span class="st">"Rural"</span>, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">is.na</span>(AGE3)<span class="sc">==</span>F) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(COUNTRY, YEAR, GEOLEV1, AGE3) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N=</span><span class="fu">sum</span>(N)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span>  <span class="fu">c</span>(COUNTRY, YEAR,GEOLEV1),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">names_from =</span> AGE3,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">values_from =</span> N,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                          <span class="at">names_prefix =</span> <span class="st">"FR"</span>, </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>                          <span class="at">values_fill =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'COUNTRY', 'YEAR', 'GEOLEV1'. You can
+override using the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>tab1<span class="ot">&lt;-</span>HU <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(HR) <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(FU) <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(FR) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = c("COUNTRY", "YEAR", "GEOLEV1")
+Joining, by = c("COUNTRY", "YEAR", "GEOLEV1")
+Joining, by = c("COUNTRY", "YEAR", "GEOLEV1")</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fill missinv values &lt;ith 0</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>tab1[,<span class="dv">4</span><span class="sc">:</span><span class="dv">15</span>][<span class="fu">is.na</span>(tab1[,<span class="dv">4</span><span class="sc">:</span><span class="dv">15</span>])]<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tab1, <span class="st">"indic/all/GEOLEV1_POP_AGE_SEX_URB_wide.RDS"</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(tab1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">COUNTRY</th>
+<th style="text-align: right;">YEAR</th>
+<th style="text-align: right;">GEOLEV1</th>
+<th style="text-align: right;">HU0014</th>
+<th style="text-align: right;">HU1559</th>
+<th style="text-align: right;">HU60XX</th>
+<th style="text-align: right;">HR0014</th>
+<th style="text-align: right;">HR1559</th>
+<th style="text-align: right;">HR60XX</th>
+<th style="text-align: right;">FU0014</th>
+<th style="text-align: right;">FU1559</th>
+<th style="text-align: right;">FU60XX</th>
+<th style="text-align: right;">FR0014</th>
+<th style="text-align: right;">FR1559</th>
+<th style="text-align: right;">FR60XX</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001</td>
+<td style="text-align: right;">49390</td>
+<td style="text-align: right;">50210</td>
+<td style="text-align: right;">4130</td>
+<td style="text-align: right;">165950</td>
+<td style="text-align: right;">137410</td>
+<td style="text-align: right;">12640</td>
+<td style="text-align: right;">47670</td>
+<td style="text-align: right;">52460</td>
+<td style="text-align: right;">3410</td>
+<td style="text-align: right;">157890</td>
+<td style="text-align: right;">149560</td>
+<td style="text-align: right;">11090</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204002</td>
+<td style="text-align: right;">66620</td>
+<td style="text-align: right;">63400</td>
+<td style="text-align: right;">6060</td>
+<td style="text-align: right;">123840</td>
+<td style="text-align: right;">96870</td>
+<td style="text-align: right;">12560</td>
+<td style="text-align: right;">63960</td>
+<td style="text-align: right;">71810</td>
+<td style="text-align: right;">7070</td>
+<td style="text-align: right;">114090</td>
+<td style="text-align: right;">114290</td>
+<td style="text-align: right;">12950</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204003</td>
+<td style="text-align: right;">117440</td>
+<td style="text-align: right;">167670</td>
+<td style="text-align: right;">9720</td>
+<td style="text-align: right;">174430</td>
+<td style="text-align: right;">182190</td>
+<td style="text-align: right;">15420</td>
+<td style="text-align: right;">117500</td>
+<td style="text-align: right;">176970</td>
+<td style="text-align: right;">12240</td>
+<td style="text-align: right;">163070</td>
+<td style="text-align: right;">200670</td>
+<td style="text-align: right;">21010</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204004</td>
+<td style="text-align: right;">113560</td>
+<td style="text-align: right;">130850</td>
+<td style="text-align: right;">9820</td>
+<td style="text-align: right;">174430</td>
+<td style="text-align: right;">143420</td>
+<td style="text-align: right;">13050</td>
+<td style="text-align: right;">111430</td>
+<td style="text-align: right;">134350</td>
+<td style="text-align: right;">9970</td>
+<td style="text-align: right;">167980</td>
+<td style="text-align: right;">155680</td>
+<td style="text-align: right;">11920</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204005</td>
+<td style="text-align: right;">40240</td>
+<td style="text-align: right;">48300</td>
+<td style="text-align: right;">4430</td>
+<td style="text-align: right;">121210</td>
+<td style="text-align: right;">116610</td>
+<td style="text-align: right;">12030</td>
+<td style="text-align: right;">40570</td>
+<td style="text-align: right;">52520</td>
+<td style="text-align: right;">6000</td>
+<td style="text-align: right;">109360</td>
+<td style="text-align: right;">128400</td>
+<td style="text-align: right;">13600</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204006</td>
+<td style="text-align: right;">46070</td>
+<td style="text-align: right;">45050</td>
+<td style="text-align: right;">3660</td>
+<td style="text-align: right;">129190</td>
+<td style="text-align: right;">102010</td>
+<td style="text-align: right;">10370</td>
+<td style="text-align: right;">45070</td>
+<td style="text-align: right;">55030</td>
+<td style="text-align: right;">5550</td>
+<td style="text-align: right;">126380</td>
+<td style="text-align: right;">139970</td>
+<td style="text-align: right;">15150</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="niveau-ii" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="niveau-ii"><span class="header-section-number">6.1.2</span> niveau II</h3>
+<p>On reprend les mêmes procédure exactement, en changeant juste le niveau d’agrégation territoriale</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>FALSE `summarise()` has grouped output by 'COUNTRY', 'YEAR', 'GEOLEV2', 'AGE3',
+FALSE 'SEX'. You can override using the `.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">COUNTRY</th>
+<th style="text-align: right;">YEAR</th>
+<th style="text-align: right;">GEOLEV2</th>
+<th style="text-align: left;">AGE3</th>
+<th style="text-align: left;">SEX</th>
+<th style="text-align: left;">URBAN</th>
+<th style="text-align: right;">N</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001001</td>
+<td style="text-align: left;">0014</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: right;">53610</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001001</td>
+<td style="text-align: left;">0014</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Urban</td>
+<td style="text-align: right;">8980</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001001</td>
+<td style="text-align: left;">0014</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: right;">49690</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001001</td>
+<td style="text-align: left;">0014</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Urban</td>
+<td style="text-align: right;">8420</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001001</td>
+<td style="text-align: left;">1559</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Rural</td>
+<td style="text-align: right;">44210</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001001</td>
+<td style="text-align: left;">1559</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Urban</td>
+<td style="text-align: right;">8760</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>FALSE `summarise()` has grouped output by 'COUNTRY', 'YEAR', 'GEOLEV2'. You can
+FALSE override using the `.groups` argument.
+FALSE `summarise()` has grouped output by 'COUNTRY', 'YEAR', 'GEOLEV2'. You can
+FALSE override using the `.groups` argument.
+FALSE `summarise()` has grouped output by 'COUNTRY', 'YEAR', 'GEOLEV2'. You can
+FALSE override using the `.groups` argument.
+FALSE `summarise()` has grouped output by 'COUNTRY', 'YEAR', 'GEOLEV2'. You can
+FALSE override using the `.groups` argument.
+FALSE Joining, by = c("COUNTRY", "YEAR", "GEOLEV2")
+FALSE Joining, by = c("COUNTRY", "YEAR", "GEOLEV2")
+FALSE Joining, by = c("COUNTRY", "YEAR", "GEOLEV2")</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 4%">
+<col style="width: 9%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">COUNTRY</th>
+<th style="text-align: right;">YEAR</th>
+<th style="text-align: right;">GEOLEV2</th>
+<th style="text-align: right;">HU0014</th>
+<th style="text-align: right;">HU1559</th>
+<th style="text-align: right;">HU60XX</th>
+<th style="text-align: right;">HR0014</th>
+<th style="text-align: right;">HR1559</th>
+<th style="text-align: right;">HR60XX</th>
+<th style="text-align: right;">FU0014</th>
+<th style="text-align: right;">FU1559</th>
+<th style="text-align: right;">FU60XX</th>
+<th style="text-align: right;">FR0014</th>
+<th style="text-align: right;">FR1559</th>
+<th style="text-align: right;">FR60XX</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001001</td>
+<td style="text-align: right;">8980</td>
+<td style="text-align: right;">8760</td>
+<td style="text-align: right;">700</td>
+<td style="text-align: right;">53610</td>
+<td style="text-align: right;">44210</td>
+<td style="text-align: right;">4120</td>
+<td style="text-align: right;">8420</td>
+<td style="text-align: right;">9580</td>
+<td style="text-align: right;">720</td>
+<td style="text-align: right;">49690</td>
+<td style="text-align: right;">47900</td>
+<td style="text-align: right;">3950</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001002</td>
+<td style="text-align: right;">2990</td>
+<td style="text-align: right;">3050</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">26320</td>
+<td style="text-align: right;">21800</td>
+<td style="text-align: right;">1960</td>
+<td style="text-align: right;">3260</td>
+<td style="text-align: right;">3600</td>
+<td style="text-align: right;">280</td>
+<td style="text-align: right;">25580</td>
+<td style="text-align: right;">23820</td>
+<td style="text-align: right;">1930</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001003</td>
+<td style="text-align: right;">12230</td>
+<td style="text-align: right;">13610</td>
+<td style="text-align: right;">1090</td>
+<td style="text-align: right;">31110</td>
+<td style="text-align: right;">25230</td>
+<td style="text-align: right;">2160</td>
+<td style="text-align: right;">11480</td>
+<td style="text-align: right;">13460</td>
+<td style="text-align: right;">900</td>
+<td style="text-align: right;">30790</td>
+<td style="text-align: right;">28240</td>
+<td style="text-align: right;">1880</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001004</td>
+<td style="text-align: right;">2660</td>
+<td style="text-align: right;">3000</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">13030</td>
+<td style="text-align: right;">11640</td>
+<td style="text-align: right;">1010</td>
+<td style="text-align: right;">2480</td>
+<td style="text-align: right;">2680</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">12930</td>
+<td style="text-align: right;">12390</td>
+<td style="text-align: right;">880</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001005</td>
+<td style="text-align: right;">15730</td>
+<td style="text-align: right;">15600</td>
+<td style="text-align: right;">1480</td>
+<td style="text-align: right;">25800</td>
+<td style="text-align: right;">21500</td>
+<td style="text-align: right;">2070</td>
+<td style="text-align: right;">15060</td>
+<td style="text-align: right;">16800</td>
+<td style="text-align: right;">940</td>
+<td style="text-align: right;">24040</td>
+<td style="text-align: right;">23380</td>
+<td style="text-align: right;">1590</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benin</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">204001006</td>
+<td style="text-align: right;">6800</td>
+<td style="text-align: right;">6190</td>
+<td style="text-align: right;">480</td>
+<td style="text-align: right;">16080</td>
+<td style="text-align: right;">13030</td>
+<td style="text-align: right;">1320</td>
+<td style="text-align: right;">6970</td>
+<td style="text-align: right;">6340</td>
+<td style="text-align: right;">410</td>
+<td style="text-align: right;">14860</td>
+<td style="text-align: right;">13830</td>
+<td style="text-align: right;">860</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="utilisation-pédagogique" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="utilisation-pédagogique"><span class="header-section-number">6.2</span> Utilisation pédagogique</h2>
+<p>On peut tirer de nombreux indicateurs du tableau de contingence multiple pour des analyses univariées, bivariées ou multivariées. L’intérêt de ce type de tableau est leur compacité et leur faible taille comparativement au tableau inital des individus. Ils peuvent en particulier être utilisé pour des applications interactives de visualisaton développées sous Shiny où l’utilisateur pourra choisir par exemple de visualiser le % de jeunes, pour un pays donné, à une date donnée, pour un genre donné, en milieu rura ou urbai, etc.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./d02_02_indicateurs_equipt.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Equipement des ménages</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./d09_01_references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

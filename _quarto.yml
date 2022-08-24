@@ -3,9 +3,8 @@ project:
   output-dir: docs
 
 book:
-  title: "IPUMS INTERNATIONAL"
-  subtitle: "Extraction de tableaux pour l'EE CIST 2023"
-  author: "Claude Grasland"
+  title: "L'INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL"
+  subtitle: "Une ressource majeure pour l'EE CIST 2023 ?"
   date: "22/08/2022"
   chapters:
     - index.qmd
@@ -16,6 +15,8 @@ book:
     - d01_03_import_geometries.qmd
     - d02_00_indicateurs_introduction.qmd
     - d02_01_indicateurs_popsup.qmd
+    - d02_02_indicateurs_equipt.qmd
+    - d02_02_indicateurs_tabcont.qmd
     - d09_01_references.qmd
 
 bibliography: references.bib

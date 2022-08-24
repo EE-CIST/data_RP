@@ -1,6 +1,7 @@
 # Population, surface, densité
 
-Le premier exemple de création d'indicateur concerne l'établissement de cartes de densité ce qui suppose de mobiliser à la fois les données individuelles (pour agréger la population) et les données géographiques (pour calculer la superficie). 
+Le premier exemple de création d'indicateur concerne l'établissement de cartes de densité ce qui suppose de mobiliser à la fois les données individuelles (pour agréger la population) et les données géographiques (pour calculer la superficie).
+
 ```{r, echo=TRUE}
 library(knitr)
 library(dplyr)
@@ -13,29 +14,28 @@ library(RColorBrewer)
 
 Une question intéressante concerne la marge d'erreur du calcul des populations selon que l'on part d'un échantillon plus ou moins dense (ici, à 1 pct ou 10 pct). Ce point méritera d'être discuté avec les spécialistes de statistique inférentielle du projet. Nous nous bornerons ici à calculer les indicateurs tirés de l'échantillon à 10%
 
-On calcule pour chacune des unités territoriales de niveau I ou II la somme des individus pondérée par le poids des ménages (HHWT) et on stocke le résultat dans un dossier commun à tous les recensments appelés all. Ceci évitera d'avoir à refaire le calcul dans les étapes suivantes. 
+On calcule pour chacune des unités territoriales de niveau I ou II la somme des individus pondérée par le poids des individus (PERWT) et on stocke le résultat dans un dossier commun à tous les recensments appelés all. Ceci évitera d'avoir à refaire le calcul dans les étapes suivantes.
 
 ```{r agregpop}
 ## Chargement des données
-rp <-readRDS(file = "ipums/rp/samp10pct.RDS")
+rp <-readRDS(file = "ipums/rp/rp_fivecountries_samp10pct.RDS")
 
 ## Calcul des populations au niveau administratif I
 pop1<-rp      %>% group_by(GEOLEV1) %>% 
-                  summarise(POP=sum(HHWT))  %>%
+                  summarise(POP=sum(PERWT))  %>%
                   mutate(GEOLEV1 = as.character(GEOLEV1))
 saveRDS(pop1, "indic/all/POP_LEV1.RDS")
 
 ## Calcul des populations au niveau administratif II
 pop2<-rp      %>% group_by(GEOLEV2) %>% 
-                  summarise(POP=sum(HHWT))  %>%
+                  summarise(POP=sum(PERWT))  %>%
                   mutate(GEOLEV2 = as.character(GEOLEV2))
 saveRDS(pop2, "indic/all/POP_LEV2.RDS")
 ```
 
 ## Jointure avec les géométries
 
-On va maintenant procéder à la jointure des données avec les fonds de carte puis stocker ces derniers enrichis par la population au format sf. On crée pour cela une procédure semi-automatique qu'on va applique au RP Bénin 2013 et qui sera ensuite répliquée sur les autres recensements étudiés. 
-
+On va maintenant procéder à la jointure des données avec les fonds de carte puis stocker ces derniers enrichis par la population au format sf. On crée pour cela une procédure semi-automatique qu'on va applique au RP Bénin 2013 et qui sera ensuite répliquée sur les autres recensements étudiés.
 
 ### Bénin, RP 2013
 
@@ -97,9 +97,6 @@ mf_layout(title = paste(census,"- Population au niveau II"),
 
 ```
 
-
-
-
 ### Burkina Faso, RP 2006
 
 ```{r pop_bf2006, eval = TRUE, echo=FALSE}
@@ -159,8 +156,6 @@ mf_layout(title = paste(census,"- Population au niveau II"),
 
 ```
 
-
-
 ### Mali, RP 2009
 
 ```{r pop_ml2009, eval = TRUE, echo=FALSE}
@@ -218,7 +213,7 @@ mf_layout(title = paste(census,"- Population au niveau II"),
                                                                    
 ```
 
-- **N.B.** : il a fallu supprimer un polygone vide concernant les valeurs "*Unknown*" et réparer la géométrie d'une unité en appliquant la fonction *st_make_valid()* du package *sf*.
+-   **N.B.** : il a fallu supprimer un polygone vide concernant les valeurs "*Unknown*" et réparer la géométrie d'une unité en appliquant la fonction *st_make_valid()* du package *sf*.
 
 ### Togo, RP 2010
 
@@ -279,8 +274,7 @@ mf_layout(title = paste(census,"- Population au niveau II"),
 
 ```
 
-- **N.B.** : il a fallu supprimer un polygone vide concernant les valeurs "*Unknown*" et réparer la géométrie d'une unité en appliquant la fonction *st_make_valid()* du package *sf*.
-
+-   **N.B.** : il a fallu supprimer un polygone vide concernant les valeurs "*Unknown*" et réparer la géométrie d'une unité en appliquant la fonction *st_make_valid()* du package *sf*.
 
 ### Sénégal, RP 2013
 
@@ -344,8 +338,7 @@ mf_layout(title = paste(census,"- Population au niveau II"),
 
 ## Calcul des superficies et densités
 
-
-Maintenant que les variables de population sont incluses dans un fichier sf, on peut y ajouter la superficie à l'aide d'un simple calcul géométrique et en déduire la densité de population des unités territoriales. Le calcul des superficies est évidemment légèrement entaché d'erreur puisqu'il dépend de la précision du fonds de carte. Ainis, dans le cas Bénin, nous trouvons une superficie de 115768 km2 alors que la valeur donnée par la Banque Mondiale est de 114760 km2. 
+Maintenant que les variables de population sont incluses dans un fichier sf, on peut y ajouter la superficie à l'aide d'un simple calcul géométrique et en déduire la densité de population des unités territoriales. Le calcul des superficies est évidemment légèrement entaché d'erreur puisqu'il dépend de la précision du fonds de carte. Ainis, dans le cas Bénin, nous trouvons une superficie de 115768 km2 alors que la valeur donnée par la Banque Mondiale est de 114760 km2.
 
 Les fichiers sont exportés au à la fois au format sf (en .RDS) et au format shapefile pour servir de point de départ à l'ensemble des analyses cartographiques ultérieures.
 
@@ -402,7 +395,6 @@ mf_layout(title = paste(census,"- Densite de population au niveau II"),
 
 
 ```
-
 
 ### RP Burkina Faso, 2006
 
@@ -563,7 +555,6 @@ mf_layout(title = paste(census,"- Densite de population au niveau II"),
 
 ```
 
-
 ### RP Togo, 2010
 
 ```{r den_tg2010, eval=TRUE, echo=FALSE}
@@ -617,12 +608,11 @@ mf_layout(title = paste(census,"- Densite de population au niveau II"),
 
 ```
 
-
 ## Cartogrammes démographiques
 
 Nous procédons dans cette dernière étape à la création de cartogrammes où la surface des unité terrioriales est approximativement proportionelle à leur population à la date du recensement. L'opération de transformation est effectuée en dehors du logiciel R à l'aide du logiciel ScapeToad qui est l'un des plus performant. La transformation est réalisée sur le niveau administraif II puis celui-ci est agrégé dans R à l'aide du package sf pour reconstituer le niveau administratif I.
 
-- **N.B.** : le calcul de l'anamorphose avec Scapetoad a été assez long et coûteux en calcul pour le Sénégal en raison de la complexité du tracé des limites. Un fonds généralisé est en général plus rapide à transformer.
+-   **N.B.** : le calcul de l'anamorphose avec Scapetoad a été assez long et coûteux en calcul pour le Sénégal en raison de la complexité du tracé des limites. Un fonds généralisé est en général plus rapide à transformer.
 
 ### RP Bénin, 2013
 
@@ -662,9 +652,6 @@ mf_layout(title = paste(census,"- Cartogramme au niveau II"),
                                         
 ```
 
-
-
-
 ### RP Burkina Faso, 2006
 
 ```{r cartog_bf2006, eval=TRUE, echo=FALSE}
@@ -702,8 +689,6 @@ mf_layout(title = paste(census,"- Cartogramme au niveau II"),
           scale = FALSE, arrow=FALSE)
                                         
 ```
-
-
 
 ### RP Mali, 2009
 
@@ -743,9 +728,6 @@ mf_layout(title = paste(census,"- Cartogramme au niveau II"),
                                         
 ```
 
-
-
-
 ### RP Sénégal, 2013
 
 ```{r cartog_sn2013, eval=TRUE, echo=FALSE}
@@ -783,10 +765,6 @@ mf_layout(title = paste(census,"- Cartogramme au niveau II"),
           scale = FALSE, arrow=FALSE)
                                         
 ```
-
-
-
-
 
 ### RP Togo, 2010
 
@@ -827,6 +805,3 @@ mf_layout(title = paste(census,"- Cartogramme au niveau II"),
           scale = FALSE, arrow=FALSE)
                                         
 ```
-
-
-

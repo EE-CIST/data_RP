@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL - 5&nbsp; Equipement des ménages</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./d02_02_indicateurs_tabcont.html" rel="next">
+<link href="./d02_01_indicateurs_popsup.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Equipement des ménages</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Préface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d00_02_intro_resume.html" class="sidebar-item-text sidebar-link">Résumé</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_00_import_introduction.html" class="sidebar-item-text sidebar-link">IMPORTATION DES DONNEES</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_01_import_conditions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conditions d’utilisation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_02_import_individus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Données individuelles</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_03_import_geometries.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Données géométriques</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_00_indicateurs_introduction.html" class="sidebar-item-text sidebar-link">CREATION D’INDICATEURS</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_01_indicateurs_popsup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Population, surface, densité</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_02_indicateurs_equipt.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Equipement des ménages</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_02_indicateurs_tabcont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sexe, âge et urbanité</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d09_01_references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#agrégation-des-ménages" id="toc-agrégation-des-ménages" class="nav-link active" data-scroll-target="#agrégation-des-ménages"> <span class="header-section-number">5.1</span> Agrégation des ménages</a></li>
+  <li><a href="#ajout-de-la-géométrie" id="toc-ajout-de-la-géométrie" class="nav-link" data-scroll-target="#ajout-de-la-géométrie"> <span class="header-section-number">5.2</span> Ajout de la géométrie</a>
+  <ul class="collapse">
+  <li><a href="#rp-bénin-2013" id="toc-rp-bénin-2013" class="nav-link" data-scroll-target="#rp-bénin-2013"> <span class="header-section-number">5.2.1</span> RP Bénin, 2013</a></li>
+  <li><a href="#rp-burkina-faso-2006" id="toc-rp-burkina-faso-2006" class="nav-link" data-scroll-target="#rp-burkina-faso-2006"> <span class="header-section-number">5.2.2</span> RP Burkina Faso, 2006</a></li>
+  <li><a href="#rp-mali-2009" id="toc-rp-mali-2009" class="nav-link" data-scroll-target="#rp-mali-2009"> <span class="header-section-number">5.2.3</span> RP Mali, 2009</a></li>
+  <li><a href="#rp-sénégal-2013" id="toc-rp-sénégal-2013" class="nav-link" data-scroll-target="#rp-sénégal-2013"> <span class="header-section-number">5.2.4</span> RP Sénégal, 2013</a></li>
+  <li><a href="#rp-togo-2010" id="toc-rp-togo-2010" class="nav-link" data-scroll-target="#rp-togo-2010"> <span class="header-section-number">5.2.5</span> RP Togo, 2010</a></li>
+  </ul></li>
+  <li><a href="#prolongements" id="toc-prolongements" class="nav-link" data-scroll-target="#prolongements"> <span class="header-section-number">5.3</span> Prolongements</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Equipement des ménages</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attachement du package : 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.9.1, GDAL 3.4.3, PROJ 7.2.1; sf_use_s2() is TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapsf)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="agrégation-des-ménages" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="agrégation-des-ménages"><span class="header-section-number">5.1</span> Agrégation des ménages</h2>
+<p>Nous allons prendre ici un exemple de calcul ou l’unité de compte est ménage et non pas l’individu. A titre d’exemple, on va calculer le nombre de ménages disposant d’électricité en écartant les données inconnues. Pour cela nous allons construire un programme qui effectue les tâches suivantes :</p>
+<ul>
+<li>ne conserver que les chefs de ménage (RELATE == 1)</li>
+<li>écarter les cas où la variable n’est pas renseignée (ELECTRIC = 1 ou 2)</li>
+<li>agréger les données en pondérant par le poids des ménages (HHWT)</li>
+<li>calculer le nombre total de ménages disponibles (nbmen)</li>
+<li>calculer l part des ménages équipés (pct)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Chargement des données</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">"ipums/rp/rp_fivecountries_samp10pct.RDS"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertit les variables haven_labelled en factors</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span><span class="fu">as_factor</span>(rp, <span class="at">only_labelled=</span>T)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(rp<span class="sc">$</span>ELECTRIC)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Calcul  au niveau administratif I</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>men1<span class="ot">&lt;-</span>rp      <span class="sc">%&gt;%</span>  <span class="fu">group_by</span>(GEOLEV1, ELECTRIC) <span class="sc">%&gt;%</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">filter</span>(RELATE <span class="sc">==</span> <span class="dv">1</span>, ELECTRIC <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarise</span>(<span class="at">N=</span><span class="fu">sum</span>(HHWT))  <span class="sc">%&gt;%</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">mutate</span>(<span class="at">GEOLEV1 =</span> <span class="fu">as.character</span>(GEOLEV1)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                   reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> GEOLEV1<span class="sc">~</span>ELECTRIC,<span class="at">value.var =</span> <span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">rename</span>(<span class="at">code=</span>GEOLEV1,<span class="at">ELEC_oui=</span><span class="dv">2</span>,<span class="at">ELEC_non=</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">mutate</span>(<span class="at">ELEC_tot =</span> ELEC_oui<span class="sc">+</span>ELEC_non,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>                          <span class="at">ELEC_pct =</span> <span class="dv">100</span><span class="sc">*</span> ELEC_oui<span class="sc">/</span>ELEC_tot)<span class="sc">%&gt;%</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">select</span>(code, ELEC_tot,ELEC_oui,ELEC_non,ELEC_pct)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(men1, <span class="st">"indic/all/MEN_ELEC_LEV1.RDS"</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Calcul  au niveau administratif II</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>men2<span class="ot">&lt;-</span>rp      <span class="sc">%&gt;%</span>  <span class="fu">group_by</span>(GEOLEV2, ELECTRIC) <span class="sc">%&gt;%</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">filter</span>(RELATE <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarise</span>(<span class="at">N=</span><span class="fu">sum</span>(HHWT))  <span class="sc">%&gt;%</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">mutate</span>(<span class="at">GEOLEV2 =</span> <span class="fu">as.character</span>(GEOLEV2)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>                   reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> GEOLEV2<span class="sc">~</span>ELECTRIC,<span class="at">value.var =</span> <span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">rename</span>(<span class="at">code=</span>GEOLEV2,<span class="at">ELEC_oui=</span><span class="dv">2</span>,<span class="at">ELEC_non=</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">mutate</span>(<span class="at">ELEC_tot =</span> ELEC_oui<span class="sc">+</span>ELEC_non,</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>                          <span class="at">ELEC_pct =</span> <span class="dv">100</span><span class="sc">*</span> ELEC_oui<span class="sc">/</span>ELEC_tot)<span class="sc">%&gt;%</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">select</span>(code, ELEC_tot,ELEC_oui,ELEC_non,ELEC_pct)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(men2, <span class="st">"indic/all/MEN_ELEC_LEV2.RDS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ajout-de-la-géométrie" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="ajout-de-la-géométrie"><span class="header-section-number">5.2</span> Ajout de la géométrie</h2>
+<p>Nous procédons ensuite à la jointure avec les fonds de carte afin de pouvoir ajouter les métadonnées qui y sont présentes et aboutir à une visualisation cartographique. Le résultat sera stocké au format sf et au format shapefile afin de pouvoir être réutilisé dans d’autres applications en dehors de R (Magrit, Geoda; …).</p>
+<p>A titre d’exemple, nous allons utiliser les fonds de carte simple et les cartogrammes mis au point dans la partie précédente.</p>
+<section id="rp-bénin-2013" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="rp-bénin-2013"><span class="header-section-number">5.2.1</span> RP Bénin, 2013</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>census<span class="ot">=</span><span class="st">"bj2013"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Jointure au niveau I</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>men1<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"indic/all/MEN_ELEC_LEV1.RDS"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>map1<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"map_lev1_"</span>,census,<span class="st">".RDS"</span>)) </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>mapdon1 <span class="ot">&lt;-</span> <span class="fu">left_join</span>(map1,men1) <span class="sc">%&gt;%</span> <span class="fu">select</span>(code,nom, pays, ELEC_tot, ELEC_oui,ELEC_non, ELEC_pct, geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(mapdon1, <span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"elec_lev1_"</span>,census,<span class="st">".RDS"</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(mapdon1, <span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"elec_lev1_"</span>,census,<span class="st">".shp"</span>),<span class="at">delete_dsn =</span> T, <span class="at">quiet=</span>T)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Jointure au niveau II</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>men2<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"indic/all/MEN_ELEC_LEV2.RDS"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>map2<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"map_lev2_"</span>,census,<span class="st">".RDS"</span>)) </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>mapdon2 <span class="ot">&lt;-</span> <span class="fu">left_join</span>(map2,men2) <span class="sc">%&gt;%</span> <span class="fu">select</span>(code,nom, pays, ELEC_tot, ELEC_oui,ELEC_non, ELEC_pct, geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(mapdon2, <span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"elec_lev2_"</span>,census,<span class="st">".RDS"</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(mapdon2, <span class="fu">paste0</span>(<span class="st">"indic/"</span>,census,<span class="st">"/"</span>,<span class="st">"elec_lev2_"</span>,census,<span class="st">".shp"</span>),<span class="at">delete_dsn =</span> T, <span class="at">quiet=</span>T)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Vérification</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>mybreaks<span class="ot">=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">16</span>,<span class="dv">32</span>, <span class="dv">64</span>,<span class="dv">100</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>mycols <span class="ot">=</span> <span class="fu">brewer.pal</span>(<span class="dv">8</span>,<span class="st">"YlOrBr"</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mapdon1,<span class="at">type=</span><span class="st">"choro"</span>, </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">var=</span><span class="st">"ELEC_pct"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">breaks=</span>mybreaks,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">pal=</span>mycols,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg_title =</span> <span class="st">"% ménages"</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg_val_rnd =</span> <span class="dv">0</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_layout</span>(<span class="at">title =</span> <span class="fu">paste</span>(census,<span class="st">"- Electrification au niveau I"</span>),</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">credits =</span> <span class="st">"Sources :  IPUMS, 2020 &amp; INS Bénin,2013"</span>,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">scale =</span> <span class="cn">FALSE</span>, <span class="at">arrow=</span><span class="cn">FALSE</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mapdon2,<span class="at">type=</span><span class="st">"choro"</span>, </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">var=</span><span class="st">"ELEC_pct"</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">breaks=</span>mybreaks,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">pal=</span>mycols,</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg_title =</span> <span class="st">"% ménages"</span>,</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg_val_rnd =</span> <span class="dv">0</span>,</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>             <span class="at">lwd=</span><span class="fl">0.3</span>,</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>             <span class="at">border =</span> <span class="st">"gray80"</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(map1,<span class="at">type=</span><span class="st">"base"</span>, </span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>            <span class="at">add=</span>T,</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd=</span><span class="dv">1</span>,</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="cn">NA</span>,</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>            <span class="at">border=</span><span class="st">"black"</span>)</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_layout</span>(<span class="at">title =</span> <span class="fu">paste</span>(census,<span class="st">"- Electrification au niveau II"</span>),</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>          <span class="at">credits =</span> <span class="st">"Sources :  IPUMS, 2020 &amp; INS Bénin,2013"</span>,</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>          <span class="at">scale =</span> <span class="cn">FALSE</span>, <span class="at">arrow=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="d02_02_indicateurs_equipt_files/figure-html/elec_bj2013-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="rp-burkina-faso-2006" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="rp-burkina-faso-2006"><span class="header-section-number">5.2.2</span> RP Burkina Faso, 2006</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"
+Joining, by = "code"</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="d02_02_indicateurs_equipt_files/figure-html/elec_bf2006-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="rp-mali-2009" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="rp-mali-2009"><span class="header-section-number">5.2.3</span> RP Mali, 2009</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"
+Joining, by = "code"</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="d02_02_indicateurs_equipt_files/figure-html/elec_ml2009-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="rp-sénégal-2013" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="rp-sénégal-2013"><span class="header-section-number">5.2.4</span> RP Sénégal, 2013</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"
+Joining, by = "code"</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="d02_02_indicateurs_equipt_files/figure-html/elec_sn2013-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="rp-togo-2010" class="level3" data-number="5.2.5">
+<h3 data-number="5.2.5" class="anchored" data-anchor-id="rp-togo-2010"><span class="header-section-number">5.2.5</span> RP Togo, 2010</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"
+Joining, by = "code"</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="d02_02_indicateurs_equipt_files/figure-html/elec_tg2010-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong>Commentaire</strong> : dans le cas du Togo, il serait préférable d’utiliser le niveau administratif I de l’année 2010 plutôt que le niveau harmonisé 1970-2010 qui réduit le pays à 3 régions seulement.</li>
+</ul>
+</section>
+</section>
+<section id="prolongements" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="prolongements"><span class="header-section-number">5.3</span> Prolongements</h2>
+<p>On peut facilement adapter le programme précédent pour construire de nombeux autres indicateurs d’équipements des ménages.</p>
+<p>On peut également lorsque les données le permettent, construire pour un pays une séquence d’évolution d’un indicateur à plusieurs dates.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./d02_01_indicateurs_popsup.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Population, surface, densité</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./d02_02_indicateurs_tabcont.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sexe, âge et urbanité</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

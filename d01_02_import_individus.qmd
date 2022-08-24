@@ -6,6 +6,8 @@ library(data.table)
 library(readxl)
 ```
 
+
+
 Après avoir créé votre compte, vous pourrez accéder à l'onglet appelé "*browse and select data*" dans la barre latérale gauche :
 
 ![lien vers les micro-données](img/ipums_002.png)
@@ -44,7 +46,7 @@ En cliquant sur la colonne ("*Add to cart*") on choisit les autres variables que
 
 ![Exemple de sélection de variables sur l'équipement des ménages](img/ipums_005.png)
 
-Nous avons effectué une sélection assez large de variables pour l'EE CIST 2023 en privilégiant celles qui étaient disponibles pour au moins 4 des 5 pays. Nous ya vons ajouté des variables plus spécifiques à chaque pays pour l'analyse des migrations. Au total, nous avons retenu 65 variables qui sont décrites en abrégées ci-dessous mais dont on pourra trouver la description détaillée sur le site IPUMS
+Nous avons effectué une sélection assez large de variables pour l'EE CIST 2023 en privilégiant celles qui étaient disponibles pour chacun des recensements des 5 pays. Nous y avons ajouté pour chaque pays le code géographique des unités de niveau I et II spécifique à l'année concernée. Ces codes spécifiques qui commencent par GEO1 ou GEO2  sont en effet indispensable si l'on souhaite utiliser la géographie administraive précise de l'année du recensement plutôt que la géographie harmonisée commune à plusieurs dates qui est fournie par défaut dans les variables GEOLEV1 et GEOLEV2.  
 
 ```{r, echo = FALSE}
 selvar <- read_excel("ipums/rp/selvar.xls")
@@ -61,7 +63,7 @@ Une fois définis les échantillons et les variables vous êtes prêts à télé
 
 Une fois lancée la requête à l'aide du bouton "*SUBMIT EXTRACT*" il faut attendre quelques minutes (généralement 2 ou 3) pour accèder au résultat. Celui-ci est annoncé par un courriel mais peut aussi être suivi directement par le navigateur :
 
-![Exemple de réduction de la densité d\'échantillonage de 10% à 1%](img/ipums_010.png) On peut utiliser une requête existante pour en construire une autre. Dans l'exemple ci-dessus, nous avons construit d'abord une requête pour une extraction de densité 1% puis une seconde requête pour une extraction de densité maximale (10%) afin de pouvoir comparer les résultats obtenus.
+## Récupération des fichiers
 
 Pour pouvoir charger ensuite les données dans R ou un autre logiciel, nous aurons besoin à chaque fois de deux fichiers :
 
@@ -79,15 +81,10 @@ Pour importer les données dans R, il faut installer le package *ipumsr* qui va 
 ```{r import_ipums, echo=TRUE, eval=FALSE}
 library(ipumsr)
 
-# Importation de l'échantillon à 1%
-ddi <- read_ipums_ddi("ipums/rp/ipumsi_00015.xml")
-data <- read_ipums_micro(ddi)
-saveRDS(data,"ipums/rp/samp1pct.RDS")
-
 # Importation de l'échantillon à 10%
-ddi <- read_ipums_ddi("ipums/rp/ipumsi_00016.xml")
+ddi <- read_ipums_ddi("ipums/rp/ipumsi_00018.xml")
 data <- read_ipums_micro(ddi)
-saveRDS(data,"ipums/rp/samp10pct.RDS")
+saveRDS(data,"ipums/rp/rp_fivecountries_samp10pct.RDS")
 ```
 
 ## Conversion de format dans R
@@ -100,7 +97,7 @@ A titre d'exemple, le petit programme ci-dessous convertit l'ensemble des donné
 library(haven)
 
 # Lit le fichier enregistré
-rp<-readRDS("ipums/rp/samp1pct.RDS")
+rp<-readRDS("ipums/rp/rp_fivecountries_samp10pct.RDS")
 
 # Convertit les variables haven_labelled en factors
 rp<-as_factor(rp, only_labelled=T)

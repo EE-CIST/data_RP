@@ -1,0 +1,211 @@
+# Sexe, âge et urbanité
+
+
+
+```{r, echo=TRUE}
+library(knitr)
+library(dplyr)
+library(sf)
+library(mapsf)
+library(RColorBrewer)
+library(haven)
+library(tidyr)
+library(FactoMineR)
+library(explor)
+
+```
+
+
+
+Nous allons prendre ici un exemple de croisement de trois indicateurs classiques auquels on ajoute une dimension territoriale : 
+
+- AGE3 : Distribution de la population en trois classes d'âges 
+- SEX : Répartition de la population entre hommes et femmes 
+- URBAN : Classification du logement en zone rurale ou urbaine
+- GEOLEV1 ou GEOLEV2 : code de l'unité géographique
+
+ On y ajoute deux autres variables facilitant le tri ultérieur du tableau
+ 
+ - COUNTRY : nom du pays
+ - YEAR : date de recensement
+ 
+ Après avoir stocké le tableau de contingence en format "long" ou "large" on donne un exemple d'utilisation avec la réalisation d'une analyse factorielle des correspondance (AFC) et une classification ascendante hiararchique (CAH) sur la structure par âge et par sexe des populations au niveau administratif I. 
+ 
+## Création des tableaux
+
+La première étape consiste à établir des tableaux croisés qui énumèrent tous les croisements possibles en ayant retirer les individus auxquels il manque une des caractéristique. Il s'agit en général d'un petit nombre de cas. 
+
+### niveau I
+
+```{r tabcont_long_1, eval=TRUE, echo=TRUE}
+## Chargement des données
+rp <-readRDS(file = "ipums/rp/rp_fivecountries_samp10pct.RDS")
+
+## Création des classes d'âges
+rp$AGE3<-cut(rp$AGE,c(0,14,59,100))
+levels(rp$AGE3)<-c("0014","1559","60XX")
+
+
+## Calcul  au niveau administratif I
+tc1 <-rp      %>%  filter(URBAN !=9)%>%
+                  group_by(COUNTRY, YEAR,GEOLEV1, AGE3, SEX, URBAN) %>%
+                   summarise(N=sum(PERWT)) %>%
+                  as_factor(only_labelled=T)
+
+saveRDS(tc1, "indic/all/GEOLEV1_POP_AGE_SEX_URB_long.RDS")
+
+kable(head(tc1))
+```
+
+Ce tableau qui est au format "long" est pratique pour certaines application mais pas pour d'autres où l'on préférera un format "large". On va donc le transformer en une seconde version qui conserve les valeurs mais les range différemment dans les colonnes. Dans ce nouveau format le nom des colonnes permet de repérer le croisement opéré (e.g. *HU0014* est la population d'hommes résidant en milieu urbain d'âge 0-14 ans, *FR85XX* est la population de femmes de 85ans et plus résidant en milieu rural, etc)
+
+
+```{r, tabcont_wide_1, eval=TRUE, echo=TRUE}
+library(tidyr)
+
+HU <- tc1 %>% filter(SEX=="Male", 
+                     URBAN == "Urban", 
+                     is.na(AGE3)==F) %>% 
+              group_by(COUNTRY, YEAR, GEOLEV1, AGE3) %>%
+              summarise(N=sum(N)) %>%
+              pivot_wider(id_cols = c(COUNTRY, YEAR,GEOLEV1),
+                          names_from = AGE3,
+                          values_from = N,
+                          names_prefix = "HU",
+                          values_fill = 0)
+
+HR <- tc1 %>% filter(SEX=="Male", 
+                     URBAN == "Rural", 
+                     is.na(AGE3)==F) %>% 
+              group_by(COUNTRY, YEAR, GEOLEV1, AGE3) %>%
+              summarise(N=sum(N)) %>%
+              pivot_wider(id_cols =  c(COUNTRY, YEAR,GEOLEV1),
+                          names_from = AGE3,
+                          values_from = N,
+                          names_prefix = "HR",   
+                          values_fill = 0)
+
+FU <- tc1 %>% filter(SEX=="Female", 
+                     URBAN == "Urban", 
+                     is.na(AGE3)==F) %>% 
+              group_by(COUNTRY, YEAR, GEOLEV1, AGE3) %>%
+              summarise(N=sum(N)) %>%
+              pivot_wider(id_cols =  c(COUNTRY, YEAR,GEOLEV1),
+                          names_from = AGE3,values_from = N,
+                          names_prefix = "FU",  
+                          values_fill = 0)
+
+FR <- tc1 %>% filter(SEX=="Female", 
+                     URBAN == "Rural", 
+                     is.na(AGE3)==F) %>% 
+              group_by(COUNTRY, YEAR, GEOLEV1, AGE3) %>%
+              summarise(N=sum(N)) %>%
+              pivot_wider(id_cols =  c(COUNTRY, YEAR,GEOLEV1),
+                          names_from = AGE3,
+                          values_from = N,
+                          names_prefix = "FR", 
+                          values_fill = 0)
+
+tab1<-HU %>% left_join(HR) %>% left_join(FU) %>% left_join(FR) 
+
+# fill missinv values <ith 0
+tab1[,4:15][is.na(tab1[,4:15])]<-0
+
+saveRDS(tab1, "indic/all/GEOLEV1_POP_AGE_SEX_URB_wide.RDS")
+
+kable(head(tab1))
+              
+```
+
+
+
+### niveau II
+
+On reprend les mêmes procédure exactement, en changeant juste le niveau d'agrégation territoriale
+
+```{r tabcont_long_2, eval=TRUE, echo=FALSE, comment=FALSE, warning=FALSE}
+## Chargement des données
+rp <-readRDS(file = "ipums/rp/rp_fivecountries_samp10pct.RDS")
+
+## Création des classes d'âges
+rp$AGE3<-cut(rp$AGE,c(0,14,59,100))
+levels(rp$AGE3)<-c("0014","1559","60XX")
+
+
+## Calcul  au niveau administratif II
+tc2 <-rp      %>%  filter(URBAN !=9)%>%
+                   group_by(COUNTRY, YEAR,GEOLEV2, AGE3, SEX, URBAN) %>%
+                   summarise(N=sum(PERWT)) %>%
+                  as_factor(only_labelled=T)
+
+
+
+saveRDS(tc2, "indic/all/GEOLEV2_POP_AGE_SEX_URB_long.RDS")
+
+kable(head(tc2))
+```
+
+
+```{r tabcont_wide_2, eval=TRUE, echo=FALSE, comment=FALSE, warning=FALSE}
+
+
+HU <- tc2 %>% filter(SEX=="Male", 
+                     URBAN == "Urban", 
+                     is.na(AGE3)==F) %>% 
+              group_by(COUNTRY, YEAR, GEOLEV2, AGE3) %>%
+              summarise(N=sum(N)) %>%
+              pivot_wider(id_cols = c(COUNTRY, YEAR,GEOLEV2),
+                          names_from = AGE3,
+                          values_from = N,
+                          names_prefix = "HU",
+                          values_fill = 0)
+
+HR <- tc2 %>% filter(SEX=="Male", 
+                     URBAN == "Rural", 
+                     is.na(AGE3)==F) %>% 
+              group_by(COUNTRY, YEAR, GEOLEV2, AGE3) %>%
+              summarise(N=sum(N)) %>%
+              pivot_wider(id_cols =  c(COUNTRY, YEAR,GEOLEV2),
+                          names_from = AGE3,
+                          values_from = N,
+                          names_prefix = "HR",   
+                          values_fill = 0)
+
+FU <- tc2 %>% filter(SEX=="Female", 
+                     URBAN == "Urban", 
+                     is.na(AGE3)==F) %>% 
+              group_by(COUNTRY, YEAR, GEOLEV2, AGE3) %>%
+              summarise(N=sum(N)) %>%
+              pivot_wider(id_cols =  c(COUNTRY, YEAR,GEOLEV2),
+                          names_from = AGE3,values_from = N,
+                          names_prefix = "FU",  
+                          values_fill = 0)
+
+FR <- tc2 %>% filter(SEX=="Female", 
+                     URBAN == "Rural", 
+                     is.na(AGE3)==F) %>% 
+              group_by(COUNTRY, YEAR, GEOLEV2, AGE3) %>%
+              summarise(N=sum(N)) %>%
+              pivot_wider(id_cols =  c(COUNTRY, YEAR,GEOLEV2),
+                          names_from = AGE3,
+                          values_from = N,
+                          names_prefix = "FR", 
+                          values_fill = 0)
+
+tab2<-HU %>% left_join(HR) %>% left_join(FU) %>% left_join(FR) 
+
+
+tab2[,4:15][is.na(tab2[,4:15])]<-0
+
+saveRDS(tab2, "indic/all/GEOLEV2_POP_AGE_SEX_URB_wide.RDS")
+
+kable(head(tab2))
+              
+```
+
+## Utilisation pédagogique
+
+On peut tirer de nombreux indicateurs du tableau de contingence multiple pour des analyses univariées, bivariées ou multivariées. L'intérêt de ce type de tableau est leur compacité et leur faible taille comparativement au tableau inital des individus. Ils peuvent en particulier être utilisé pour des applications interactives de visualisaton développées sous Shiny où l'utilisateur pourra choisir par exemple de visualiser le % de jeunes, pour un pays donné, à une date donnée, pour un genre donné, en milieu rura ou urbai, etc.
+
+
+
