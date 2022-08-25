@@ -1,0 +1,438 @@
+# Migrations durée de vie
+
+```{r, echo=FALSE}
+library(knitr, quiet=T)
+library(data.table)
+library(readxl)
+library(dplyr, quiet=T)
+library(sf, quiet=T)
+library(mapsf,quiet=T)
+library(RColorBrewer)
+```
+
+## Définition générale
+
+Nous proposons dans ce chapitre une analyse des *migrations durée de vie* c'est-à-dire des différences entre le lieu de naissance et le lieu de résidence déclarés au moment du recensement. Il s'agit évidemment d'une mesure assez grossière puisqu'elle conduit à ignorer toutes les étapes suivies par le migrant au cours de sa vie et dépend étroitement de l'âge de l'individu. La mesure peut de plus s'avérer trompeuse puisqu'une personne née en un lieu A peut avoir vécu dans les lieux B, C, D avant de revenir en A au moment du recensement qui concluera à l'absence de mobilité...
+
+![Exemple théorique de parcours migratoire](img/mobil001.png){heigth=50%}
+
+Dans l'exemple théorique présenté ci-dessus, l'individu concerné qui est né dans la commune de Malanville (département Alibori) sera réputé avoir effectué une migration durée de vie lors des recensements de 1979 où il est recensé à Parakou (département de Borgou), en 1992 où il est recensé à Abomey-Calavi (département Atlantique) et en 2002 où iest recensé à Grand-Popo (département du Mono). En revanche il ne sera pas considéré comme migrant en 2013 puisqu'il réside à nouveau dans la commune et le département de son lieu de naissance. 
+
+## Variables IPUMS
+
+Le site IPUMS permet d'analyser en détail la disponibilité des variables utiles à l'analyse ainsi que leurs éventuels changements au cours du temps. Il est donc recommandé d'utiliser les métadonnées nombreuses offertes par IPUMS avant de se lancer dans ses propres analyses
+
+### Département de naissance (BPLBJ1)
+
+La page de description de [la variable BPLBJ1](https://international.ipums.org/international-action/variables/BPLBJ1#codes_section) nous fournit d'abord une description de sa disponibilité et des effectifs correspondant à chacune des dates de recensement.
+
+![Disponibilité de la variable département de naissance](img/mobil002.png)
+
+
+Comme on peut le voir dans l'image ci-dessous, il n'y a pas de difficultés particulières concernant les mouvements internes au pays mais il y a une absence d'information sur les personnes nées à l'étranger lors des recensements de 1979 et 1992. Ils sont rangés à cette date dans la catégorie inconnue dont on voit en 2002 qu'elle ne concerne pas forcément les étrangers.
+
+Les onglets suivants précisent la définition de la variable en anglais (*BPLBJ1 indicates the person's department of birth within Benin.*) et indiquent le degré de comparabilité entre les dates (*There have not been any changes in boundaries for all sample years in BPLBJ1 and is comparable across all available sample years.*). Ils fournissent ensuite un document précisant les questions exactes qui ont été posées dans le questionnaire de recnsement et les instructions données aux agents recenseurs.
+
+![Questionnaire de la variable département de naissance au RP 1979](img/mobil003.png)
+Mieux encore, on peut accéder à un fac similé du document papier de recensemet qui a permis d'établir les statistiques de lieu de résidence (en vert), de lieu de naissance (en rouge) et de lieu de résidence antérieure (en bleu)
+
+![Formulaire ménage du RP1979 au Bénin - Recto](img/mobilrp1979_recto.png)
+![Formulaire ménage du RP 1979 au Bénin - Verso](img/mobilrp1979_verso.png)
+
+### Commune de naissance (BPLBJ2)
+
+Cette variable permet une localisation plus précise des lieux de naissance mais elle comporte un certain degré d'incertitude puisque pour certains individus on ne connaît que le département de naissance mais pas la commune à l'intérieur de ceux-ci. Ces cas de localisation du leiu de naissance uniquement au niveau du département ne se présentent qu'en 2002 et 2013 et concernent un effectif limité. Dans le cas des recensements de 1979 et 1992, ils sont comptabilisés dans la catégorie "Inconnu" dont nous avons vu précédemment qu'elle concernait aussi les personnes nées à l'étranger. 
+
+![Questionnaire de la variable département de naissance au RP 1979](img/mobil004.png)
+
+Au final, et dans la perspective comparative que nous suivons, il semble préférable de travailler sur un échantillon limité aux individus dont on connait la commune de naissance en éliminant ceux qui sont nés à l'étranger. 
+
+## Création d'indicateurs
+
+Nous allons maintenant compléter la base de donnée en y ajoutant deux indicateurs relatifs aux migrations durée de vie entre départments et communes. Nous allons dans le même temps éliminer du fichier les observations manquantes ou non disponibles aux deux niveaux. 
+
+### Nouvelles variables
+
+Une petite difficulté concerne le type des variables GEOLEV1 ou GEOLEV2 et MIG1_B_BJ ou MIG2_B_BJ qui ne sont pas du même type *factor* ou *haven_labelled* et qui ont des modalités différentes. Nous suggérons donc fortement de convertir immédiatement toutes ces variables en type *character* pour en faire de nouvelles en les nommant LEV1_NAI et LEV2_NAI pour les départements et communes de naissance, LEV1_RES et LEV2_RES pour les départements et communes de résidence.
+
+
+```{r, echo=TRUE, eval=FALSE}
+### Load data
+rp<-readRDS("ipums/rp/rp_benin_4dates_samp10pct.RDS")
+
+### Level I : Create new variables and filter 
+rp<-rp %>% mutate(LEV1_RES = as.character(GEOLEV1),
+                   LEV1_NAI = as.character(MIG1_P_BJ)) %>%
+             filter(substr(LEV1_NAI,5,5) !="9") %>%
+             mutate(MIG_DV_1 = as.numeric(LEV1_RES!=LEV1_NAI))
+
+### Level II Create new variables and filter 
+rp<-rp %>% mutate(LEV2_RES = as.character(GEOLEV2),
+                   LEV2_NAI = as.character(MIG2_P_BJ)) %>%
+             filter(substr(LEV2_NAI,8,9) !="99") %>%
+             mutate(MIG_DV_2 = as.numeric(LEV2_RES!=LEV2_NAI))
+
+saveRDS(rp,"ipums/rp/mobil_benin_4dates_samp10pct.RDS" )
+        
+```
+
+
+### Indicateurs globaux
+
+Pour vérifier la fiabilité de nos résultats, on calcule pour chaque date le nombre de personnes qui résident dans un autre département ou une autre commune qu'au moment de leur naissance.
+
+
+```{r, warning=F, comment=F}
+rp <- readRDS("ipums/rp/mobil_benin_4dates_samp10pct.RDS" )
+
+
+
+### Check results
+tab <- rp %>% group_by(YEAR, MIG_DV_1) %>%
+              summarise(N = sum(PERWT)) %>%
+              reshape2::dcast(formula = YEAR~MIG_DV_1, value.var="N") %>%
+              select(Recensement = YEAR,
+                     Immobile = 2,
+                     Mobile = 3) %>%
+              mutate(Total = Immobile+Mobile,
+                     TxMobil = round(100*Mobile/Total,2))
+kable(tab, caption = "Mobilité durée de vie au Bénin / Départements"  ) 
+
+
+### Check results
+tab <- rp %>% group_by(YEAR, MIG_DV_2) %>%
+              summarise(N = sum(PERWT)) %>%
+              reshape2::dcast(formula = YEAR~MIG_DV_2, value.var="N") %>%
+              select(Recensement = YEAR,
+                     Immobile = 2,
+                     Mobile = 3) %>%
+              mutate(Total = Immobile+Mobile,
+                     TxMobil = round(100*Mobile/Total,2))
+kable(tab, caption = "Mobilité durée de vie au Bénin / Communes"  )  
+
+```
+
+
+- **Commentaire : ** Pour les deux niveaux administratifs on constate un accroissement régulier de la mobilité durée de vie lors des recensements de 1979, 1992 et 2002. Mais on assiste ensuite à une baisse significative en 2013. S'agit-il d'un biais ou d'une réalité ?
+
+
+### Indicateurs départementaux
+
+On calcule pour chaque département les trois variables de stock suivantes :
+
+- **STA** : le nombre de personnes recensées dans un département qui y sont né
+- **EMI** : le nombre de personnes nées dans un département qui ont té recensées dans un autre
+- **IMM** : le nombre de personnes recensées dans un département qui sont nées dans un autre.
+
+On en déduit trois autres variables de stock :
+
+- **VOL = EMI+IMM** : le volume de personnes qui sont nées ou résident dans un département.
+- **SOL = IMM-EMI ** : le solde des arrivées et des départs d'un département parmi les survivants à la date du recensement
+- **POMOY = STA + (EMI+IMM)/2** : Une estimation (très imparfaite) de la population moyenne du département entre la date du recensement et la date de naissance de personnes. 
+
+Ce qui permet finalement d'établir les indicateurs de taux suivants : 
+
+- **txEMI = 100 x EMI/POPMOY**  : taux d'émigration (en %)
+- **txIMM = 100 x IMM/POPMOY**  : taux d'immigration (en %)
+- **txMOB = 100 x VOL/POPMOY**  : taux de mobilité (en %)
+- **txACM = 100 x SOL/POPMOY**  : taux d'ac. migratoire (en %)
+- **txASY = SOL/VOL** : indicateur d'asymétrie des flux (compris entre -1 et +1)
+
+
+```{r}
+# Load code and name of units
+map1<-st_read("mobil/geom/map_lev1_bj2013.shp",quiet=T)
+tab1<-map1 %>% st_drop_geometry() %>% select(code,nom)
+
+# Non migrant
+STA <-  rp %>% filter(MIG_DV_1 ==0) %>%
+              group_by(YEAR,LEV1_NAI) %>% 
+              summarize(N=sum(PERWT)) %>%
+              select(date = YEAR,
+                     code = LEV1_NAI,
+                     STA = N)
+
+
+# Departures
+EMI <- rp %>% filter(MIG_DV_1 ==1) %>%
+              group_by(YEAR,LEV1_NAI) %>% 
+              summarize(N=sum(PERWT)) %>%
+              select(date = YEAR,
+                     code = LEV1_NAI,
+                     EMI = N)
+# Arrivals
+IMM <- rp %>% filter(MIG_DV_1 ==1) %>%
+              group_by(YEAR,LEV1_RES) %>% 
+              summarize(N=sum(PERWT)) %>%
+              select(date = YEAR,
+                     code = LEV1_RES,
+                     IMM = N)
+
+# Put together
+tab1 <- tab1 %>% right_join(STA) %>% 
+               left_join(EMI) %>%
+               left_join(IMM) %>%
+                mutate(VOL=EMI+IMM,
+                       SOL=IMM-EMI,
+                       POPMOY= STA+(EMI+IMM)/2,
+                       txEMI = 100*EMI/POPMOY,
+                       txIMM = 100*IMM/POPMOY,
+                       txMOB = 100*VOL/POPMOY,
+                       txACM = 100*SOL/POPMOY,
+                       txASY = SOL/VOL)
+# Sauvegarde
+saveRDS(tab1, "mobil/all/mob_dv_lev1.RDS")
+
+kable(head(tab1),
+      digits = c(0,0,0,0,0,0,0,0,0,1,1,1,1,2),
+      caption = "Indicateurs départementaux de migration durée de vie au Bénin (1979, 1992, 2002, 2013)")
+```
+
+
+il est ensuite facile d'établir une cartographie des indicateurs de son choix pour comparer l'évolution à chacune des quatre dates de recensement :
+
+
+
+```{r mig_dv_lev1_sol,eval=TRUE, echo=FALSE, fig.cap="Solde des migrations durée de vie par département au Bénin"}
+
+tab<-readRDS("mobil/all/mob_dv_lev1.RDS")
+map<-st_read("mobil/geom/map_lev1_bj2013.shp",quiet=T)
+par(mfrow=c(1,4))
+
+## 1979##
+don<-tab %>% filter(date==1979)
+mapdon<-left_join(map,don) 
+mapdon$SOL2<-as.factor(mapdon$SOL<0)
+levels(mapdon$SOL2)<-c("Positif","Négatif")
+mapdon$SOL2<-as.character(mapdon$SOL2)
+mf_map(mapdon,type="base", col="lightyellow")
+mf_map(mapdon, type="prop_typo",var=c("SOL","SOL2"),inches = 0.1)
+mf_layout(title = "Bénin, RP 1979",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,1979",
+          scale = FALSE, arrow=FALSE)
+
+## 1992##
+don<-tab %>% filter(date==1992)
+mapdon<-left_join(map,don) 
+mapdon$SOL2<-as.factor(mapdon$SOL<0)
+levels(mapdon$SOL2)<-c("Positif","Négatif")
+mapdon$SOL2<-as.character(mapdon$SOL2)
+mf_map(mapdon,type="base", col="lightyellow")
+mf_map(mapdon, type="prop_typo",var=c("SOL","SOL2"),inches = 0.1)
+mf_layout(title = "Bénin, RP 1992",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,1992",
+          scale = FALSE, arrow=FALSE)
+
+## 2002##
+don<-tab %>% filter(date==2002)
+mapdon<-left_join(map,don) 
+mapdon$SOL2<-as.factor(mapdon$SOL<0)
+levels(mapdon$SOL2)<-c("Positif","Négatif")
+mapdon$SOL2<-as.character(mapdon$SOL2)
+mf_map(mapdon,type="base", col="lightyellow")
+mf_map(mapdon, type="prop_typo",var=c("SOL","SOL2"),inches = 0.1)
+mf_layout(title = "Bénin, RP 2002",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,2002",
+          scale = FALSE, arrow=FALSE)
+
+## 2013##
+don<-tab %>% filter(date==2013)
+mapdon<-left_join(map,don) 
+mapdon$SOL2<-as.factor(mapdon$SOL<0)
+levels(mapdon$SOL2)<-c("Positif","Négatif")
+mapdon$SOL2<-as.character(mapdon$SOL2)
+mf_map(mapdon,type="base", col="lightyellow")
+mf_map(mapdon, type="prop_typo",var=c("SOL","SOL2"),inches = 0.1)
+mf_layout(title = "Bénin, RP 2013",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,2013",
+          scale = FALSE, arrow=FALSE)
+
+
+```
+
+- **Commentaire** : A première vue la série de carte proposée semble cohérente avec les conaissances empiriques. On voit notamment bien comment la capitale Cotonou (département du Littoral) commence par attirer les populations des départements voisins en 1979 avant d'arriver à saturation et de resdistribuer la population vers les départements voisins d'Atlantique et de Ouémé pour aboutir à une inversion du solde en 2013. On note par ailleurs le solde positif permanent du département de Borgou et à un moindre degré du departement des Collines. 
+
+
+
+```{r mig_dv_lev1_asy,fig.cap="Asymétrie des migrations durée de vie par département au Bénin", eval=TRUE, echo=FALSE}
+
+tab<-readRDS("mobil/all/mob_dv_lev1.RDS")
+map<-st_read("mobil/geom/map_lev1_bj2013.shp",quiet=T)
+
+par(mfrow=c(1,4))
+mybreaks=c(-1,-0.3,-0.2,-0.1,0, 0.1,0.2, 0.3, 1)
+mycols = brewer.pal(8,"RdBu")
+
+
+## 1979##
+don<-tab1 %>% filter(date==1979)
+mapdon<-left_join(map,don) 
+mf_map(mapdon,type="choro", 
+            var="txASY",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "Asym.",
+            leg_val_rnd = 1)
+mf_layout(title = "Benin, RP 1979",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,1979",
+                    scale = FALSE, arrow=FALSE)
+
+## 1992##
+don<-tab1 %>% filter(date==1992)
+mapdon<-left_join(map,don) 
+mf_map(mapdon,type="choro", 
+            var="txASY",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "Asym.",
+            leg_val_rnd = 1)
+mf_layout(title = "Benin, RP 1992",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin, 1992",
+                    scale = FALSE, arrow=FALSE)
+
+## 2002##
+don<-tab1 %>% filter(date==2002)
+mapdon<-left_join(map,don) 
+mf_map(mapdon,type="choro", 
+            var="txASY",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "Asym.",
+            leg_val_rnd = 1)
+mf_layout(title = "Benin, RP 2002",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin, 2002",
+                    scale = FALSE, arrow=FALSE)
+
+## 2013##
+don<-tab1 %>% filter(date==2013)
+mapdon<-left_join(map,don) 
+mf_map(mapdon,type="choro", 
+            var="txASY",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "Asym.",
+            leg_val_rnd = 1)
+mf_layout(title = "Benin, RP 2013",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin, 2013",
+                    scale = FALSE, arrow=FALSE)
+
+
+```
+
+- **Commentaire : ** L'indice d'asymétrie (rapport entre le solde et le volume des echanges) est un bon indicateur d'attractivité migratoire. Il est normalisé entre -1 (uniquement des départs) et +1 (uniquement des arrivées) avec une valeur de référence 0 (égalité entre les départs et les arrivées). Appliqué aux migrations durée de vie, il montre bien l'attractivité permanente de certains départements comme le Borgou et la répulsivité permanente d'autres comme Atacora. Mais il souligne également des évolution de ces niveaux voire des retrournements de situation notamment dans le sud entre Cotonou et sa périphérie. 
+
+### Indicateurs communaux
+
+On peut répliquer la même procédure sur les données communales afin d'obtenir des informations de résolution spatiale plus fine. On doit toutefois faire attention à l'incertitude statistique plus grande des calculs puisque les analyses ne concernent qu'un échantillon de 10%. Il peut donc y avoir une marge d'erreur élevé, d'autant plus importante pour les recensements anciens que la population (et donc l'échantillon) était moins importante.
+
+
+
+```{r, echo=FALSE, eval=FALSE}
+# Load code and name of units
+map2<-st_read("mobil/geom/map_lev2_bj2013.shp",quiet=T)
+tab2<-map2 %>% st_drop_geometry() %>% select(code,nom)
+
+# Non migrant
+STA <-  rp %>% filter(MIG_DV_2 ==0) %>%
+              group_by(YEAR,LEV2_NAI) %>% 
+              summarize(N=sum(PERWT)) %>%
+              select(date = YEAR,
+                     code = LEV2_NAI,
+                     STA = N)
+
+
+# Departures
+EMI <- rp %>% filter(MIG_DV_2 ==1) %>%
+              group_by(YEAR,LEV2_NAI) %>% 
+              summarize(N=sum(PERWT)) %>%
+              select(date = YEAR,
+                     code = LEV2_NAI,
+                     EMI = N)
+# Arrivals
+IMM <- rp %>% filter(MIG_DV_2 ==1) %>%
+              group_by(YEAR,LEV2_RES) %>% 
+              summarize(N=sum(PERWT)) %>%
+              select(date = YEAR,
+                     code = LEV2_RES,
+                     IMM = N)
+
+# Put together
+tab2 <- tab2 %>% right_join(STA) %>% 
+               left_join(EMI) %>%
+               left_join(IMM) %>%
+                mutate(VOL=EMI+IMM,
+                       SOL=IMM-EMI,
+                       POPMOY= STA+(EMI+IMM)/2,
+                       txEMI = 100*EMI/POPMOY,
+                       txIMM = 100*IMM/POPMOY,
+                       txMOB = 100*VOL/POPMOY,
+                       txACM = 100*SOL/POPMOY,
+                       txASY = SOL/VOL)
+# Sauvegarde
+saveRDS(tab2, "mobil/all/mob_dv_lev2.RDS")
+
+kable(head(tab2),
+      digits = c(0,0,0,0,0,0,0,0,0,1,1,1,1,2),
+      caption = "Indicateurs communaux de migration durée de vie au Bénin (1979, 1992, 2002, 2013)")
+```
+
+A ce niveau d'analyse, il devent difficile de visualiser les résultats sur une carte géographique normale et il peut être intéressant de proposer conjointement une représentation sous forme de cartogramme dont la surface est proportionnelle à la population de la commune à la date du recensement. On peut illustrer cette solution à l'aide du RP 2013 pour lequel nous disposons d'un tel cartogramme (il serait évidemment incorrect de l'utiliser pour les autres dates, la population ayant changé).
+
+
+```{r mig_dv_lev2_sol,eval=TRUE, echo=FALSE, fig.cap="Solde des migrations durée de vie par département au Bénin"}
+
+tab<-readRDS("mobil/all/mob_dv_lev2.RDS")
+map2<-st_read("mobil/geom/map_lev2_bj2013.shp",quiet=T)
+car2<-st_read("mobil/geom/cartog_lev2_bj2013.shp",quiet=T)
+map1<-st_read("mobil/geom/map_lev1_bj2013.shp",quiet=T)
+car1<-st_read("mobil/geom/cartog_lev1_bj2013.shp",quiet=T)
+
+par(mfrow=c(1,2))
+
+## Carte normale
+don<-tab %>% filter(date==2013)
+mapdon<-left_join(map2,don) 
+mapdon$SOL2<-as.factor(mapdon$SOL<0)
+levels(mapdon$SOL2)<-c("Positif","Négatif")
+mapdon$SOL2<-as.character(mapdon$SOL2)
+mf_map(mapdon,type="base", col="lightyellow",lwd=0.3,border="gray80")
+mf_map(map1,type="base", 
+            add=T,
+            lwd=1,
+            col = NA,
+            border="black")
+mf_map(mapdon, type="prop_typo",
+       var=c("SOL","SOL2"),
+       inches = 0.2,
+       leg_pos = c("topright","topleft"))
+mf_layout(title = "Carte par communes (RP 2013)",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,2013",
+          scale = FALSE, arrow=FALSE)
+
+## Cartogramme
+don<-tab %>% filter(date==2013)
+mapdon<-left_join(car2,don) 
+mapdon$SOL2<-as.factor(mapdon$SOL<0)
+levels(mapdon$SOL2)<-c("Positif","Négatif")
+mapdon$SOL2<-as.character(mapdon$SOL2)
+mf_map(mapdon,type="base", col="lightyellow",lwd=0.3,border="gray80")
+mf_map(car1,type="base", 
+            add=T,
+            lwd=1,
+            col = NA,
+            border="black")
+mf_map(mapdon, type="prop_typo",
+       var=c("SOL","SOL2"),
+       inches = 0.2,
+       leg_pos = c("topright","topleft"))
+mf_layout(title = "Cartogramme démographique (RP 2013)",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,2013",
+          scale = FALSE, arrow=FALSE)
+
+
+
+```
+
+- **Commentaire** : Le passage au niveau communal permet de mettre à jour des inégalités considérables entre les communes d'un même département. La représentation sous forme de cartogramme permet de mieux visualiser les dynamiques à l'oeuvre dans la région métropolitaine côtière et l'intense redistribution qui s'opère de Cotonou vers Abomey-Calavi ou Porto-Novo
+
+

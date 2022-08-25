@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL - 8&nbsp; Migrations durée de vie</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./d09_01_references.html" rel="next">
+<link href="./d03_01_mobil_data.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Migrations durée de vie</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Préface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d00_02_intro_resume.html" class="sidebar-item-text sidebar-link">Résumé</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_00_import_introduction.html" class="sidebar-item-text sidebar-link">IMPORTATION DES DONNEES</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_01_import_conditions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conditions d’utilisation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_02_import_individus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Données individuelles</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_03_import_geometries.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Données géométriques</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_00_indicateurs_introduction.html" class="sidebar-item-text sidebar-link">COMPARAISONS DE PAYS</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_01_indicateurs_popsup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Population, surface, densité</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_02_indicateurs_equipt.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Equipement des ménages</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_03_indicateurs_tabcont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sexe, âge et urbanité</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d03_00_mobil_introduction.html" class="sidebar-item-text sidebar-link">COMPARAISONS DANS LE TEMPS</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d03_01_mobil_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Préparation des données</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d03_02_mobil_durvie.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Migrations durée de vie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d09_01_references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#définition-générale" id="toc-définition-générale" class="nav-link active" data-scroll-target="#définition-générale"> <span class="header-section-number">8.1</span> Définition générale</a></li>
+  <li><a href="#variables-ipums" id="toc-variables-ipums" class="nav-link" data-scroll-target="#variables-ipums"> <span class="header-section-number">8.2</span> Variables IPUMS</a>
+  <ul class="collapse">
+  <li><a href="#département-de-naissance-bplbj1" id="toc-département-de-naissance-bplbj1" class="nav-link" data-scroll-target="#département-de-naissance-bplbj1"> <span class="header-section-number">8.2.1</span> Département de naissance (BPLBJ1)</a></li>
+  <li><a href="#commune-de-naissance-bplbj2" id="toc-commune-de-naissance-bplbj2" class="nav-link" data-scroll-target="#commune-de-naissance-bplbj2"> <span class="header-section-number">8.2.2</span> Commune de naissance (BPLBJ2)</a></li>
+  </ul></li>
+  <li><a href="#création-dindicateurs" id="toc-création-dindicateurs" class="nav-link" data-scroll-target="#création-dindicateurs"> <span class="header-section-number">8.3</span> Création d’indicateurs</a>
+  <ul class="collapse">
+  <li><a href="#nouvelles-variables" id="toc-nouvelles-variables" class="nav-link" data-scroll-target="#nouvelles-variables"> <span class="header-section-number">8.3.1</span> Nouvelles variables</a></li>
+  <li><a href="#indicateurs-globaux" id="toc-indicateurs-globaux" class="nav-link" data-scroll-target="#indicateurs-globaux"> <span class="header-section-number">8.3.2</span> Indicateurs globaux</a></li>
+  <li><a href="#indicateurs-départementaux" id="toc-indicateurs-départementaux" class="nav-link" data-scroll-target="#indicateurs-départementaux"> <span class="header-section-number">8.3.3</span> Indicateurs départementaux</a></li>
+  <li><a href="#indicateurs-communaux" id="toc-indicateurs-communaux" class="nav-link" data-scroll-target="#indicateurs-communaux"> <span class="header-section-number">8.3.4</span> Indicateurs communaux</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Migrations durée de vie</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attachement du package : 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:data.table':
+
+    between, first, last</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.9.1, GDAL 3.4.3, PROJ 7.2.1; sf_use_s2() is TRUE</code></pre>
+</div>
+</div>
+<section id="définition-générale" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="définition-générale"><span class="header-section-number">8.1</span> Définition générale</h2>
+<p>Nous proposons dans ce chapitre une analyse des <em>migrations durée de vie</em> c’est-à-dire des différences entre le lieu de naissance et le lieu de résidence déclarés au moment du recensement. Il s’agit évidemment d’une mesure assez grossière puisqu’elle conduit à ignorer toutes les étapes suivies par le migrant au cours de sa vie et dépend étroitement de l’âge de l’individu. La mesure peut de plus s’avérer trompeuse puisqu’une personne née en un lieu A peut avoir vécu dans les lieux B, C, D avant de revenir en A au moment du recensement qui concluera à l’absence de mobilité…</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobil001.png" class="img-fluid figure-img" data-heigth="50%"></p>
+<p></p><figcaption class="figure-caption">Exemple théorique de parcours migratoire</figcaption><p></p>
+</figure>
+</div>
+<p>Dans l’exemple théorique présenté ci-dessus, l’individu concerné qui est né dans la commune de Malanville (département Alibori) sera réputé avoir effectué une migration durée de vie lors des recensements de 1979 où il est recensé à Parakou (département de Borgou), en 1992 où il est recensé à Abomey-Calavi (département Atlantique) et en 2002 où iest recensé à Grand-Popo (département du Mono). En revanche il ne sera pas considéré comme migrant en 2013 puisqu’il réside à nouveau dans la commune et le département de son lieu de naissance.</p>
+</section>
+<section id="variables-ipums" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="variables-ipums"><span class="header-section-number">8.2</span> Variables IPUMS</h2>
+<p>Le site IPUMS permet d’analyser en détail la disponibilité des variables utiles à l’analyse ainsi que leurs éventuels changements au cours du temps. Il est donc recommandé d’utiliser les métadonnées nombreuses offertes par IPUMS avant de se lancer dans ses propres analyses</p>
+<section id="département-de-naissance-bplbj1" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="département-de-naissance-bplbj1"><span class="header-section-number">8.2.1</span> Département de naissance (BPLBJ1)</h3>
+<p>La page de description de <a href="https://international.ipums.org/international-action/variables/BPLBJ1#codes_section">la variable BPLBJ1</a> nous fournit d’abord une description de sa disponibilité et des effectifs correspondant à chacune des dates de recensement.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobil002.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Disponibilité de la variable département de naissance</figcaption><p></p>
+</figure>
+</div>
+<p>Comme on peut le voir dans l’image ci-dessous, il n’y a pas de difficultés particulières concernant les mouvements internes au pays mais il y a une absence d’information sur les personnes nées à l’étranger lors des recensements de 1979 et 1992. Ils sont rangés à cette date dans la catégorie inconnue dont on voit en 2002 qu’elle ne concerne pas forcément les étrangers.</p>
+<p>Les onglets suivants précisent la définition de la variable en anglais (<em>BPLBJ1 indicates the person’s department of birth within Benin.</em>) et indiquent le degré de comparabilité entre les dates (<em>There have not been any changes in boundaries for all sample years in BPLBJ1 and is comparable across all available sample years.</em>). Ils fournissent ensuite un document précisant les questions exactes qui ont été posées dans le questionnaire de recnsement et les instructions données aux agents recenseurs.</p>
+<p><img src="img/mobil003.png" class="img-fluid" alt="Questionnaire de la variable département de naissance au RP 1979"> Mieux encore, on peut accéder à un fac similé du document papier de recensemet qui a permis d’établir les statistiques de lieu de résidence (en vert), de lieu de naissance (en rouge) et de lieu de résidence antérieure (en bleu)</p>
+<p><img src="img/mobilrp1979_recto.png" class="img-fluid" alt="Formulaire ménage du RP1979 au Bénin - Recto"> <img src="img/mobilrp1979_verso.png" class="img-fluid" alt="Formulaire ménage du RP 1979 au Bénin - Verso"></p>
+</section>
+<section id="commune-de-naissance-bplbj2" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="commune-de-naissance-bplbj2"><span class="header-section-number">8.2.2</span> Commune de naissance (BPLBJ2)</h3>
+<p>Cette variable permet une localisation plus précise des lieux de naissance mais elle comporte un certain degré d’incertitude puisque pour certains individus on ne connaît que le département de naissance mais pas la commune à l’intérieur de ceux-ci. Ces cas de localisation du leiu de naissance uniquement au niveau du département ne se présentent qu’en 2002 et 2013 et concernent un effectif limité. Dans le cas des recensements de 1979 et 1992, ils sont comptabilisés dans la catégorie “Inconnu” dont nous avons vu précédemment qu’elle concernait aussi les personnes nées à l’étranger.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobil004.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Questionnaire de la variable département de naissance au RP 1979</figcaption><p></p>
+</figure>
+</div>
+<p>Au final, et dans la perspective comparative que nous suivons, il semble préférable de travailler sur un échantillon limité aux individus dont on connait la commune de naissance en éliminant ceux qui sont nés à l’étranger.</p>
+</section>
+</section>
+<section id="création-dindicateurs" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="création-dindicateurs"><span class="header-section-number">8.3</span> Création d’indicateurs</h2>
+<p>Nous allons maintenant compléter la base de donnée en y ajoutant deux indicateurs relatifs aux migrations durée de vie entre départments et communes. Nous allons dans le même temps éliminer du fichier les observations manquantes ou non disponibles aux deux niveaux.</p>
+<section id="nouvelles-variables" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="nouvelles-variables"><span class="header-section-number">8.3.1</span> Nouvelles variables</h3>
+<p>Une petite difficulté concerne le type des variables GEOLEV1 ou GEOLEV2 et MIG1_B_BJ ou MIG2_B_BJ qui ne sont pas du même type <em>factor</em> ou <em>haven_labelled</em> et qui ont des modalités différentes. Nous suggérons donc fortement de convertir immédiatement toutes ces variables en type <em>character</em> pour en faire de nouvelles en les nommant LEV1_NAI et LEV2_NAI pour les départements et communes de naissance, LEV1_RES et LEV2_RES pour les départements et communes de résidence.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Load data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"ipums/rp/rp_benin_4dates_samp10pct.RDS"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">### Level I : Create new variables and filter </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span>rp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">LEV1_RES =</span> <span class="fu">as.character</span>(GEOLEV1),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">LEV1_NAI =</span> <span class="fu">as.character</span>(MIG1_P_BJ)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(<span class="fu">substr</span>(LEV1_NAI,<span class="dv">5</span>,<span class="dv">5</span>) <span class="sc">!=</span><span class="st">"9"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">MIG_DV_1 =</span> <span class="fu">as.numeric</span>(LEV1_RES<span class="sc">!=</span>LEV1_NAI))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="do">### Level II Create new variables and filter </span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span>rp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">LEV2_RES =</span> <span class="fu">as.character</span>(GEOLEV2),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                   <span class="at">LEV2_NAI =</span> <span class="fu">as.character</span>(MIG2_P_BJ)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(<span class="fu">substr</span>(LEV2_NAI,<span class="dv">8</span>,<span class="dv">9</span>) <span class="sc">!=</span><span class="st">"99"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">MIG_DV_2 =</span> <span class="fu">as.numeric</span>(LEV2_RES<span class="sc">!=</span>LEV2_NAI))</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rp,<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="indicateurs-globaux" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="indicateurs-globaux"><span class="header-section-number">8.3.2</span> Indicateurs globaux</h3>
+<p>Pour vérifier la fiabilité de nos résultats, on calcule pour chaque date le nombre de personnes qui résident dans un autre département ou une autre commune qu’au moment de leur naissance.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">### Check results</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(YEAR, MIG_DV_1) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>              reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> YEAR<span class="sc">~</span>MIG_DV_1, <span class="at">value.var=</span><span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">Recensement =</span> YEAR,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Immobile =</span> <span class="dv">2</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Mobile =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">Total =</span> Immobile<span class="sc">+</span>Mobile,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">TxMobil =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>Mobile<span class="sc">/</span>Total,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>FALSE `summarise()` has grouped output by 'YEAR'. You can override using the
+FALSE `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tab, <span class="at">caption =</span> <span class="st">"Mobilité durée de vie au Bénin / Départements"</span>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Mobilité durée de vie au Bénin / Départements</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Recensement</th>
+<th style="text-align: right;">Immobile</th>
+<th style="text-align: right;">Mobile</th>
+<th style="text-align: right;">Total</th>
+<th style="text-align: right;">TxMobil</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1979</td>
+<td style="text-align: right;">2800670</td>
+<td style="text-align: right;">352600</td>
+<td style="text-align: right;">3153270</td>
+<td style="text-align: right;">11.18</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1992</td>
+<td style="text-align: right;">4059680</td>
+<td style="text-align: right;">622320</td>
+<td style="text-align: right;">4682000</td>
+<td style="text-align: right;">13.29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">5311510</td>
+<td style="text-align: right;">797490</td>
+<td style="text-align: right;">6109000</td>
+<td style="text-align: right;">13.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">8638630</td>
+<td style="text-align: right;">1022500</td>
+<td style="text-align: right;">9661130</td>
+<td style="text-align: right;">10.58</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Check results</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(YEAR, MIG_DV_2) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>              reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> YEAR<span class="sc">~</span>MIG_DV_2, <span class="at">value.var=</span><span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">Recensement =</span> YEAR,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Immobile =</span> <span class="dv">2</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Mobile =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">Total =</span> Immobile<span class="sc">+</span>Mobile,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">TxMobil =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>Mobile<span class="sc">/</span>Total,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>FALSE `summarise()` has grouped output by 'YEAR'. You can override using the
+FALSE `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tab, <span class="at">caption =</span> <span class="st">"Mobilité durée de vie au Bénin / Communes"</span>  )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Mobilité durée de vie au Bénin / Communes</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Recensement</th>
+<th style="text-align: right;">Immobile</th>
+<th style="text-align: right;">Mobile</th>
+<th style="text-align: right;">Total</th>
+<th style="text-align: right;">TxMobil</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1979</td>
+<td style="text-align: right;">2652610</td>
+<td style="text-align: right;">500660</td>
+<td style="text-align: right;">3153270</td>
+<td style="text-align: right;">15.88</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1992</td>
+<td style="text-align: right;">3823320</td>
+<td style="text-align: right;">858680</td>
+<td style="text-align: right;">4682000</td>
+<td style="text-align: right;">18.34</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">5041330</td>
+<td style="text-align: right;">1067670</td>
+<td style="text-align: right;">6109000</td>
+<td style="text-align: right;">17.48</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">8264390</td>
+<td style="text-align: right;">1396740</td>
+<td style="text-align: right;">9661130</td>
+<td style="text-align: right;">14.46</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><strong>Commentaire : </strong> Pour les deux niveaux administratifs on constate un accroissement régulier de la mobilité durée de vie lors des recensements de 1979, 1992 et 2002. Mais on assiste ensuite à une baisse significative en 2013. S’agit-il d’un biais ou d’une réalité ?</li>
+</ul>
+</section>
+<section id="indicateurs-départementaux" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="indicateurs-départementaux"><span class="header-section-number">8.3.3</span> Indicateurs départementaux</h3>
+<p>On calcule pour chaque département les trois variables de stock suivantes :</p>
+<ul>
+<li><strong>STA</strong> : le nombre de personnes recensées dans un département qui y sont né</li>
+<li><strong>EMI</strong> : le nombre de personnes nées dans un département qui ont té recensées dans un autre</li>
+<li><strong>IMM</strong> : le nombre de personnes recensées dans un département qui sont nées dans un autre.</li>
+</ul>
+<p>On en déduit trois autres variables de stock :</p>
+<ul>
+<li><strong>VOL = EMI+IMM</strong> : le volume de personnes qui sont nées ou résident dans un département.</li>
+<li><strong>SOL = IMM-EMI </strong> : le solde des arrivées et des départs d’un département parmi les survivants à la date du recensement</li>
+<li><strong>POMOY = STA + (EMI+IMM)/2</strong> : Une estimation (très imparfaite) de la population moyenne du département entre la date du recensement et la date de naissance de personnes.</li>
+</ul>
+<p>Ce qui permet finalement d’établir les indicateurs de taux suivants :</p>
+<ul>
+<li><strong>txEMI = 100 x EMI/POPMOY</strong> : taux d’émigration (en %)</li>
+<li><strong>txIMM = 100 x IMM/POPMOY</strong> : taux d’immigration (en %)</li>
+<li><strong>txMOB = 100 x VOL/POPMOY</strong> : taux de mobilité (en %)</li>
+<li><strong>txACM = 100 x SOL/POPMOY</strong> : taux d’ac. migratoire (en %)</li>
+<li><strong>txASY = SOL/VOL</strong> : indicateur d’asymétrie des flux (compris entre -1 et +1)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load code and name of units</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>map1<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/map_lev1_bj2013.shp"</span>,<span class="at">quiet=</span>T)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>tab1<span class="ot">&lt;-</span>map1 <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(code,nom)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Non migrant</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>STA <span class="ot">&lt;-</span>  rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_NAI) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_NAI,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">STA =</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'YEAR'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Departures</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>EMI <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_NAI) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_NAI,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">EMI =</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'YEAR'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrivals</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>IMM <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_RES) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_RES,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">IMM =</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'YEAR'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Put together</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>tab1 <span class="ot">&lt;-</span> tab1 <span class="sc">%&gt;%</span> <span class="fu">right_join</span>(STA) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">left_join</span>(EMI) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>               <span class="fu">left_join</span>(IMM) <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mutate</span>(<span class="at">VOL=</span>EMI<span class="sc">+</span>IMM,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">SOL=</span>IMM<span class="sc">-</span>EMI,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">POPMOY=</span> STA<span class="sc">+</span>(EMI<span class="sc">+</span>IMM)<span class="sc">/</span><span class="dv">2</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txEMI =</span> <span class="dv">100</span><span class="sc">*</span>EMI<span class="sc">/</span>POPMOY,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txIMM =</span> <span class="dv">100</span><span class="sc">*</span>IMM<span class="sc">/</span>POPMOY,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txMOB =</span> <span class="dv">100</span><span class="sc">*</span>VOL<span class="sc">/</span>POPMOY,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txACM =</span> <span class="dv">100</span><span class="sc">*</span>SOL<span class="sc">/</span>POPMOY,</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txASY =</span> SOL<span class="sc">/</span>VOL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"
+Joining, by = c("code", "date")
+Joining, by = c("code", "date")</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sauvegarde</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tab1, <span class="st">"mobil/all/mob_dv_lev1.RDS"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(tab1),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Indicateurs départementaux de migration durée de vie au Bénin (1979, 1992, 2002, 2013)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Indicateurs départementaux de migration durée de vie au Bénin (1979, 1992, 2002, 2013)</caption>
+<colgroup>
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">code</th>
+<th style="text-align: left;">nom</th>
+<th style="text-align: right;">date</th>
+<th style="text-align: right;">STA</th>
+<th style="text-align: right;">EMI</th>
+<th style="text-align: right;">IMM</th>
+<th style="text-align: right;">VOL</th>
+<th style="text-align: right;">SOL</th>
+<th style="text-align: right;">POPMOY</th>
+<th style="text-align: right;">txEMI</th>
+<th style="text-align: right;">txIMM</th>
+<th style="text-align: right;">txMOB</th>
+<th style="text-align: right;">txACM</th>
+<th style="text-align: right;">txASY</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">204001</td>
+<td style="text-align: left;">Alibori</td>
+<td style="text-align: right;">1979</td>
+<td style="text-align: right;">190260</td>
+<td style="text-align: right;">11990</td>
+<td style="text-align: right;">7710</td>
+<td style="text-align: right;">19700</td>
+<td style="text-align: right;">-4280</td>
+<td style="text-align: right;">200110</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">9.8</td>
+<td style="text-align: right;">-2.1</td>
+<td style="text-align: right;">-0.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">204001</td>
+<td style="text-align: left;">Alibori</td>
+<td style="text-align: right;">1992</td>
+<td style="text-align: right;">323530</td>
+<td style="text-align: right;">19370</td>
+<td style="text-align: right;">12710</td>
+<td style="text-align: right;">32080</td>
+<td style="text-align: right;">-6660</td>
+<td style="text-align: right;">339570</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">-2.0</td>
+<td style="text-align: right;">-0.21</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">204001</td>
+<td style="text-align: left;">Alibori</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">431550</td>
+<td style="text-align: right;">18470</td>
+<td style="text-align: right;">12640</td>
+<td style="text-align: right;">31110</td>
+<td style="text-align: right;">-5830</td>
+<td style="text-align: right;">447105</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">-1.3</td>
+<td style="text-align: right;">-0.19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">204001</td>
+<td style="text-align: left;">Alibori</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">824950</td>
+<td style="text-align: right;">26560</td>
+<td style="text-align: right;">15130</td>
+<td style="text-align: right;">41690</td>
+<td style="text-align: right;">-11430</td>
+<td style="text-align: right;">845795</td>
+<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">1.8</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">-1.4</td>
+<td style="text-align: right;">-0.27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">204002</td>
+<td style="text-align: left;">Atacora</td>
+<td style="text-align: right;">1979</td>
+<td style="text-align: right;">263120</td>
+<td style="text-align: right;">18130</td>
+<td style="text-align: right;">12910</td>
+<td style="text-align: right;">31040</td>
+<td style="text-align: right;">-5220</td>
+<td style="text-align: right;">278640</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">11.1</td>
+<td style="text-align: right;">-1.9</td>
+<td style="text-align: right;">-0.17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">204002</td>
+<td style="text-align: left;">Atacora</td>
+<td style="text-align: right;">1992</td>
+<td style="text-align: right;">365180</td>
+<td style="text-align: right;">37810</td>
+<td style="text-align: right;">18340</td>
+<td style="text-align: right;">56150</td>
+<td style="text-align: right;">-19470</td>
+<td style="text-align: right;">393255</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">-5.0</td>
+<td style="text-align: right;">-0.35</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>il est ensuite facile d’établir une cartographie des indicateurs de son choix pour comparer l’évolution à chacune des quatre dates de recensement :</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = c("code", "nom")
+Joining, by = c("code", "nom")
+Joining, by = c("code", "nom")
+Joining, by = c("code", "nom")</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="d03_02_mobil_durvie_files/figure-html/mig_dv_lev1_sol-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Solde des migrations durée de vie par département au Bénin</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Commentaire</strong> : A première vue la série de carte proposée semble cohérente avec les conaissances empiriques. On voit notamment bien comment la capitale Cotonou (département du Littoral) commence par attirer les populations des départements voisins en 1979 avant d’arriver à saturation et de resdistribuer la population vers les départements voisins d’Atlantique et de Ouémé pour aboutir à une inversion du solde en 2013. On note par ailleurs le solde positif permanent du département de Borgou et à un moindre degré du departement des Collines.</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = c("code", "nom")
+Joining, by = c("code", "nom")
+Joining, by = c("code", "nom")
+Joining, by = c("code", "nom")</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="d03_02_mobil_durvie_files/figure-html/mig_dv_lev1_asy-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Asymétrie des migrations durée de vie par département au Bénin</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Commentaire : </strong> L’indice d’asymétrie (rapport entre le solde et le volume des echanges) est un bon indicateur d’attractivité migratoire. Il est normalisé entre -1 (uniquement des départs) et +1 (uniquement des arrivées) avec une valeur de référence 0 (égalité entre les départs et les arrivées). Appliqué aux migrations durée de vie, il montre bien l’attractivité permanente de certains départements comme le Borgou et la répulsivité permanente d’autres comme Atacora. Mais il souligne également des évolution de ces niveaux voire des retrournements de situation notamment dans le sud entre Cotonou et sa périphérie.</li>
+</ul>
+</section>
+<section id="indicateurs-communaux" class="level3" data-number="8.3.4">
+<h3 data-number="8.3.4" class="anchored" data-anchor-id="indicateurs-communaux"><span class="header-section-number">8.3.4</span> Indicateurs communaux</h3>
+<p>On peut répliquer la même procédure sur les données communales afin d’obtenir des informations de résolution spatiale plus fine. On doit toutefois faire attention à l’incertitude statistique plus grande des calculs puisque les analyses ne concernent qu’un échantillon de 10%. Il peut donc y avoir une marge d’erreur élevé, d’autant plus importante pour les recensements anciens que la population (et donc l’échantillon) était moins importante.</p>
+<div class="cell">
+
+</div>
+<p>A ce niveau d’analyse, il devent difficile de visualiser les résultats sur une carte géographique normale et il peut être intéressant de proposer conjointement une représentation sous forme de cartogramme dont la surface est proportionnelle à la population de la commune à la date du recensement. On peut illustrer cette solution à l’aide du RP 2013 pour lequel nous disposons d’un tel cartogramme (il serait évidemment incorrect de l’utiliser pour les autres dates, la population ayant changé).</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = c("code", "nom")
+Joining, by = c("code", "nom")</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="d03_02_mobil_durvie_files/figure-html/mig_dv_lev2_sol-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Solde des migrations durée de vie par département au Bénin</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Commentaire</strong> : Le passage au niveau communal permet de mettre à jour des inégalités considérables entre les communes d’un même département. La représentation sous forme de cartogramme permet de mieux visualiser les dynamiques à l’oeuvre dans la région métropolitaine côtière et l’intense redistribution qui s’opère de Cotonou vers Abomey-Calavi ou Porto-Novo</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./d03_01_mobil_data.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Préparation des données</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./d09_01_references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

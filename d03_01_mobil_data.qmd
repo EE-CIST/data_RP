@@ -1,0 +1,72 @@
+# Préparation des données
+
+```{r, echo=FALSE}
+library(knitr)
+library(data.table)
+library(readxl)
+```
+
+La méthode d'acquisitio des données est la même que celle qui a été décrite pour la comparaison des derniers recensements de cinq pays d'Afrique de l'Ouest mais la liste des variables est différente puisque l'objectif est ici d'analyser les mobilités des individus. Il est important de préciser pour chaque variable les définitions exactes et les métadonnées fournies par IPUMS concernant les procédures d'harmonisation entre les dates
+
+## Sélection des dates
+
+En cliquant sur le bouton "*SELECT SAMPLES*" on va tout d'abord choisir les recensements qui nous intéressent. On peut en retenir soit un seul soit plusieurs à la fois. Ici, nous avons retenu les quatre recensements du Bénin disponibles sur IPUMS.
+
+![Recensements africains disponibles dans IPUMS International](img/ipums_017.png)
+
+## Sélection des variables
+
+Nous avons effectué une sélection ciblée de variables en privilégiant celles qui concernent les individus et sont disponibles pour les quatre dates.
+
+```{r, echo = FALSE}
+selvar <- read_excel("mobil/all/list_var.xls")
+kable(selvar, caption = "Liste de variables retenus pour les 4 recensements du Bénin")
+```
+
+## Choix du niveau d'échantillonage
+
+Nous avons utilisé le niveau maximal d'échantillonage proposé soit 10% des individus à chaque date de recensement. Cela correspond évidememnt à des effectifs différents compte-tenu de la croissance démographique rapide du pays au cours de la période d'observation. On passe de 332000 individus en 1979 à plus d'un million en 2013 soit un triplement. On aurait pu décider d'utiliser un échantillon de même taille à chacune des dates mais nous avons préféré retenir l'effectif maximal à chaque date, sachant que cela implique des différences de précision dans les mesures.
+
+![Taille des échantillons de recensement du Bénin fournis par IPUMS International](img/ipums_018.png)
+
+## Récupération des fichiers
+
+Pour pouvoir charger ensuite les données dans R ou un autre logiciel, nous avons besoin comme d'habitude de deux fichiers qui pourront être partagés entre les étudiants et les formateurs si l'on obtient le statut de *classroom* pour l'école d'été.
+
+-   le fichier ipums00019.DAT qui contient les données au format compressé .gz
+-   le fichier ipums00019.DDI qui contient les métadonnées au format .xml
+
+Pour importer les données dans R, il faut installer le package *ipumsr* qui va nous permettre de lire les métadonnées puis d'importer les données en une seule opération.
+
+```{r import_ipums, echo=TRUE, eval=FALSE}
+library(ipumsr)
+
+# Importation de l'échantillon à 10%
+ddi <- read_ipums_ddi("ipums/rp/ipumsi_00019.xml")
+data <- read_ipums_micro(ddi)
+saveRDS(data,"ipums/rp/rp_benin_4dates_samp10pct.RDS")
+```
+
+## Conversion de format dans R
+
+Nous reviendrons ultérieurement sur le format du tableau R obtenu qui n'est pas un *data.frame* standard car il comporte des labels supplémentaire donnant à la fois le nom des variables et le code de leurs modalités. On retiendra juste ici que les données initialement de type *haven_labelled* peuvent être converties en type *factor* à l'aide du package *haven* ce qui permet de visualiser plus facilement.
+
+A titre d'exemple, le petit programme ci-dessous convertit l'ensemble des données en factor et affiche les premières lignes.
+
+```{r}
+library(haven)
+
+# Lit le fichier enregistré
+rp<-readRDS("ipums/rp/rp_benin_4dates_samp10pct.RDS")
+
+# Convertit les variables haven_labelled en factors
+rp<-as_factor(rp, only_labelled=T)
+class(rp)
+
+# Convertit le tableau en pur data.frame
+rp<-as.data.frame(rp)
+class(rp)
+
+# Affiche les 10 premières lignes (soit 2 ménages de 5 personnes )
+kable(head(rp,10), caption = "Extrait des données IPUMS International sur le Bénin")
+```

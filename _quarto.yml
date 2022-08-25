@@ -16,8 +16,10 @@ book:
     - d02_00_indicateurs_introduction.qmd
     - d02_01_indicateurs_popsup.qmd
     - d02_02_indicateurs_equipt.qmd
-    - d02_02_indicateurs_tabcont.qmd
-    - d03_03_mobil_introduction
+    - d02_03_indicateurs_tabcont.qmd
+    - d03_00_mobil_introduction.qmd
+    - d03_01_mobil_data.qmd
+    - d03_02_mobil_durvie.qmd
     - d09_01_references.qmd
 
 bibliography: references.bib

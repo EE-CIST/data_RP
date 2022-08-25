@@ -1,7 +1,5 @@
 # Equipement des ménages
 
-
-
 ```{r, echo=TRUE}
 library(knitr)
 library(dplyr)
@@ -14,13 +12,13 @@ library(haven)
 
 ## Agrégation des ménages
 
-Nous allons prendre ici un exemple de calcul ou l'unité de compte est ménage et non pas l'individu. A titre d'exemple, on va calculer le nombre de ménages disposant d'électricité en écartant les données inconnues.  Pour cela nous allons construire un programme qui effectue les tâches suivantes : 
+Nous allons prendre ici un exemple de calcul ou l'unité de compte est ménage et non pas l'individu. A titre d'exemple, on va calculer le nombre de ménages disposant d'électricité en écartant les données inconnues. Pour cela nous allons construire un programme qui effectue les tâches suivantes :
 
-- ne conserver que les chefs de ménage (RELATE == 1)
-- écarter les cas où la variable n'est pas renseignée (ELECTRIC = 1 ou 2)
-- agréger les données en pondérant par le poids des ménages (HHWT)
-- calculer le nombre total de ménages disponibles (nbmen)
-- calculer l part des ménages équipés (pct)
+-   ne conserver que les chefs de ménage (RELATE == 1)
+-   écarter les cas où la variable n'est pas renseignée (ELECTRIC = 1 ou 2)
+-   agréger les données en pondérant par le poids des ménages (HHWT)
+-   calculer le nombre total de ménages disponibles (nbmen)
+-   calculer l part des ménages équipés (pct)
 
 ```{r agregmen, eval=FALSE, echo=TRUE}
 ## Chargement des données
@@ -56,13 +54,11 @@ men2<-rp      %>%  group_by(GEOLEV2, ELECTRIC) %>%
 saveRDS(men2, "indic/all/MEN_ELEC_LEV2.RDS")
 ```
 
-
 ## Ajout de la géométrie
 
 Nous procédons ensuite à la jointure avec les fonds de carte afin de pouvoir ajouter les métadonnées qui y sont présentes et aboutir à une visualisation cartographique. Le résultat sera stocké au format sf et au format shapefile afin de pouvoir être réutilisé dans d'autres applications en dehors de R (Magrit, Geoda; ...).
 
 A titre d'exemple, nous allons utiliser les fonds de carte simple et les cartogrammes mis au point dans la partie précédente.
-
 
 ### RP Bénin, 2013
 
@@ -117,8 +113,6 @@ mf_layout(title = paste(census,"- Electrification au niveau II"),
 
 
 ```
-
-
 
 ### RP Burkina Faso, 2006
 
@@ -228,7 +222,6 @@ mf_layout(title = paste(census,"- Electrification au niveau II"),
 
 ```
 
-
 ### RP Sénégal, 2013
 
 ```{r elec_sn2013, eval=TRUE, echo=FALSE}
@@ -337,13 +330,10 @@ mf_layout(title = paste(census,"- Electrification au niveau II"),
 
 ```
 
-- **Commentaire** : dans le cas du Togo, il serait préférable d'utiliser le niveau administratif I de l'année 2010 plutôt que le niveau harmonisé 1970-2010 qui réduit le pays à 3 régions seulement. 
-
+-   **Commentaire** : dans le cas du Togo, il serait préférable d'utiliser le niveau administratif I de l'année 2010 plutôt que le niveau harmonisé 1970-2010 qui réduit le pays à 3 régions seulement.
 
 ## Prolongements
 
 On peut facilement adapter le programme précédent pour construire de nombeux autres indicateurs d'équipements des ménages.
 
-On peut également lorsque les données le permettent, construire pour un pays une séquence d'évolution d'un indicateur à plusieurs dates. 
-
-
+On peut également lorsque les données le permettent, construire pour un pays une séquence d'évolution d'un indicateur à plusieurs dates.
