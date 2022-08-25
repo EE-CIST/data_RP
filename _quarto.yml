@@ -17,6 +17,7 @@ book:
     - d02_01_indicateurs_popsup.qmd
     - d02_02_indicateurs_equipt.qmd
     - d02_02_indicateurs_tabcont.qmd
+    - d03_03_mobil_introduction
     - d09_01_references.qmd
 
 bibliography: references.bib

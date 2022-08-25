@@ -1,0 +1,7 @@
+# COMPARAISONS DANS LE TEMPS {.unnumbered}
+
+La troisième étape de cette analyse vise à tester la possibilité de comparaisons dans le temps. Nous utiliserons pour cela l'exemple du Bénin pour lequel on dispose de quatre recensements (1979, 1992, 2002, 2013) pour lesquels le découpage administratif a été globalement stable au niveau I comme au niveau II et où IPUMS a procédé à l'harmonisation éventuelle des différences.
+
+Nous focaliserons l'analyse sur la question des mobilités c'est à dire les migrations durée de vie, les dernières migrations ou les migrations internationales en partant d'indicateurs simples pour ensuite arriver à des mesures plus complexes d'interaction.
+
+Comme dans la partie précédente il s'agit ici d'une analyse exploratoire à finalité pédagogique et non pas d'une analyse scientifique dans les règles de l'art. Le but est de repérer les cas où il est possible de répliquer une même analyse dans le temps sur trois ou qautre des recensements considérés.

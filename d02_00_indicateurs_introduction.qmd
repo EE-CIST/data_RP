@@ -1,9 +1,3 @@
-# CREATION D'INDICATEURS {.unnumbered}
+# COMPARAISONS DE PAYS {.unnumbered}
 
 La seconde étape du travail est la **création d'indicateurs territoriaux** décrivant les unités administratives des différents pays à chacun des deux niveaux d'analyse géographique. Ces indicateurs territoriaux peuvent être obtenus de plusieurs façons et on se limitera ici à quelques exemples. Le point essentiel est quel les méthodes utilisées pour créer ces indicateurs soient bien reproductibles pour chacun des recensements analysés.
-
-
-
-
-
-
