@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL - 9&nbsp; Migrations antérieures</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./d09_01_references.html" rel="next">
+<link href="./d03_02_mobil_durvie.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Migrations antérieures</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Préface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./credits.html" class="sidebar-item-text sidebar-link">CREDITS</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_00_import_introduction.html" class="sidebar-item-text sidebar-link">IMPORTATION DES DONNEES</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_01_import_conditions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conditions d’utilisation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_02_import_individus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Données individuelles</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d01_03_import_geometries.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Données géométriques</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_00_indicateurs_introduction.html" class="sidebar-item-text sidebar-link">COMPARAISONS DE PAYS</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_01_indicateurs_popsup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Population, surface, densité</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_02_indicateurs_equipt.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Equipement des ménages</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d02_03_indicateurs_tabcont.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sexe, âge et urbanité</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d03_00_mobil_introduction.html" class="sidebar-item-text sidebar-link">COMPARAISONS DANS LE TEMPS</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d03_01_mobil_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Préparation des données</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d03_02_mobil_durvie.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Migrations durée de vie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d03_03_mobil_preced.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Migrations antérieures</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./d09_01_references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#définition-générale" id="toc-définition-générale" class="nav-link active" data-scroll-target="#définition-générale"> <span class="header-section-number">9.1</span> Définition générale</a></li>
+  <li><a href="#variables-ipums" id="toc-variables-ipums" class="nav-link" data-scroll-target="#variables-ipums"> <span class="header-section-number">9.2</span> Variables IPUMS</a>
+  <ul class="collapse">
+  <li><a href="#durée-de-résidence-dans-la-localité-actuelle-migyrs1" id="toc-durée-de-résidence-dans-la-localité-actuelle-migyrs1" class="nav-link" data-scroll-target="#durée-de-résidence-dans-la-localité-actuelle-migyrs1"> <span class="header-section-number">9.2.1</span> Durée de résidence dans la localité actuelle (MIGYRS1)</a></li>
+  <li><a href="#lieu-de-résidence-antérieure-mig1_p_bj-mig2_p_bj" id="toc-lieu-de-résidence-antérieure-mig1_p_bj-mig2_p_bj" class="nav-link" data-scroll-target="#lieu-de-résidence-antérieure-mig1_p_bj-mig2_p_bj"> <span class="header-section-number">9.2.2</span> Lieu de résidence antérieure (MIG1_P_BJ, MIG2_P_BJ)</a></li>
+  </ul></li>
+  <li><a href="#création-dindicateurs" id="toc-création-dindicateurs" class="nav-link" data-scroll-target="#création-dindicateurs"> <span class="header-section-number">9.3</span> Création d’indicateurs</a>
+  <ul class="collapse">
+  <li><a href="#nouvelles-variables" id="toc-nouvelles-variables" class="nav-link" data-scroll-target="#nouvelles-variables"> <span class="header-section-number">9.3.1</span> Nouvelles variables</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-8" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Migrations antérieures</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attachement du package : 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:data.table':
+
+    between, first, last</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.9.1, GDAL 3.4.3, PROJ 7.2.1; sf_use_s2() is TRUE</code></pre>
+</div>
+</div>
+<section id="définition-générale" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="définition-générale"><span class="header-section-number">9.1</span> Définition générale</h2>
+<p>Nous proposons dans ce chapitre une analyse des <em>migrations antérieures</em> c’est-à-dire des différences entre le lieu de naissance et le <em>lieu de résidence précédent</em> déclaré au moment du recensement associé à la <em>durée de résidence</em> dans le domicile actuel et au <em>lieu de naissance</em>. Le problème de cette définition c’est qu’elle peut aboutir à des formes différentes de question et de codage des réponses dans les recensements de différents pays ou d’un même pays au cours du temps.</p>
+<p>Considérons notre exemple théorique du chapitre précédent et la question posée lors du recensement de 1992 au Bénin :</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobil001.png" class="img-fluid figure-img" data-heigth="50%"></p>
+<p></p><figcaption class="figure-caption">Exemple théorique de parcours migratoire</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobil92.png" class="img-fluid figure-img" data-heigth="50%"></p>
+<p></p><figcaption class="figure-caption">Question du RP 1992 du Bénin sur les mobilits antérieures</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p>Notre individu réside en 1992 à Abomey-Calavi où il est arrivé en 1983. Il va donc répondre à la première question du recensement qu’il réside dans son logement depuis 9 ans et que son lieu de résidence antérieur était la commune de Parakou, située dans le département du Borgou. Comme on sait par ailleurs qu’il est né à Mallanville, on peut reconstituer deux migrations antérieures.</p></li>
+<li><p>Si on lui avait posé la question au recensement de 1979, il aurait été recensé à Parakou où il aurait déclaré vivre depuis 6 ans avec pour lieu de résidence antérieure Mallanville qui est aussi son lieu de naissance.On ne connaîtrait donc qu’un seul trajet migratoire ce qui est logique puisqu’à cette date il n’en avait pas effectué d’autres.</p></li>
+<li><p>Mais si on lui pose la question en 2002, il sera recensé à Grand Popo et déclarera y résider depuis 7 ans avec pour lieu de résidence antérieure Abomey-Calavi. On ignore désormais qu’il a résidé à Parakou et on supposera qu’il est arrivé directement de Mallanville à Abomey-Calavi.</p></li>
+<li><p>Si enfin on lui pose la question en 2013 où il est revenu sur son lieu de naissance qui est Malanville, il va déclarer y résider depuis 1 an en indiquant pour lieu de résidence antérieure Abomey-Calavi. On considérera donc à tod qu’il a effectué une migration aller et retour alors qu’en réalité son parcours aura été infiiment plus complexe avec deux passages par Abomey-Calavi et des périodes de résidence à Parakou ou Grand Popo.</p></li>
+</ul>
+<p>Comme il est exclu d’apparier les codes d’individu d’un recensement à l’autre pour des raisos d’éthique et d’anonymat, on concluera qu’<strong>il est impossible de retrouver les parcours de vie complet d’un individu à partir des données de recensement</strong>. Tout au plus peut-on en retrouver quelques <strong>traces partielles</strong>* mais dont la comparaison n’est pas toujours facile car les questions différent d’une date à une autre ou d’un pays à un autre.</p>
+</section>
+<section id="variables-ipums" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="variables-ipums"><span class="header-section-number">9.2</span> Variables IPUMS</h2>
+<p>IPUMS 2010 a tenté dans la mesure du possible d’harmoniser les données de résidence antérieure mais il signale à plusieurs reprise la difficulté de l’entreprise et les métadonnées concluent généralement à une certaine fragilité des résultats. A tout le moins, le site fournit des métadonnées très précises et des copies des formulaires de recensement permettant d’y voir plus clair et d’évaluer les degrés de comparabilité.</p>
+<section id="durée-de-résidence-dans-la-localité-actuelle-migyrs1" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="durée-de-résidence-dans-la-localité-actuelle-migyrs1"><span class="header-section-number">9.2.1</span> Durée de résidence dans la localité actuelle (MIGYRS1)</h3>
+<p>La page de description de <a href="https://international.ipums.org/international-action/variables/BPLBJ1#codes_section">la variable MIGYRS1</a> nous fournit d’abord une description de la durée de résidence qui montre des différences de précision selon les années. En 1979, les modalités étaient de nature qualitatives alors que dans les recensements suivants on dispose d’un nombre plus précis d’année mais avec des maxima fixés à 50 ans en 1992, 60 ans en 2002 et 98 ans en 2013.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobil005.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Disponibilité de la variable département de naissance</figcaption><p></p>
+</figure>
+</div>
+<p>Comme l’indique le commentaire général d’IPUMS sur cet indicateur au niveau mondial :</p>
+<blockquote class="blockquote">
+<p>La variable est conceptuellement similaire d’un échantillon à l’autre, mais il existe des problèmes de comparabilité en ce qui concerne les données échelonnées, les unités géographiques et les univers. Certains échantillons ont déclaré l’année de migration sous forme d’intervalles. Les données de ces échantillons sont codées en MIGYRS1 jusqu’à la première année de l’intervalle. La discussion de comparabilité pour le pays indique quand un échantillon a été codé en intervalles. Les intervalles d’origine sont enregistrés dans les variables sources non harmonisées. La plupart des échantillons font état de migrations pour des unités géographiques relativement petites d’un sous-pays, telles que des villages ou des municipalités. Certains font état d’unités un peu plus grandes, comme le deuxième niveau administratif du pays.</p>
+</blockquote>
+<p>On sera donc très prudent lorsqu’il s’agit de comparer deux pays, mais on peut être plus confiant à l’intérieur d’un même pays, <strong>à condition que les unités géographiques définissant la mobilité demeurent les mêmes d’un recensement à l’autre</strong>. Dans le cas du Bénin, la variable MIGRATEP permet de vérifier qu’il est toujours possible de reconstituer si un individu à changer de commune ou de département à chaque recensement. Il n’est en revanche pas possible de connaître l’effectif exact des personnes originaires de l’étranger en 1979 et en 1992.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobil007.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Effectifs de la variable MIGRATEP</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="lieu-de-résidence-antérieure-mig1_p_bj-mig2_p_bj" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="lieu-de-résidence-antérieure-mig1_p_bj-mig2_p_bj"><span class="header-section-number">9.2.2</span> Lieu de résidence antérieure (MIG1_P_BJ, MIG2_P_BJ)</h3>
+<p>Dans le cas du Bénin, la stabilité du découpage administratif des départements et des communes au cours du temps assure une qualité de comparaison qu’on ne retrouverait pas dans d’autres pays. On dispose e effet pour chaque date de la commune (MIG2_P_BJ) et du département (MIG1_P_BJ) de résidence antérieure, avec le même degré de précision que celui noté pour les lieux de naissance. Il existe une minorité de cas où l’agent recenseur a recensé les départements de résidence antérieurs sans préciser la commune mais il sont peu nombreux et peuvent être facilement éliminés. On peut également repérer les lieux de résidence antérieurs à l’étranger à l’aide la variable</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobil006.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Distribution des communes de résidence antérieures</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="création-dindicateurs" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="création-dindicateurs"><span class="header-section-number">9.3</span> Création d’indicateurs</h2>
+<p>Nous allons maintenant compléter la base de donnée établie pour les migrations durée de vie en y ajoutant des indicateurs relatifs aux lieux de résidence antérieurs et à la durée d’installation dans le lieu de résidence actuel.</p>
+<section id="nouvelles-variables" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="nouvelles-variables"><span class="header-section-number">9.3.1</span> Nouvelles variables</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Load data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Align duration of residence on 1979</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>RES_TIM<span class="ot">&lt;-</span><span class="fu">as_factor</span>(rp<span class="sc">$</span>MIGYRS1)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(RES_TIM)[<span class="dv">1</span>]<span class="ot">&lt;-</span><span class="st">"0"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(RES_TIM)[<span class="dv">2</span>]<span class="ot">&lt;-</span><span class="st">"1"</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(RES_TIM)[<span class="dv">96</span>]<span class="ot">&lt;-</span><span class="st">"95"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(RES_TIM)[<span class="dv">97</span>]<span class="ot">&lt;-</span><span class="cn">NA</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(RES_TIM)[<span class="dv">98</span>]<span class="ot">&lt;-</span><span class="cn">NA</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(RES_TIM)[<span class="dv">99</span>]<span class="ot">&lt;-</span><span class="cn">NA</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(RES_TIM)[<span class="dv">100</span>]<span class="ot">&lt;-</span><span class="cn">NA</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>RES_TIM<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(RES_TIM)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>RES_TIM<span class="ot">&lt;-</span><span class="fu">cut</span>(RES_TIM, <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">15</span>, <span class="dv">100</span>))</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>rp<span class="sc">$</span>MIG_ANT_TIME<span class="ot">&lt;-</span>RES_TIM</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="do">### Level I : Create new variables and filter </span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span>rp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">LEV1_RES =</span> <span class="fu">as.character</span>(GEOLEV1),</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                   <span class="at">LEV1_ANT =</span> <span class="fu">as.character</span>(MIG1_P_BJ)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(<span class="fu">substr</span>(LEV1_ANT,<span class="dv">5</span>,<span class="dv">5</span>) <span class="sc">!=</span><span class="st">"9"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">MIG_PR_1 =</span> <span class="fu">as.numeric</span>(LEV1_RES<span class="sc">!=</span>LEV1_ANT))</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="do">### Level II Create new variables and filter </span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span>rp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">LEV2_RES =</span> <span class="fu">as.character</span>(GEOLEV2),</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                   <span class="at">LEV2_ANT =</span> <span class="fu">as.character</span>(MIG2_P_BJ)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(<span class="fu">substr</span>(LEV2_ANT,<span class="dv">8</span>,<span class="dv">9</span>) <span class="sc">!=</span><span class="st">"99"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">MIG_PR_2 =</span> <span class="fu">as.numeric</span>(LEV2_RES<span class="sc">!=</span>LEV2_ANT))</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rp,<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct_V2.RDS"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./d03_02_mobil_durvie.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Migrations durée de vie</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./d09_01_references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

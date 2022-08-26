@@ -21,6 +21,7 @@ book:
     - d03_00_mobil_introduction.qmd
     - d03_01_mobil_data.qmd
     - d03_02_mobil_durvie.qmd
+    - d03_03_mobil_preced.qmd
     - d09_01_references.qmd
 
 bibliography: references.bib

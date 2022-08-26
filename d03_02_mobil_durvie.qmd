@@ -8,6 +8,7 @@ library(dplyr, quiet=T)
 library(sf, quiet=T)
 library(mapsf,quiet=T)
 library(RColorBrewer)
+library(forcats)
 ```
 
 ## Définition générale
@@ -50,25 +51,43 @@ Nous allons maintenant compléter la base de donnée en y ajoutant deux indicate
 
 ### Nouvelles variables
 
-Une petite difficulté concerne le type des variables GEOLEV1 ou GEOLEV2 et MIG1_B\_BJ ou MIG2_B\_BJ qui ne sont pas du même type *factor* ou *haven_labelled* et qui ont des modalités différentes. Nous suggérons donc fortement de convertir immédiatement toutes ces variables en type *character* pour en faire de nouvelles en les nommant LEV1_NAI et LEV2_NAI pour les départements et communes de naissance, LEV1_RES et LEV2_RES pour les départements et communes de résidence.
+Le programme qui suit est un peu compliqué car les variables relatives aux lieux de naissance ne sont pas codés de la même façon que les variables de résidence. Il faut donc reconstituer les codes avant de pouvoir tester leur égalité ...
 
 ```{r, echo=TRUE, eval=FALSE}
 ### Load data
 rp<-readRDS("ipums/rp/rp_benin_4dates_samp10pct.RDS")
 
-### Level I : Create new variables and filter 
-rp<-rp %>% mutate(LEV1_RES = as.character(GEOLEV1),
-                   LEV1_NAI = as.character(MIG1_P_BJ)) %>%
-             filter(substr(LEV1_NAI,5,5) !="9") %>%
+### Recode and filter
+
+
+### Level I : Create new variables and filter
+code1<-readRDS("ipums/geom/geo1_bj2013.RDS") %>% st_drop_geometry()
+recode1<-code1$DEPT2013
+names(recode1)<-paste0(code1$CNTRY_CODE,code1$IPUM2013)
+test<-as_factor(as.numeric(rp$BPLBJ1))
+test<-fct_recode(test,!!!recode1)
+rp$LEV1_NAI<-as.character(test)
+table(rp$LEV1_NAI)
+
+code2<-readRDS("ipums/geom/geo2_bj2013.RDS") %>% st_drop_geometry()
+recode2<-code2$COMN2013
+names(recode2)<-paste0(code2$CNTRY_CODE,code2$IPUM2013)
+test<-as_factor(as.numeric(rp$BPLBJ2))
+test<-fct_recode(test,!!!recode2)
+rp$LEV2_NAI<-as.character(test)
+
+
+rp<-rp %>% mutate(LEV1_RES = as.character(as_factor(GEOLEV1))) %>%
+             filter(nchar(LEV1_NAI) ==6) %>%
              mutate(MIG_DV_1 = as.numeric(LEV1_RES!=LEV1_NAI))
 
 ### Level II Create new variables and filter 
-rp<-rp %>% mutate(LEV2_RES = as.character(GEOLEV2),
-                   LEV2_NAI = as.character(MIG2_P_BJ)) %>%
-             filter(substr(LEV2_NAI,8,9) !="99") %>%
+rp<-rp %>% mutate(LEV2_RES = as.character(as_factor(GEOLEV2))) %>%
+             filter(nchar(LEV2_NAI) ==9) %>%
              mutate(MIG_DV_2 = as.numeric(LEV2_RES!=LEV2_NAI))
 
 saveRDS(rp,"ipums/rp/mobil_benin_4dates_samp10pct.RDS" )
+
         
 ```
 
@@ -78,7 +97,7 @@ Pour vérifier la fiabilité de nos résultats, on calcule pour chaque date le n
 
 ```{r, warning=F, comment=F}
 rp <- readRDS("ipums/rp/mobil_benin_4dates_samp10pct.RDS" )
-
+names(rp)
 
 
 ### Check results
@@ -106,7 +125,7 @@ kable(tab, caption = "Mobilité durée de vie au Bénin / Communes"  )
 
 ```
 
--   **Commentaire :** Pour les deux niveaux administratifs on constate un accroissement régulier de la mobilité durée de vie lors des recensements de 1979, 1992 et 2002. Mais on assiste ensuite à une baisse significative en 2013. S'agit-il d'un biais ou d'une réalité ?
+-   **Commentaire :** A chaque date on trouve environ 12% de personnes nées dans un autre département.
 
 ### Indicateurs départementaux
 
@@ -418,15 +437,13 @@ mf_layout(title = "Cartogramme démographique (RP 2013)",
 
 -   **Commentaire** : Le passage au niveau communal permet de mettre à jour des inégalités considérables entre les communes d'un même département. La représentation sous forme de cartogramme permet de mieux visualiser les dynamiques à l'oeuvre dans la région métropolitaine côtière et l'intense redistribution qui s'opère de Cotonou vers Abomey-Calavi ou Porto-Novo
 
-
 ## Matrices Origine-Destination
 
 Au delà des indicateurs simples décrits dans la section précédente, on peut procéder à une analyse spatiale des déplacements en construisant des matrices origine-destination qui mesurent le flux de personnes entre leurs lieux de naissance et leurs lieux de résidence. Cela ouvre une vaste gamme de possibilités de traitements que nous allons illustrer par l'exemple du recensement de 2013 mais que l'on pourrait évidemment reproduire aux autres dates.
 
-
 ### Flux entre départements
 
-L'établissement de la matrice de flux est très facile. Elle suppose d'établir d'abord un tableau d'interactions au format "long" 
+L'établissement de la matrice de flux est très facile. Elle suppose d'établir d'abord un tableau d'interactions au format "long"
 
 ```{r}
 # Load individual data
@@ -465,8 +482,7 @@ row.names(int3)<-int2[[1]]
 kable(int3, caption ="Migrations durée de vie au Bénin en 2013 (matrice)")
 ```
 
-L'intérêt du format matriciel est de faciliter des opérations mathématiques telles que le calcul de pourcentage en ligne  ou le pourcentage en colonnes qui vont indiquer respectivement des probabilités de destination ou des probabilités d'origines.On va illustrer ces possibilités sur une matrice dont on a retiré la diagonale
-
+L'intérêt du format matriciel est de faciliter des opérations mathématiques telles que le calcul de pourcentage en ligne ou le pourcentage en colonnes qui vont indiquer respectivement des probabilités de destination ou des probabilités d'origines.On va illustrer ces possibilités sur une matrice dont on a retiré la diagonale
 
 ```{r}
 int4<-int3
@@ -475,12 +491,9 @@ int4 <- 100*int4/apply(int4,1,sum, na.rm=T)
 kable(int4, digits=1, caption = "Probabilité de destination des migrants durée de vie en 2013 (en %)")
 ```
 
-- **Commentaire :** Si l'on prend l'exemple des personnes nées à *Alibori* qui résident dans un autre département en 2013, on constate que plus de la moitié d'entre elles (55.5%) on été recensés dans le département de *Borgou*, 11.9% dans le département voisin d'Atacora et seulement 6.6% vers Cotonou (département de l'*Atlantique*). Inversement, les personnes nées dans le département du *Mono* qui résident dans un autre département en 2013 ont choisi majoritairement la capitale Cotonou (44.1%) et sa périphérie proche du département du *Littoral* (25.9%). On voit donc bien apparaître des clivages liés à la distance aux métropoles principales du pays qui polarisent chacune un espace migratoire distinct. 
-
-
+-   **Commentaire :** Si l'on prend l'exemple des personnes nées à *Alibori* qui résident dans un autre département en 2013, on constate que plus de la moitié d'entre elles (52%) on été recensés dans le département de *Borgou*, 14.3% dans le département voisin d'Atacora et seulement 8.9 % vers Cotonou (département de l'*Atlantique*). Inversement, les personnes nées dans le département du *Mono* qui résident dans un autre département en 2013 ont choisi majoritairement la capitale Cotonou (52.3%) et sa périphérie proche du département du *Littoral* (24.1%). On voit donc bien apparaître des clivages liés à la distance aux métropoles principales du pays qui polarisent chacune un espace migratoire distinct.
 
 Procédons à l'opération inverse de calcul des origines mais en ne retirant pas cette fois-ci la diagonale afin de voir la part des populations autchtones
-
 
 ```{r}
 int5<-t(int3)
@@ -489,14 +502,13 @@ int5<-t(int5)
 kable(int5, digits=1, caption = "Département de naissance des individus en 2013 (en %)")
 ```
 
-- **Commentaire** : La diagonale de cette matrice montre le degré de diversité des origines départementales des population qui résident dans chaque département en 2013. Les départements isolés et peu attractifs ont des taux très élevés de populations nées dans le même département, ce que l'on peut voir avec les départements d'*Alibori* (98.3%), de *Couffo* (97.3%)ou d'*Atacora* (96.8%). Inversement les départements métropolitains qui ont attiré des migrants de tous le pays affichent des taux plus faibles de populations nées dans le même département ce que l'on peut voir pour les départements de l'*Atlantique* (74.2%), du *Littoral* (78.3%), des *Collines* (89.2%) ou de *Borgou* (90.0%).
-
+-   **Commentaire** : La diagonale de cette matrice montre le degré de diversité des origines départementales des population qui résident dans chaque département en 2013. Les départements isolés et peu attractifs ont des taux très élevés de populations nées dans le même département, ce que l'on peut voir avec les départements d'*Alibori* (97.7%), de *Couffo* (97.5%)ou d'*Atacora* (96.5%). Inversement les départements métropolitains qui ont attiré des migrants de tous le pays affichent des taux plus faibles de populations nées dans le même département ce que l'on peut voir pour les départements de l'*Atlantique* (68.1%), du *Littoral* (65.7%), des *Collines* (88.8%) ou de *Borgou* (88.0%).
 
 ### Flux entre communes
 
 Les flux entre départements sont intéressants d'un point de vue pédagogique puisqu'ils permettent de montrer facilement les tableaux de format 10 x 10 aux étudiants et de leur expliquer les différentes transformations que l'on peut faire subir à une matrice de flux. Mais ils constituent une grille d'analyse assez grossière qui masque notamment tous les flux de proximité. Il est donc plus intéressant, dans un deuxième temps d'attaquer des données plus précises en commençant par étudier les flux vers une seule destinations mais à plusieurs dates.
 
-A titre d'exemple, nous allons essayer ici de reconstituer l'évolution de l'aire d'attraction de la commune de Parakou au cours du temps. 
+A titre d'exemple, nous allons essayer ici de reconstituer l'évolution de l'aire d'attraction de la commune de Parakou au cours du temps.
 
 ```{r}
 
@@ -542,8 +554,7 @@ kable(head(tab), digits=c(0,0,0,0,0,0,0,0,0,0,1,1,1,1),
 saveRDS(tab,"mobil/all/mob_dv_parakou_lev2.RDS")
 ```
 
-- **Exemple de lecture** : Au recensement de 1979, 3360 personnes natives de la commune de *Banikorara* résidaient dans une autre commune du Bénin. Parmi ces émigrants, on en trouvait 410 qui résidaient dans la commune de *Parakou* soit 12.2% des personnes ayant quitté la commune de *Banikorara*. Au recensement de 2013, on constatait la présence de 7200 personnes natives de la commune de *Banikorara* qui résidaient dans une autre commune, dont 1440 (20%) à *Parakou*. Il y a donc eu un renforcement de l'attraction de *Parakou* sur *Banikorara*, lié soit à de nouvelles migrations, soit à un cumul progressif du nombre d'arrivants qui ne sont pas repartis vers d'autres destinations et ont survécu. Les chiffres doivent toutefois être considérés avec précaution lorsqu'ils concernent de petits effectifs comme dans le cas de la commune de *Karimama* où le chiffre affiché de 40 migrants vers Parakou  en 1979 ne correspond en réalité qu'à 4 cas de l'échantillon de recensement à 10%. 
-
+-   **Exemple de lecture** : Au recensement de 1979, 3460 personnes natives de la commune de *Banikorara* résidaient dans une autre commune du Bénin. Parmi ces émigrants, on en trouvait 420 qui résidaient dans la commune de *Parakou* soit 12.1% des personnes ayant quitté la commune de *Banikorara*. Au recensement de 2013, on constatait la présence de 10340 personnes natives de la commune de *Banikorara* qui résidaient dans une autre commune, dont 1800 (17.4%) à *Parakou*. Il y a donc eu un renforcement de l'attraction de *Parakou* sur *Banikorara*, lié soit à de nouvelles migrations, soit à un cumul progressif du nombre d'arrivants qui ne sont pas repartis vers d'autres destinations et ont survécu. Les chiffres doivent toutefois être considérés avec précaution lorsqu'ils concernent de petits effectifs comme dans le cas de la commune de *Karimama* où le chiffre affiché de 90 migrants vers Parakou en 1992 ne correspond en réalité qu'à 9 cas de l'échantillon de recensement à 10%.
 
 A partir de ce tableau, on peut réaliser tout d'abord une cartographie des communes d'origine des personne qui résident à Parakou mais sont nés dans une autre commune pour chacune des dates de recensement
 
@@ -596,8 +607,7 @@ mf_layout(title = "Bénin, RP 2013",
 
 ```
 
-- **Commentaire**: Les personnes qui résident à Parakou mais sont originaires d'un autre département viennent principalement des cinq départements du nord, de quelques communes du Couffo et de l'agglomération constituée par  Cotonou, Abomey-Calavi et Porto-Novo. Cette géographie est apparemment assez stable au cours du temps, ce qui s'expique en partie par le choix de la variable de mobilité durée de vie qui produit des effets cumulatifs. Ces cartes ne permettent cependant pas de bien visualiser les effets de polarisation puisqu'elles subissent un effet de taille : plus une commune est peuplée, plus elle a de chance d'avoir envoyé des migrants vers Parakou. 
-
+-   **Commentaire**: Les personnes qui résident à Parakou mais sont originaires d'un autre département viennent principalement des cinq départements du nord, de quelques communes du Couffo et de l'agglomération constituée par Cotonou, Abomey-Calavi et Porto-Novo. Cette géographie est apparemment assez stable au cours du temps, ce qui s'expique en partie par le choix de la variable de mobilité durée de vie qui produit des effets cumulatifs. Ces cartes ne permettent cependant pas de bien visualiser les effets de polarisation puisqu'elles subissent un effet de taille : plus une commune est peuplée, plus elle a de chance d'avoir envoyé des migrants vers Parakou.
 
 ```{r mig_dv_lev2_parakou_pct,eval=TRUE, echo=FALSE, fig.cap="Probabilité de résider à Parakou pour les individus ayant quitté leur commune de naissance"}
 
@@ -675,13 +685,10 @@ mf_layout(title = "Bénin, RP 2013",
 
 ```
 
-- **Commentaire** : Cette seconde visualisation montre de façon beaucoup plus nette l'existence d'une coupure entre les cinq départements du nord du pays qui envoient une proportion élevée de leurs migrants vers Parakou et le reste du pays. La tendance générale est au renforcement et à l'homogénéisation spatiale de l'attraction de la ville de Parakou sur la partie nord du pays. Si cette attraction est évidemment liée à la distance (ce que pourra confirmer le *modèle gravitaire*), elle semble aussi révéler un *effet de barrière* au vu de la netteté de la coupure qui appraît brutalement au sud du département des Collines.  Il s'agit en bref d'un excellent exemple pédagogique pour construire des modules d'analyse de l'interaction spatiale. 
+-   **Commentaire** : Cette seconde visualisation montre de façon beaucoup plus nette l'existence d'une coupure entre les cinq départements du nord du pays qui envoient une proportion élevée de leurs migrants vers Parakou et le reste du pays. La tendance générale est au renforcement et à l'homogénéisation spatiale de l'attraction de la ville de Parakou sur la partie nord du pays. Si cette attraction est évidemment liée à la distance (ce que pourra confirmer le *modèle gravitaire*), elle semble aussi révéler un *effet de barrière* au vu de la netteté de la coupure qui appraît brutalement au sud du département des Collines. Il s'agit en bref d'un excellent exemple pédagogique pour construire des modules d'analyse de l'interaction spatiale.
 
 ## Prolongements possibles
 
 Les exemples présentés ci-dessus concernent les *migration durée de vie* mais ils pourront être reproduit sur d'autres matrices de migration concernant les mobilités effectuées au cours des années antérieures. Ils pourront également être appliqués facilement à d'autres pays, les migrations durée de vie étant presque toujours disponibles dans le recensement (ce qui n'est pas le cas des autres mesures de mobilité).
 
 Un point important est la possibilité d'étudier les *mobilités de sous-populations* plutôt que de populations entières comme nous l'avons fait ici. Il est en effet évident que la probabilité d'avoir effectué une migration durée de vie dépend de l'âge de la personne et augmente globalement avec celui-ci (même si un effet de génération peut entraîner une baisse aux âges plus élevés). On peut donc imaginer d'étudier par exemple la matrice de migrations des femmes de 15 à 30 ans célibataires ou celle des hommes chef de ménage de plus de 50 ans, ou celle des étudiants disposant d'un diplôme de l'enseignement supérieur, etc. La seule limite à ce type d'analyse réside dans la taille des échantillons obtenus et du niveau de découpage territorial retenu. Une sous-population de taille trop réduite ne pourra vraismeblablement pas être analysée valablement au niveau communal et il faudra dans ce cas retenir plutôt le niveau départemental.
-
-
-

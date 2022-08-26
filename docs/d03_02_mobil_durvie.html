@@ -88,7 +88,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./d09_01_references.html" rel="next">
+<link href="./d03_03_mobil_preced.html" rel="next">
 <link href="./d03_01_mobil_data.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -218,6 +218,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./d03_03_mobil_preced.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Migrations antérieures</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./d09_01_references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
@@ -340,24 +345,41 @@ Attachement du package : 'dplyr'</code></pre>
 <p>Nous allons maintenant compléter la base de donnée en y ajoutant deux indicateurs relatifs aux migrations durée de vie entre départments et communes. Nous allons dans le même temps éliminer du fichier les observations manquantes ou non disponibles aux deux niveaux.</p>
 <section id="nouvelles-variables" class="level3" data-number="8.3.1">
 <h3 data-number="8.3.1" class="anchored" data-anchor-id="nouvelles-variables"><span class="header-section-number">8.3.1</span> Nouvelles variables</h3>
-<p>Une petite difficulté concerne le type des variables GEOLEV1 ou GEOLEV2 et MIG1_B_BJ ou MIG2_B_BJ qui ne sont pas du même type <em>factor</em> ou <em>haven_labelled</em> et qui ont des modalités différentes. Nous suggérons donc fortement de convertir immédiatement toutes ces variables en type <em>character</em> pour en faire de nouvelles en les nommant LEV1_NAI et LEV2_NAI pour les départements et communes de naissance, LEV1_RES et LEV2_RES pour les départements et communes de résidence.</p>
+<p>Le programme qui suit est un peu compliqué car les variables relatives aux lieux de naissance ne sont pas codés de la même façon que les variables de résidence. Il faut donc reconstituer les codes avant de pouvoir tester leur égalité …</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Load data</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"ipums/rp/rp_benin_4dates_samp10pct.RDS"</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">### Level I : Create new variables and filter </span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span>rp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">LEV1_RES =</span> <span class="fu">as.character</span>(GEOLEV1),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">LEV1_NAI =</span> <span class="fu">as.character</span>(MIG1_P_BJ)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(<span class="fu">substr</span>(LEV1_NAI,<span class="dv">5</span>,<span class="dv">5</span>) <span class="sc">!=</span><span class="st">"9"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">MIG_DV_1 =</span> <span class="fu">as.numeric</span>(LEV1_RES<span class="sc">!=</span>LEV1_NAI))</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="do">### Level II Create new variables and filter </span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span>rp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">LEV2_RES =</span> <span class="fu">as.character</span>(GEOLEV2),</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                   <span class="at">LEV2_NAI =</span> <span class="fu">as.character</span>(MIG2_P_BJ)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(<span class="fu">substr</span>(LEV2_NAI,<span class="dv">8</span>,<span class="dv">9</span>) <span class="sc">!=</span><span class="st">"99"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">MIG_DV_2 =</span> <span class="fu">as.numeric</span>(LEV2_RES<span class="sc">!=</span>LEV2_NAI))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">### Recode and filter</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="do">### Level I : Create new variables and filter</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>code1<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"ipums/geom/geo1_bj2013.RDS"</span>) <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>recode1<span class="ot">&lt;-</span>code1<span class="sc">$</span>DEPT2013</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(recode1)<span class="ot">&lt;-</span><span class="fu">paste0</span>(code1<span class="sc">$</span>CNTRY_CODE,code1<span class="sc">$</span>IPUM2013)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">as_factor</span>(<span class="fu">as.numeric</span>(rp<span class="sc">$</span>BPLBJ1))</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">fct_recode</span>(test,<span class="sc">!!!</span>recode1)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>rp<span class="sc">$</span>LEV1_NAI<span class="ot">&lt;-</span><span class="fu">as.character</span>(test)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(rp<span class="sc">$</span>LEV1_NAI)</span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rp,<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>code2<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"ipums/geom/geo2_bj2013.RDS"</span>) <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>()</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>recode2<span class="ot">&lt;-</span>code2<span class="sc">$</span>COMN2013</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(recode2)<span class="ot">&lt;-</span><span class="fu">paste0</span>(code2<span class="sc">$</span>CNTRY_CODE,code2<span class="sc">$</span>IPUM2013)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">as_factor</span>(<span class="fu">as.numeric</span>(rp<span class="sc">$</span>BPLBJ2))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">fct_recode</span>(test,<span class="sc">!!!</span>recode2)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>rp<span class="sc">$</span>LEV2_NAI<span class="ot">&lt;-</span><span class="fu">as.character</span>(test)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span>rp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">LEV1_RES =</span> <span class="fu">as.character</span>(<span class="fu">as_factor</span>(GEOLEV1))) <span class="sc">%&gt;%</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(<span class="fu">nchar</span>(LEV1_NAI) <span class="sc">==</span><span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">MIG_DV_1 =</span> <span class="fu">as.numeric</span>(LEV1_RES<span class="sc">!=</span>LEV1_NAI))</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="do">### Level II Create new variables and filter </span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span>rp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">LEV2_RES =</span> <span class="fu">as.character</span>(<span class="fu">as_factor</span>(GEOLEV2))) <span class="sc">%&gt;%</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(<span class="fu">nchar</span>(LEV2_NAI) <span class="sc">==</span><span class="dv">9</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">MIG_DV_2 =</span> <span class="fu">as.numeric</span>(LEV2_RES<span class="sc">!=</span>LEV2_NAI))</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rp,<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="indicateurs-globaux" class="level3" data-number="8.3.2">
@@ -365,23 +387,31 @@ Attachement du package : 'dplyr'</code></pre>
 <p>Pour vérifier la fiabilité de nos résultats, on calcule pour chaque date le nombre de personnes qui résident dans un autre département ou une autre commune qu’au moment de leur naissance.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">### Check results</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(YEAR, MIG_DV_1) <span class="sc">%&gt;%</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>              reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> YEAR<span class="sc">~</span>MIG_DV_1, <span class="at">value.var=</span><span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">Recensement =</span> YEAR,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Immobile =</span> <span class="dv">2</span>,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Mobile =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">Total =</span> Immobile<span class="sc">+</span>Mobile,</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">TxMobil =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>Mobile<span class="sc">/</span>Total,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FALSE  [1] "COUNTRY"   "YEAR"      "SAMPLE"    "SERIAL"    "HHWT"      "URBAN"    
+FALSE  [7] "GEOLEV1"   "GEOLEV2"   "ELECTRIC"  "WATSUP"    "PERNUM"    "PERWT"    
+FALSE [13] "RESIDENT"  "RELATE"    "RELATED"   "AGE"       "AGE2"      "SEX"      
+FALSE [19] "MARST"     "MARSTD"    "BIRTHYR"   "CITIZEN"   "BPLBJ1"    "BPLBJ2"   
+FALSE [25] "EDATTAIN"  "EDATTAIND" "YRSCHOOL"  "EDUCBJ"    "EMPSTAT"   "EMPSTATD" 
+FALSE [31] "LABFORCE"  "MIGRATEP"  "MIGCTRYP"  "GEOMIG1_P" "MIGYRS1"   "MIG1_P_BJ"
+FALSE [37] "MIG2_P_BJ" "LEV1_NAI"  "LEV2_NAI"  "LEV1_RES"  "MIG_DV_1"  "LEV2_RES" 
+FALSE [43] "MIG_DV_2"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Check results</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(YEAR, MIG_DV_1) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>              reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> YEAR<span class="sc">~</span>MIG_DV_1, <span class="at">value.var=</span><span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">Recensement =</span> YEAR,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Immobile =</span> <span class="dv">2</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Mobile =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">Total =</span> Immobile<span class="sc">+</span>Mobile,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">TxMobil =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>Mobile<span class="sc">/</span>Total,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>FALSE `summarise()` has grouped output by 'YEAR'. You can override using the
 FALSE `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tab, <span class="at">caption =</span> <span class="st">"Mobilité durée de vie au Bénin / Départements"</span>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tab, <span class="at">caption =</span> <span class="st">"Mobilité durée de vie au Bénin / Départements"</span>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Mobilité durée de vie au Bénin / Départements</caption>
@@ -397,49 +427,49 @@ FALSE `.groups` argument.</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1979</td>
-<td style="text-align: right;">2800670</td>
-<td style="text-align: right;">352600</td>
-<td style="text-align: right;">3153270</td>
-<td style="text-align: right;">11.18</td>
+<td style="text-align: right;">2854050</td>
+<td style="text-align: right;">362340</td>
+<td style="text-align: right;">3216390</td>
+<td style="text-align: right;">11.27</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1992</td>
-<td style="text-align: right;">4059680</td>
-<td style="text-align: right;">622320</td>
-<td style="text-align: right;">4682000</td>
-<td style="text-align: right;">13.29</td>
+<td style="text-align: right;">4227630</td>
+<td style="text-align: right;">604460</td>
+<td style="text-align: right;">4832090</td>
+<td style="text-align: right;">12.51</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2002</td>
-<td style="text-align: right;">5311510</td>
-<td style="text-align: right;">797490</td>
-<td style="text-align: right;">6109000</td>
-<td style="text-align: right;">13.05</td>
+<td style="text-align: right;">5681660</td>
+<td style="text-align: right;">842960</td>
+<td style="text-align: right;">6524620</td>
+<td style="text-align: right;">12.92</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2013</td>
-<td style="text-align: right;">8638630</td>
-<td style="text-align: right;">1022500</td>
-<td style="text-align: right;">9661130</td>
-<td style="text-align: right;">10.58</td>
+<td style="text-align: right;">8492480</td>
+<td style="text-align: right;">1239330</td>
+<td style="text-align: right;">9731810</td>
+<td style="text-align: right;">12.73</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Check results</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(YEAR, MIG_DV_2) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>              reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> YEAR<span class="sc">~</span>MIG_DV_2, <span class="at">value.var=</span><span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">Recensement =</span> YEAR,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Immobile =</span> <span class="dv">2</span>,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Mobile =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">Total =</span> Immobile<span class="sc">+</span>Mobile,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">TxMobil =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>Mobile<span class="sc">/</span>Total,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Check results</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(YEAR, MIG_DV_2) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>              reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> YEAR<span class="sc">~</span>MIG_DV_2, <span class="at">value.var=</span><span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">Recensement =</span> YEAR,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Immobile =</span> <span class="dv">2</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Mobile =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">Total =</span> Immobile<span class="sc">+</span>Mobile,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">TxMobil =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>Mobile<span class="sc">/</span>Total,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>FALSE `summarise()` has grouped output by 'YEAR'. You can override using the
 FALSE `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tab, <span class="at">caption =</span> <span class="st">"Mobilité durée de vie au Bénin / Communes"</span>  )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tab, <span class="at">caption =</span> <span class="st">"Mobilité durée de vie au Bénin / Communes"</span>  )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Mobilité durée de vie au Bénin / Communes</caption>
@@ -455,38 +485,38 @@ FALSE `.groups` argument.</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1979</td>
-<td style="text-align: right;">2652610</td>
-<td style="text-align: right;">500660</td>
-<td style="text-align: right;">3153270</td>
-<td style="text-align: right;">15.88</td>
+<td style="text-align: right;">2695300</td>
+<td style="text-align: right;">521090</td>
+<td style="text-align: right;">3216390</td>
+<td style="text-align: right;">16.20</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1992</td>
-<td style="text-align: right;">3823320</td>
-<td style="text-align: right;">858680</td>
-<td style="text-align: right;">4682000</td>
-<td style="text-align: right;">18.34</td>
+<td style="text-align: right;">4006900</td>
+<td style="text-align: right;">825190</td>
+<td style="text-align: right;">4832090</td>
+<td style="text-align: right;">17.08</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2002</td>
-<td style="text-align: right;">5041330</td>
-<td style="text-align: right;">1067670</td>
-<td style="text-align: right;">6109000</td>
-<td style="text-align: right;">17.48</td>
+<td style="text-align: right;">5344080</td>
+<td style="text-align: right;">1180540</td>
+<td style="text-align: right;">6524620</td>
+<td style="text-align: right;">18.09</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2013</td>
-<td style="text-align: right;">8264390</td>
-<td style="text-align: right;">1396740</td>
-<td style="text-align: right;">9661130</td>
-<td style="text-align: right;">14.46</td>
+<td style="text-align: right;">7979390</td>
+<td style="text-align: right;">1752420</td>
+<td style="text-align: right;">9731810</td>
+<td style="text-align: right;">18.01</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <ul>
-<li><strong>Commentaire :</strong> Pour les deux niveaux administratifs on constate un accroissement régulier de la mobilité durée de vie lors des recensements de 1979, 1992 et 2002. Mais on assiste ensuite à une baisse significative en 2013. S’agit-il d’un biais ou d’une réalité ?</li>
+<li><strong>Commentaire :</strong> A chaque date on trouve environ 12% de personnes nées dans un autre département.</li>
 </ul>
 </section>
 <section id="indicateurs-départementaux" class="level3" data-number="8.3.3">
@@ -512,66 +542,66 @@ FALSE `.groups` argument.</code></pre>
 <li><strong>txASY = SOL/VOL</strong> : indicateur d’asymétrie des flux (compris entre -1 et +1)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load code and name of units</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>map1<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/map_lev1_bj2013.shp"</span>,<span class="at">quiet=</span>T)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>tab1<span class="ot">&lt;-</span>map1 <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(code,nom)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Non migrant</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>STA <span class="ot">&lt;-</span>  rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_NAI) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_NAI,</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">STA =</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load code and name of units</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>map1<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/map_lev1_bj2013.shp"</span>,<span class="at">quiet=</span>T)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>tab1<span class="ot">&lt;-</span>map1 <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(code,nom)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Non migrant</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>STA <span class="ot">&lt;-</span>  rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_NAI) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_NAI,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">STA =</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'YEAR'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Departures</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>EMI <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_NAI) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_NAI,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">EMI =</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'YEAR'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrivals</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>IMM <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_RES) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Departures</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>EMI <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_NAI) <span class="sc">%&gt;%</span> </span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_RES,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">IMM =</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_NAI,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">EMI =</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'YEAR'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Put together</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>tab1 <span class="ot">&lt;-</span> tab1 <span class="sc">%&gt;%</span> <span class="fu">right_join</span>(STA) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">left_join</span>(EMI) <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>               <span class="fu">left_join</span>(IMM) <span class="sc">%&gt;%</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mutate</span>(<span class="at">VOL=</span>EMI<span class="sc">+</span>IMM,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">SOL=</span>IMM<span class="sc">-</span>EMI,</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">POPMOY=</span> STA<span class="sc">+</span>(EMI<span class="sc">+</span>IMM)<span class="sc">/</span><span class="dv">2</span>,</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txEMI =</span> <span class="dv">100</span><span class="sc">*</span>EMI<span class="sc">/</span>POPMOY,</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txIMM =</span> <span class="dv">100</span><span class="sc">*</span>IMM<span class="sc">/</span>POPMOY,</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txMOB =</span> <span class="dv">100</span><span class="sc">*</span>VOL<span class="sc">/</span>POPMOY,</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txACM =</span> <span class="dv">100</span><span class="sc">*</span>SOL<span class="sc">/</span>POPMOY,</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txASY =</span> SOL<span class="sc">/</span>VOL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrivals</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>IMM <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_RES) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_RES,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">IMM =</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'YEAR'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Put together</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>tab1 <span class="ot">&lt;-</span> tab1 <span class="sc">%&gt;%</span> <span class="fu">right_join</span>(STA) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">left_join</span>(EMI) <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>               <span class="fu">left_join</span>(IMM) <span class="sc">%&gt;%</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mutate</span>(<span class="at">VOL=</span>EMI<span class="sc">+</span>IMM,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">SOL=</span>IMM<span class="sc">-</span>EMI,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">POPMOY=</span> STA<span class="sc">+</span>(EMI<span class="sc">+</span>IMM)<span class="sc">/</span><span class="dv">2</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txEMI =</span> <span class="dv">100</span><span class="sc">*</span>EMI<span class="sc">/</span>POPMOY,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txIMM =</span> <span class="dv">100</span><span class="sc">*</span>IMM<span class="sc">/</span>POPMOY,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txMOB =</span> <span class="dv">100</span><span class="sc">*</span>VOL<span class="sc">/</span>POPMOY,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txACM =</span> <span class="dv">100</span><span class="sc">*</span>SOL<span class="sc">/</span>POPMOY,</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txASY =</span> SOL<span class="sc">/</span>VOL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Joining, by = "code"
 Joining, by = c("code", "date")
 Joining, by = c("code", "date")</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sauvegarde</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tab1, <span class="st">"mobil/all/mob_dv_lev1.RDS"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(tab1),</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>),</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Indicateurs départementaux de migration durée de vie au Bénin (1979, 1992, 2002, 2013)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sauvegarde</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tab1, <span class="st">"mobil/all/mob_dv_lev1.RDS"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(tab1),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Indicateurs départementaux de migration durée de vie au Bénin (1979, 1992, 2002, 2013)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Indicateurs départementaux de migration durée de vie au Bénin (1979, 1992, 2002, 2013)</caption>
@@ -614,97 +644,97 @@ Joining, by = c("code", "date")</code></pre>
 <td style="text-align: left;">204001</td>
 <td style="text-align: left;">Alibori</td>
 <td style="text-align: right;">1979</td>
-<td style="text-align: right;">190260</td>
-<td style="text-align: right;">11990</td>
-<td style="text-align: right;">7710</td>
-<td style="text-align: right;">19700</td>
-<td style="text-align: right;">-4280</td>
-<td style="text-align: right;">200110</td>
-<td style="text-align: right;">6.0</td>
-<td style="text-align: right;">3.9</td>
-<td style="text-align: right;">9.8</td>
-<td style="text-align: right;">-2.1</td>
-<td style="text-align: right;">-0.22</td>
+<td style="text-align: right;">192050</td>
+<td style="text-align: right;">10650</td>
+<td style="text-align: right;">7580</td>
+<td style="text-align: right;">18230</td>
+<td style="text-align: right;">-3070</td>
+<td style="text-align: right;">201165</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">-1.5</td>
+<td style="text-align: right;">-0.17</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">204001</td>
 <td style="text-align: left;">Alibori</td>
 <td style="text-align: right;">1992</td>
-<td style="text-align: right;">323530</td>
-<td style="text-align: right;">19370</td>
-<td style="text-align: right;">12710</td>
-<td style="text-align: right;">32080</td>
-<td style="text-align: right;">-6660</td>
-<td style="text-align: right;">339570</td>
+<td style="text-align: right;">330010</td>
+<td style="text-align: right;">19570</td>
+<td style="text-align: right;">12550</td>
+<td style="text-align: right;">32120</td>
+<td style="text-align: right;">-7020</td>
+<td style="text-align: right;">346070</td>
 <td style="text-align: right;">5.7</td>
-<td style="text-align: right;">3.7</td>
-<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">9.3</td>
 <td style="text-align: right;">-2.0</td>
-<td style="text-align: right;">-0.21</td>
+<td style="text-align: right;">-0.22</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">204001</td>
 <td style="text-align: left;">Alibori</td>
 <td style="text-align: right;">2002</td>
-<td style="text-align: right;">431550</td>
-<td style="text-align: right;">18470</td>
-<td style="text-align: right;">12640</td>
-<td style="text-align: right;">31110</td>
-<td style="text-align: right;">-5830</td>
-<td style="text-align: right;">447105</td>
-<td style="text-align: right;">4.1</td>
-<td style="text-align: right;">2.8</td>
-<td style="text-align: right;">7.0</td>
-<td style="text-align: right;">-1.3</td>
-<td style="text-align: right;">-0.19</td>
+<td style="text-align: right;">478180</td>
+<td style="text-align: right;">19200</td>
+<td style="text-align: right;">14200</td>
+<td style="text-align: right;">33400</td>
+<td style="text-align: right;">-5000</td>
+<td style="text-align: right;">494880</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">2.9</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">-1.0</td>
+<td style="text-align: right;">-0.15</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">204001</td>
 <td style="text-align: left;">Alibori</td>
 <td style="text-align: right;">2013</td>
-<td style="text-align: right;">824950</td>
-<td style="text-align: right;">26560</td>
-<td style="text-align: right;">15130</td>
-<td style="text-align: right;">41690</td>
-<td style="text-align: right;">-11430</td>
-<td style="text-align: right;">845795</td>
-<td style="text-align: right;">3.1</td>
-<td style="text-align: right;">1.8</td>
-<td style="text-align: right;">4.9</td>
-<td style="text-align: right;">-1.4</td>
-<td style="text-align: right;">-0.27</td>
+<td style="text-align: right;">819840</td>
+<td style="text-align: right;">32520</td>
+<td style="text-align: right;">19610</td>
+<td style="text-align: right;">52130</td>
+<td style="text-align: right;">-12910</td>
+<td style="text-align: right;">845905</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">-1.5</td>
+<td style="text-align: right;">-0.25</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">204002</td>
 <td style="text-align: left;">Atacora</td>
 <td style="text-align: right;">1979</td>
-<td style="text-align: right;">263120</td>
-<td style="text-align: right;">18130</td>
-<td style="text-align: right;">12910</td>
-<td style="text-align: right;">31040</td>
-<td style="text-align: right;">-5220</td>
-<td style="text-align: right;">278640</td>
-<td style="text-align: right;">6.5</td>
-<td style="text-align: right;">4.6</td>
-<td style="text-align: right;">11.1</td>
-<td style="text-align: right;">-1.9</td>
-<td style="text-align: right;">-0.17</td>
+<td style="text-align: right;">277370</td>
+<td style="text-align: right;">18470</td>
+<td style="text-align: right;">8370</td>
+<td style="text-align: right;">26840</td>
+<td style="text-align: right;">-10100</td>
+<td style="text-align: right;">290790</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">2.9</td>
+<td style="text-align: right;">9.2</td>
+<td style="text-align: right;">-3.5</td>
+<td style="text-align: right;">-0.38</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">204002</td>
 <td style="text-align: left;">Atacora</td>
 <td style="text-align: right;">1992</td>
-<td style="text-align: right;">365180</td>
-<td style="text-align: right;">37810</td>
-<td style="text-align: right;">18340</td>
-<td style="text-align: right;">56150</td>
-<td style="text-align: right;">-19470</td>
-<td style="text-align: right;">393255</td>
-<td style="text-align: right;">9.6</td>
-<td style="text-align: right;">4.7</td>
-<td style="text-align: right;">14.3</td>
-<td style="text-align: right;">-5.0</td>
-<td style="text-align: right;">-0.35</td>
+<td style="text-align: right;">387050</td>
+<td style="text-align: right;">43130</td>
+<td style="text-align: right;">14260</td>
+<td style="text-align: right;">57390</td>
+<td style="text-align: right;">-28870</td>
+<td style="text-align: right;">415745</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">13.8</td>
+<td style="text-align: right;">-6.9</td>
+<td style="text-align: right;">-0.50</td>
 </tr>
 </tbody>
 </table>
@@ -783,30 +813,30 @@ Joining, by = c("code", "nom")</code></pre>
 <h3 data-number="8.4.1" class="anchored" data-anchor-id="flux-entre-départements"><span class="header-section-number">8.4.1</span> Flux entre départements</h3>
 <p>L’établissement de la matrice de flux est très facile. Elle suppose d’établir d’abord un tableau d’interactions au format “long”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load individual data</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load map and extract name of units</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>map<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/cartog_lev1_bj2013.shp"</span>, <span class="at">quiet=</span>T)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>codei <span class="ot">&lt;-</span> map <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="at">i=</span>code,<span class="at">name_i=</span>nom)</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>codej <span class="ot">&lt;-</span> map <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="at">j=</span>code,<span class="at">name_j=</span>nom)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute interactions</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>int <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(YEAR <span class="sc">==</span> <span class="dv">2013</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">group_by</span>(<span class="at">i =</span> LEV1_NAI,</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">j =</span> LEV1_RES) <span class="sc">%&gt;%</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarize</span>(<span class="at">Fij =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">left_join</span>(codei) <span class="sc">%&gt;%</span></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">left_join</span>(codej) <span class="sc">%&gt;%</span></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">select</span>(i,j,name_i,name_j, Fij)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load individual data</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load map and extract name of units</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>map<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/cartog_lev1_bj2013.shp"</span>, <span class="at">quiet=</span>T)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>codei <span class="ot">&lt;-</span> map <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="at">i=</span>code,<span class="at">name_i=</span>nom)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>codej <span class="ot">&lt;-</span> map <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="at">j=</span>code,<span class="at">name_j=</span>nom)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute interactions</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>int <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(YEAR <span class="sc">==</span> <span class="dv">2013</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">group_by</span>(<span class="at">i =</span> LEV1_NAI,</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">j =</span> LEV1_RES) <span class="sc">%&gt;%</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarize</span>(<span class="at">Fij =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">left_join</span>(codei) <span class="sc">%&gt;%</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">left_join</span>(codej) <span class="sc">%&gt;%</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">select</span>(i,j,name_i,name_j, Fij)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'i'. You can override using the `.groups`
 argument.
 Joining, by = "i"
 Joining, by = "j"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(int), <span class="at">caption =</span> <span class="st">"Migrations durée de vie au Bénin en 2013 (format long)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(int), <span class="at">caption =</span> <span class="st">"Migrations durée de vie au Bénin en 2013 (format long)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Migrations durée de vie au Bénin en 2013 (format long)</caption>
@@ -825,42 +855,42 @@ Joining, by = "j"</code></pre>
 <td style="text-align: left;">204001</td>
 <td style="text-align: left;">Alibori</td>
 <td style="text-align: left;">Alibori</td>
-<td style="text-align: right;">824950</td>
+<td style="text-align: right;">819840</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">204001</td>
 <td style="text-align: left;">204002</td>
 <td style="text-align: left;">Alibori</td>
 <td style="text-align: left;">Atacora</td>
-<td style="text-align: right;">3160</td>
+<td style="text-align: right;">4650</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">204001</td>
 <td style="text-align: left;">204003</td>
 <td style="text-align: left;">Alibori</td>
 <td style="text-align: left;">Atlantique</td>
-<td style="text-align: right;">1760</td>
+<td style="text-align: right;">2880</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">204001</td>
 <td style="text-align: left;">204004</td>
 <td style="text-align: left;">Alibori</td>
 <td style="text-align: left;">Borgou</td>
-<td style="text-align: right;">14750</td>
+<td style="text-align: right;">16910</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">204001</td>
 <td style="text-align: left;">204005</td>
 <td style="text-align: left;">Alibori</td>
 <td style="text-align: left;">Collines</td>
-<td style="text-align: right;">1790</td>
+<td style="text-align: right;">1940</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">204001</td>
 <td style="text-align: left;">204006</td>
 <td style="text-align: left;">Alibori</td>
 <td style="text-align: left;">Couffo</td>
-<td style="text-align: right;">110</td>
+<td style="text-align: right;">100</td>
 </tr>
 </tbody>
 </table>
@@ -868,11 +898,11 @@ Joining, by = "j"</code></pre>
 </div>
 <p>On peut ensuite transformer le tableau d’interaction en format large en utilisant au choix la fonction <code>dcast()</code> (des packages reshape2 et data.table ) ou la procédure <code>pivot_wider()</code> du package tidyr qui fait partie de l’univers tidyverse.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>int2<span class="ot">&lt;-</span> reshape2<span class="sc">::</span><span class="fu">dcast</span>(int, <span class="at">formula =</span> name_i<span class="sc">~</span>name_j, <span class="at">values.var=</span>Fij)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>int2<span class="ot">&lt;-</span> reshape2<span class="sc">::</span><span class="fu">dcast</span>(int, <span class="at">formula =</span> name_i<span class="sc">~</span>name_j, <span class="at">values.var=</span>Fij)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Using Fij as value column: use value.var to override.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int2, <span class="at">caption =</span><span class="st">"Migrations durée de vie au Bénin en 2013 (format large)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int2, <span class="at">caption =</span><span class="st">"Migrations durée de vie au Bénin en 2013 (format large)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Migrations durée de vie au Bénin en 2013 (format large)</caption>
@@ -911,183 +941,183 @@ Joining, by = "j"</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Alibori</td>
-<td style="text-align: right;">824950</td>
-<td style="text-align: right;">3160</td>
-<td style="text-align: right;">1760</td>
-<td style="text-align: right;">14750</td>
-<td style="text-align: right;">1790</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">1340</td>
-<td style="text-align: right;">1450</td>
-<td style="text-align: right;">440</td>
-<td style="text-align: right;">670</td>
-<td style="text-align: right;">210</td>
-<td style="text-align: right;">880</td>
+<td style="text-align: right;">819840</td>
+<td style="text-align: right;">4650</td>
+<td style="text-align: right;">2880</td>
+<td style="text-align: right;">16910</td>
+<td style="text-align: right;">1940</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">1130</td>
+<td style="text-align: right;">2070</td>
+<td style="text-align: right;">370</td>
+<td style="text-align: right;">1010</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">1280</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Atacora</td>
-<td style="text-align: right;">1320</td>
-<td style="text-align: right;">733210</td>
-<td style="text-align: right;">3870</td>
-<td style="text-align: right;">35660</td>
-<td style="text-align: right;">6400</td>
-<td style="text-align: right;">410</td>
-<td style="text-align: right;">6420</td>
-<td style="text-align: right;">2400</td>
-<td style="text-align: right;">420</td>
+<td style="text-align: right;">2110</td>
+<td style="text-align: right;">742110</td>
+<td style="text-align: right;">5900</td>
+<td style="text-align: right;">45210</td>
+<td style="text-align: right;">7920</td>
+<td style="text-align: right;">230</td>
+<td style="text-align: right;">8100</td>
+<td style="text-align: right;">3290</td>
+<td style="text-align: right;">640</td>
+<td style="text-align: right;">1950</td>
+<td style="text-align: right;">530</td>
 <td style="text-align: right;">1550</td>
-<td style="text-align: right;">550</td>
-<td style="text-align: right;">1480</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Atlantique</td>
-<td style="text-align: right;">400</td>
-<td style="text-align: right;">1300</td>
-<td style="text-align: right;">1015530</td>
-<td style="text-align: right;">2850</td>
-<td style="text-align: right;">2290</td>
-<td style="text-align: right;">1830</td>
-<td style="text-align: right;">410</td>
-<td style="text-align: right;">33900</td>
-<td style="text-align: right;">5850</td>
-<td style="text-align: right;">11980</td>
-<td style="text-align: right;">1720</td>
-<td style="text-align: right;">6120</td>
+<td style="text-align: right;">490</td>
+<td style="text-align: right;">1450</td>
+<td style="text-align: right;">931460</td>
+<td style="text-align: right;">3230</td>
+<td style="text-align: right;">2370</td>
+<td style="text-align: right;">1920</td>
+<td style="text-align: right;">690</td>
+<td style="text-align: right;">48590</td>
+<td style="text-align: right;">7720</td>
+<td style="text-align: right;">17730</td>
+<td style="text-align: right;">2110</td>
+<td style="text-align: right;">7100</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Borgou</td>
-<td style="text-align: right;">4950</td>
-<td style="text-align: right;">7850</td>
-<td style="text-align: right;">8380</td>
-<td style="text-align: right;">1063610</td>
-<td style="text-align: right;">8660</td>
-<td style="text-align: right;">1180</td>
-<td style="text-align: right;">6590</td>
-<td style="text-align: right;">7530</td>
-<td style="text-align: right;">1210</td>
-<td style="text-align: right;">3160</td>
-<td style="text-align: right;">300</td>
-<td style="text-align: right;">4200</td>
+<td style="text-align: right;">5320</td>
+<td style="text-align: right;">6640</td>
+<td style="text-align: right;">12050</td>
+<td style="text-align: right;">1045670</td>
+<td style="text-align: right;">7640</td>
+<td style="text-align: right;">900</td>
+<td style="text-align: right;">5380</td>
+<td style="text-align: right;">9250</td>
+<td style="text-align: right;">1080</td>
+<td style="text-align: right;">4090</td>
+<td style="text-align: right;">430</td>
+<td style="text-align: right;">3520</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Collines</td>
-<td style="text-align: right;">1690</td>
-<td style="text-align: right;">2360</td>
-<td style="text-align: right;">14370</td>
-<td style="text-align: right;">18020</td>
-<td style="text-align: right;">602740</td>
-<td style="text-align: right;">1170</td>
-<td style="text-align: right;">3540</td>
-<td style="text-align: right;">6350</td>
-<td style="text-align: right;">880</td>
-<td style="text-align: right;">2550</td>
-<td style="text-align: right;">980</td>
-<td style="text-align: right;">10880</td>
+<td style="text-align: right;">2700</td>
+<td style="text-align: right;">2820</td>
+<td style="text-align: right;">31610</td>
+<td style="text-align: right;">23890</td>
+<td style="text-align: right;">611770</td>
+<td style="text-align: right;">1130</td>
+<td style="text-align: right;">3900</td>
+<td style="text-align: right;">11290</td>
+<td style="text-align: right;">1450</td>
+<td style="text-align: right;">4580</td>
+<td style="text-align: right;">1570</td>
+<td style="text-align: right;">11010</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Couffo</td>
-<td style="text-align: right;">180</td>
 <td style="text-align: right;">320</td>
-<td style="text-align: right;">14160</td>
-<td style="text-align: right;">2450</td>
-<td style="text-align: right;">3970</td>
-<td style="text-align: right;">708640</td>
-<td style="text-align: right;">810</td>
-<td style="text-align: right;">6160</td>
-<td style="text-align: right;">9640</td>
-<td style="text-align: right;">2840</td>
-<td style="text-align: right;">1000</td>
-<td style="text-align: right;">7910</td>
+<td style="text-align: right;">630</td>
+<td style="text-align: right;">31080</td>
+<td style="text-align: right;">3590</td>
+<td style="text-align: right;">5190</td>
+<td style="text-align: right;">718560</td>
+<td style="text-align: right;">920</td>
+<td style="text-align: right;">10300</td>
+<td style="text-align: right;">12210</td>
+<td style="text-align: right;">4850</td>
+<td style="text-align: right;">1470</td>
+<td style="text-align: right;">8910</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Donga</td>
-<td style="text-align: right;">900</td>
-<td style="text-align: right;">4070</td>
-<td style="text-align: right;">2910</td>
-<td style="text-align: right;">16290</td>
-<td style="text-align: right;">7310</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: right;">491420</td>
-<td style="text-align: right;">6940</td>
-<td style="text-align: right;">180</td>
-<td style="text-align: right;">1700</td>
-<td style="text-align: right;">260</td>
-<td style="text-align: right;">1020</td>
+<td style="text-align: right;">1820</td>
+<td style="text-align: right;">4460</td>
+<td style="text-align: right;">5800</td>
+<td style="text-align: right;">21080</td>
+<td style="text-align: right;">8160</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">500830</td>
+<td style="text-align: right;">10030</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">2660</td>
+<td style="text-align: right;">440</td>
+<td style="text-align: right;">800</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Littoral</td>
-<td style="text-align: right;">4120</td>
-<td style="text-align: right;">3110</td>
-<td style="text-align: right;">235020</td>
-<td style="text-align: right;">13480</td>
-<td style="text-align: right;">9860</td>
-<td style="text-align: right;">6110</td>
-<td style="text-align: right;">3910</td>
-<td style="text-align: right;">483920</td>
-<td style="text-align: right;">16140</td>
-<td style="text-align: right;">78470</td>
-<td style="text-align: right;">5320</td>
-<td style="text-align: right;">18700</td>
+<td style="text-align: right;">4170</td>
+<td style="text-align: right;">2580</td>
+<td style="text-align: right;">203580</td>
+<td style="text-align: right;">11210</td>
+<td style="text-align: right;">5570</td>
+<td style="text-align: right;">2910</td>
+<td style="text-align: right;">2250</td>
+<td style="text-align: right;">399480</td>
+<td style="text-align: right;">10620</td>
+<td style="text-align: right;">66160</td>
+<td style="text-align: right;">4370</td>
+<td style="text-align: right;">11780</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Mono</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">320</td>
-<td style="text-align: right;">21850</td>
-<td style="text-align: right;">1510</td>
-<td style="text-align: right;">1190</td>
-<td style="text-align: right;">3810</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">12810</td>
-<td style="text-align: right;">431570</td>
-<td style="text-align: right;">4220</td>
-<td style="text-align: right;">670</td>
-<td style="text-align: right;">2720</td>
+<td style="text-align: right;">380</td>
+<td style="text-align: right;">570</td>
+<td style="text-align: right;">47510</td>
+<td style="text-align: right;">1900</td>
+<td style="text-align: right;">1500</td>
+<td style="text-align: right;">5250</td>
+<td style="text-align: right;">310</td>
+<td style="text-align: right;">21900</td>
+<td style="text-align: right;">442180</td>
+<td style="text-align: right;">7280</td>
+<td style="text-align: right;">1060</td>
+<td style="text-align: right;">3210</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Oueme</td>
-<td style="text-align: right;">600</td>
-<td style="text-align: right;">920</td>
-<td style="text-align: right;">17180</td>
-<td style="text-align: right;">4250</td>
-<td style="text-align: right;">1670</td>
-<td style="text-align: right;">1110</td>
-<td style="text-align: right;">450</td>
-<td style="text-align: right;">31410</td>
-<td style="text-align: right;">2330</td>
-<td style="text-align: right;">929610</td>
-<td style="text-align: right;">13330</td>
-<td style="text-align: right;">4300</td>
+<td style="text-align: right;">740</td>
+<td style="text-align: right;">1270</td>
+<td style="text-align: right;">27530</td>
+<td style="text-align: right;">4800</td>
+<td style="text-align: right;">1880</td>
+<td style="text-align: right;">1360</td>
+<td style="text-align: right;">590</td>
+<td style="text-align: right;">47700</td>
+<td style="text-align: right;">2460</td>
+<td style="text-align: right;">917830</td>
+<td style="text-align: right;">19500</td>
+<td style="text-align: right;">4680</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Plateau</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: right;">290</td>
-<td style="text-align: right;">3530</td>
-<td style="text-align: right;">850</td>
-<td style="text-align: right;">1680</td>
-<td style="text-align: right;">250</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6040</td>
-<td style="text-align: right;">670</td>
-<td style="text-align: right;">14970</td>
-<td style="text-align: right;">581800</td>
-<td style="text-align: right;">3020</td>
+<td style="text-align: right;">380</td>
+<td style="text-align: right;">350</td>
+<td style="text-align: right;">6200</td>
+<td style="text-align: right;">1110</td>
+<td style="text-align: right;">1780</td>
+<td style="text-align: right;">300</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">11390</td>
+<td style="text-align: right;">800</td>
+<td style="text-align: right;">25680</td>
+<td style="text-align: right;">577800</td>
+<td style="text-align: right;">3610</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Zou</td>
-<td style="text-align: right;">630</td>
-<td style="text-align: right;">680</td>
-<td style="text-align: right;">29430</td>
-<td style="text-align: right;">7640</td>
-<td style="text-align: right;">28390</td>
-<td style="text-align: right;">3840</td>
-<td style="text-align: right;">580</td>
-<td style="text-align: right;">19250</td>
-<td style="text-align: right;">1820</td>
-<td style="text-align: right;">7550</td>
-<td style="text-align: right;">6270</td>
-<td style="text-align: right;">771630</td>
+<td style="text-align: right;">1180</td>
+<td style="text-align: right;">1410</td>
+<td style="text-align: right;">62460</td>
+<td style="text-align: right;">9300</td>
+<td style="text-align: right;">32970</td>
+<td style="text-align: right;">4380</td>
+<td style="text-align: right;">840</td>
+<td style="text-align: right;">32790</td>
+<td style="text-align: right;">2480</td>
+<td style="text-align: right;">12230</td>
+<td style="text-align: right;">8260</td>
+<td style="text-align: right;">784950</td>
 </tr>
 </tbody>
 </table>
@@ -1095,9 +1125,9 @@ Joining, by = "j"</code></pre>
 </div>
 <p>On peut enfin transformer le tableau en un objet de type matrice ce qui suppose de transformer la variable name_i en nom des lignes :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>int3 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(int2[,<span class="sc">-</span><span class="dv">1</span>])</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(int3)<span class="ot">&lt;-</span>int2[[<span class="dv">1</span>]]</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int3, <span class="at">caption =</span><span class="st">"Migrations durée de vie au Bénin en 2013 (matrice)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>int3 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(int2[,<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(int3)<span class="ot">&lt;-</span>int2[[<span class="dv">1</span>]]</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int3, <span class="at">caption =</span><span class="st">"Migrations durée de vie au Bénin en 2013 (matrice)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Migrations durée de vie au Bénin en 2013 (matrice)</caption>
@@ -1136,183 +1166,183 @@ Joining, by = "j"</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Alibori</td>
-<td style="text-align: right;">824950</td>
-<td style="text-align: right;">3160</td>
-<td style="text-align: right;">1760</td>
-<td style="text-align: right;">14750</td>
-<td style="text-align: right;">1790</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">1340</td>
-<td style="text-align: right;">1450</td>
-<td style="text-align: right;">440</td>
-<td style="text-align: right;">670</td>
-<td style="text-align: right;">210</td>
-<td style="text-align: right;">880</td>
+<td style="text-align: right;">819840</td>
+<td style="text-align: right;">4650</td>
+<td style="text-align: right;">2880</td>
+<td style="text-align: right;">16910</td>
+<td style="text-align: right;">1940</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">1130</td>
+<td style="text-align: right;">2070</td>
+<td style="text-align: right;">370</td>
+<td style="text-align: right;">1010</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">1280</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Atacora</td>
-<td style="text-align: right;">1320</td>
-<td style="text-align: right;">733210</td>
-<td style="text-align: right;">3870</td>
-<td style="text-align: right;">35660</td>
-<td style="text-align: right;">6400</td>
-<td style="text-align: right;">410</td>
-<td style="text-align: right;">6420</td>
-<td style="text-align: right;">2400</td>
-<td style="text-align: right;">420</td>
+<td style="text-align: right;">2110</td>
+<td style="text-align: right;">742110</td>
+<td style="text-align: right;">5900</td>
+<td style="text-align: right;">45210</td>
+<td style="text-align: right;">7920</td>
+<td style="text-align: right;">230</td>
+<td style="text-align: right;">8100</td>
+<td style="text-align: right;">3290</td>
+<td style="text-align: right;">640</td>
+<td style="text-align: right;">1950</td>
+<td style="text-align: right;">530</td>
 <td style="text-align: right;">1550</td>
-<td style="text-align: right;">550</td>
-<td style="text-align: right;">1480</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Atlantique</td>
-<td style="text-align: right;">400</td>
-<td style="text-align: right;">1300</td>
-<td style="text-align: right;">1015530</td>
-<td style="text-align: right;">2850</td>
-<td style="text-align: right;">2290</td>
-<td style="text-align: right;">1830</td>
-<td style="text-align: right;">410</td>
-<td style="text-align: right;">33900</td>
-<td style="text-align: right;">5850</td>
-<td style="text-align: right;">11980</td>
-<td style="text-align: right;">1720</td>
-<td style="text-align: right;">6120</td>
+<td style="text-align: right;">490</td>
+<td style="text-align: right;">1450</td>
+<td style="text-align: right;">931460</td>
+<td style="text-align: right;">3230</td>
+<td style="text-align: right;">2370</td>
+<td style="text-align: right;">1920</td>
+<td style="text-align: right;">690</td>
+<td style="text-align: right;">48590</td>
+<td style="text-align: right;">7720</td>
+<td style="text-align: right;">17730</td>
+<td style="text-align: right;">2110</td>
+<td style="text-align: right;">7100</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Borgou</td>
-<td style="text-align: right;">4950</td>
-<td style="text-align: right;">7850</td>
-<td style="text-align: right;">8380</td>
-<td style="text-align: right;">1063610</td>
-<td style="text-align: right;">8660</td>
-<td style="text-align: right;">1180</td>
-<td style="text-align: right;">6590</td>
-<td style="text-align: right;">7530</td>
-<td style="text-align: right;">1210</td>
-<td style="text-align: right;">3160</td>
-<td style="text-align: right;">300</td>
-<td style="text-align: right;">4200</td>
+<td style="text-align: right;">5320</td>
+<td style="text-align: right;">6640</td>
+<td style="text-align: right;">12050</td>
+<td style="text-align: right;">1045670</td>
+<td style="text-align: right;">7640</td>
+<td style="text-align: right;">900</td>
+<td style="text-align: right;">5380</td>
+<td style="text-align: right;">9250</td>
+<td style="text-align: right;">1080</td>
+<td style="text-align: right;">4090</td>
+<td style="text-align: right;">430</td>
+<td style="text-align: right;">3520</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Collines</td>
-<td style="text-align: right;">1690</td>
-<td style="text-align: right;">2360</td>
-<td style="text-align: right;">14370</td>
-<td style="text-align: right;">18020</td>
-<td style="text-align: right;">602740</td>
-<td style="text-align: right;">1170</td>
-<td style="text-align: right;">3540</td>
-<td style="text-align: right;">6350</td>
-<td style="text-align: right;">880</td>
-<td style="text-align: right;">2550</td>
-<td style="text-align: right;">980</td>
-<td style="text-align: right;">10880</td>
+<td style="text-align: right;">2700</td>
+<td style="text-align: right;">2820</td>
+<td style="text-align: right;">31610</td>
+<td style="text-align: right;">23890</td>
+<td style="text-align: right;">611770</td>
+<td style="text-align: right;">1130</td>
+<td style="text-align: right;">3900</td>
+<td style="text-align: right;">11290</td>
+<td style="text-align: right;">1450</td>
+<td style="text-align: right;">4580</td>
+<td style="text-align: right;">1570</td>
+<td style="text-align: right;">11010</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Couffo</td>
-<td style="text-align: right;">180</td>
 <td style="text-align: right;">320</td>
-<td style="text-align: right;">14160</td>
-<td style="text-align: right;">2450</td>
-<td style="text-align: right;">3970</td>
-<td style="text-align: right;">708640</td>
-<td style="text-align: right;">810</td>
-<td style="text-align: right;">6160</td>
-<td style="text-align: right;">9640</td>
-<td style="text-align: right;">2840</td>
-<td style="text-align: right;">1000</td>
-<td style="text-align: right;">7910</td>
+<td style="text-align: right;">630</td>
+<td style="text-align: right;">31080</td>
+<td style="text-align: right;">3590</td>
+<td style="text-align: right;">5190</td>
+<td style="text-align: right;">718560</td>
+<td style="text-align: right;">920</td>
+<td style="text-align: right;">10300</td>
+<td style="text-align: right;">12210</td>
+<td style="text-align: right;">4850</td>
+<td style="text-align: right;">1470</td>
+<td style="text-align: right;">8910</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Donga</td>
-<td style="text-align: right;">900</td>
-<td style="text-align: right;">4070</td>
-<td style="text-align: right;">2910</td>
-<td style="text-align: right;">16290</td>
-<td style="text-align: right;">7310</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: right;">491420</td>
-<td style="text-align: right;">6940</td>
-<td style="text-align: right;">180</td>
-<td style="text-align: right;">1700</td>
-<td style="text-align: right;">260</td>
-<td style="text-align: right;">1020</td>
+<td style="text-align: right;">1820</td>
+<td style="text-align: right;">4460</td>
+<td style="text-align: right;">5800</td>
+<td style="text-align: right;">21080</td>
+<td style="text-align: right;">8160</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">500830</td>
+<td style="text-align: right;">10030</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">2660</td>
+<td style="text-align: right;">440</td>
+<td style="text-align: right;">800</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Littoral</td>
-<td style="text-align: right;">4120</td>
-<td style="text-align: right;">3110</td>
-<td style="text-align: right;">235020</td>
-<td style="text-align: right;">13480</td>
-<td style="text-align: right;">9860</td>
-<td style="text-align: right;">6110</td>
-<td style="text-align: right;">3910</td>
-<td style="text-align: right;">483920</td>
-<td style="text-align: right;">16140</td>
-<td style="text-align: right;">78470</td>
-<td style="text-align: right;">5320</td>
-<td style="text-align: right;">18700</td>
+<td style="text-align: right;">4170</td>
+<td style="text-align: right;">2580</td>
+<td style="text-align: right;">203580</td>
+<td style="text-align: right;">11210</td>
+<td style="text-align: right;">5570</td>
+<td style="text-align: right;">2910</td>
+<td style="text-align: right;">2250</td>
+<td style="text-align: right;">399480</td>
+<td style="text-align: right;">10620</td>
+<td style="text-align: right;">66160</td>
+<td style="text-align: right;">4370</td>
+<td style="text-align: right;">11780</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Mono</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">320</td>
-<td style="text-align: right;">21850</td>
-<td style="text-align: right;">1510</td>
-<td style="text-align: right;">1190</td>
-<td style="text-align: right;">3810</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">12810</td>
-<td style="text-align: right;">431570</td>
-<td style="text-align: right;">4220</td>
-<td style="text-align: right;">670</td>
-<td style="text-align: right;">2720</td>
+<td style="text-align: right;">380</td>
+<td style="text-align: right;">570</td>
+<td style="text-align: right;">47510</td>
+<td style="text-align: right;">1900</td>
+<td style="text-align: right;">1500</td>
+<td style="text-align: right;">5250</td>
+<td style="text-align: right;">310</td>
+<td style="text-align: right;">21900</td>
+<td style="text-align: right;">442180</td>
+<td style="text-align: right;">7280</td>
+<td style="text-align: right;">1060</td>
+<td style="text-align: right;">3210</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Oueme</td>
-<td style="text-align: right;">600</td>
-<td style="text-align: right;">920</td>
-<td style="text-align: right;">17180</td>
-<td style="text-align: right;">4250</td>
-<td style="text-align: right;">1670</td>
-<td style="text-align: right;">1110</td>
-<td style="text-align: right;">450</td>
-<td style="text-align: right;">31410</td>
-<td style="text-align: right;">2330</td>
-<td style="text-align: right;">929610</td>
-<td style="text-align: right;">13330</td>
-<td style="text-align: right;">4300</td>
+<td style="text-align: right;">740</td>
+<td style="text-align: right;">1270</td>
+<td style="text-align: right;">27530</td>
+<td style="text-align: right;">4800</td>
+<td style="text-align: right;">1880</td>
+<td style="text-align: right;">1360</td>
+<td style="text-align: right;">590</td>
+<td style="text-align: right;">47700</td>
+<td style="text-align: right;">2460</td>
+<td style="text-align: right;">917830</td>
+<td style="text-align: right;">19500</td>
+<td style="text-align: right;">4680</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Plateau</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: right;">290</td>
-<td style="text-align: right;">3530</td>
-<td style="text-align: right;">850</td>
-<td style="text-align: right;">1680</td>
-<td style="text-align: right;">250</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6040</td>
-<td style="text-align: right;">670</td>
-<td style="text-align: right;">14970</td>
-<td style="text-align: right;">581800</td>
-<td style="text-align: right;">3020</td>
+<td style="text-align: right;">380</td>
+<td style="text-align: right;">350</td>
+<td style="text-align: right;">6200</td>
+<td style="text-align: right;">1110</td>
+<td style="text-align: right;">1780</td>
+<td style="text-align: right;">300</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">11390</td>
+<td style="text-align: right;">800</td>
+<td style="text-align: right;">25680</td>
+<td style="text-align: right;">577800</td>
+<td style="text-align: right;">3610</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Zou</td>
-<td style="text-align: right;">630</td>
-<td style="text-align: right;">680</td>
-<td style="text-align: right;">29430</td>
-<td style="text-align: right;">7640</td>
-<td style="text-align: right;">28390</td>
-<td style="text-align: right;">3840</td>
-<td style="text-align: right;">580</td>
-<td style="text-align: right;">19250</td>
-<td style="text-align: right;">1820</td>
-<td style="text-align: right;">7550</td>
-<td style="text-align: right;">6270</td>
-<td style="text-align: right;">771630</td>
+<td style="text-align: right;">1180</td>
+<td style="text-align: right;">1410</td>
+<td style="text-align: right;">62460</td>
+<td style="text-align: right;">9300</td>
+<td style="text-align: right;">32970</td>
+<td style="text-align: right;">4380</td>
+<td style="text-align: right;">840</td>
+<td style="text-align: right;">32790</td>
+<td style="text-align: right;">2480</td>
+<td style="text-align: right;">12230</td>
+<td style="text-align: right;">8260</td>
+<td style="text-align: right;">784950</td>
 </tr>
 </tbody>
 </table>
@@ -1320,10 +1350,10 @@ Joining, by = "j"</code></pre>
 </div>
 <p>L’intérêt du format matriciel est de faciliter des opérations mathématiques telles que le calcul de pourcentage en ligne ou le pourcentage en colonnes qui vont indiquer respectivement des probabilités de destination ou des probabilités d’origines.On va illustrer ces possibilités sur une matrice dont on a retiré la diagonale</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>int4<span class="ot">&lt;-</span>int3</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(int4)<span class="ot">&lt;-</span><span class="cn">NA</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>int4 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>int4<span class="sc">/</span><span class="fu">apply</span>(int4,<span class="dv">1</span>,sum, <span class="at">na.rm=</span>T)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int4, <span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption =</span> <span class="st">"Probabilité de destination des migrants durée de vie en 2013 (en %)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>int4<span class="ot">&lt;-</span>int3</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(int4)<span class="ot">&lt;-</span><span class="cn">NA</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>int4 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>int4<span class="sc">/</span><span class="fu">apply</span>(int4,<span class="dv">1</span>,sum, <span class="at">na.rm=</span>T)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int4, <span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption =</span> <span class="st">"Probabilité de destination des migrants durée de vie en 2013 (en %)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Probabilité de destination des migrants durée de vie en 2013 (en %)</caption>
@@ -1363,181 +1393,181 @@ Joining, by = "j"</code></pre>
 <tr class="odd">
 <td style="text-align: left;">Alibori</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">11.9</td>
-<td style="text-align: right;">6.6</td>
-<td style="text-align: right;">55.5</td>
-<td style="text-align: right;">6.7</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: right;">5.0</td>
-<td style="text-align: right;">5.5</td>
-<td style="text-align: right;">1.7</td>
-<td style="text-align: right;">2.5</td>
-<td style="text-align: right;">0.8</td>
-<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">52.0</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">3.9</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Atacora</td>
-<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">2.7</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">6.4</td>
-<td style="text-align: right;">59.0</td>
-<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">58.4</td>
+<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">2.5</td>
 <td style="text-align: right;">0.7</td>
-<td style="text-align: right;">10.6</td>
-<td style="text-align: right;">4.0</td>
-<td style="text-align: right;">0.7</td>
-<td style="text-align: right;">2.6</td>
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">2.4</td>
+<td style="text-align: right;">2.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Atlantique</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1.6</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">4.2</td>
-<td style="text-align: right;">3.3</td>
-<td style="text-align: right;">2.7</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">49.4</td>
-<td style="text-align: right;">8.5</td>
-<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">3.5</td>
 <td style="text-align: right;">2.5</td>
-<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">52.0</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">7.6</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Borgou</td>
-<td style="text-align: right;">9.2</td>
-<td style="text-align: right;">14.5</td>
-<td style="text-align: right;">15.5</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">11.8</td>
+<td style="text-align: right;">21.4</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">16.0</td>
-<td style="text-align: right;">2.2</td>
-<td style="text-align: right;">12.2</td>
-<td style="text-align: right;">13.9</td>
-<td style="text-align: right;">2.2</td>
-<td style="text-align: right;">5.9</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">13.6</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">16.4</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">6.3</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Collines</td>
-<td style="text-align: right;">2.7</td>
-<td style="text-align: right;">3.8</td>
-<td style="text-align: right;">22.9</td>
-<td style="text-align: right;">28.7</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">2.9</td>
+<td style="text-align: right;">32.9</td>
+<td style="text-align: right;">24.9</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">1.9</td>
-<td style="text-align: right;">5.6</td>
-<td style="text-align: right;">10.1</td>
-<td style="text-align: right;">1.4</td>
+<td style="text-align: right;">1.2</td>
 <td style="text-align: right;">4.1</td>
+<td style="text-align: right;">11.8</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">4.8</td>
 <td style="text-align: right;">1.6</td>
-<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">11.5</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Couffo</td>
 <td style="text-align: right;">0.4</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">28.6</td>
-<td style="text-align: right;">5.0</td>
-<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">39.1</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">6.5</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">1.6</td>
-<td style="text-align: right;">12.5</td>
-<td style="text-align: right;">19.5</td>
-<td style="text-align: right;">5.7</td>
-<td style="text-align: right;">2.0</td>
-<td style="text-align: right;">16.0</td>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">13.0</td>
+<td style="text-align: right;">15.4</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">1.8</td>
+<td style="text-align: right;">11.2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Donga</td>
-<td style="text-align: right;">2.2</td>
-<td style="text-align: right;">9.8</td>
-<td style="text-align: right;">7.0</td>
-<td style="text-align: right;">39.0</td>
-<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">37.9</td>
+<td style="text-align: right;">14.7</td>
 <td style="text-align: right;">0.3</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">16.6</td>
+<td style="text-align: right;">18.0</td>
 <td style="text-align: right;">0.4</td>
-<td style="text-align: right;">4.1</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">2.4</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">1.4</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Littoral</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">0.8</td>
-<td style="text-align: right;">59.6</td>
-<td style="text-align: right;">3.4</td>
-<td style="text-align: right;">2.5</td>
-<td style="text-align: right;">1.5</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">4.1</td>
-<td style="text-align: right;">19.9</td>
 <td style="text-align: right;">1.3</td>
-<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">62.6</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">1.7</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">20.3</td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">3.6</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Mono</td>
 <td style="text-align: right;">0.4</td>
 <td style="text-align: right;">0.6</td>
-<td style="text-align: right;">44.1</td>
-<td style="text-align: right;">3.1</td>
-<td style="text-align: right;">2.4</td>
-<td style="text-align: right;">7.7</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: right;">25.9</td>
+<td style="text-align: right;">52.3</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">1.7</td>
+<td style="text-align: right;">5.8</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">24.1</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">8.5</td>
-<td style="text-align: right;">1.4</td>
-<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">3.5</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Oueme</td>
-<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">24.5</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">1.7</td>
 <td style="text-align: right;">1.2</td>
-<td style="text-align: right;">22.2</td>
-<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">42.4</td>
 <td style="text-align: right;">2.2</td>
-<td style="text-align: right;">1.4</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">40.5</td>
-<td style="text-align: right;">3.0</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">17.2</td>
-<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">4.2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Plateau</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">11.2</td>
-<td style="text-align: right;">2.7</td>
-<td style="text-align: right;">5.3</td>
-<td style="text-align: right;">0.8</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">12.0</td>
 <td style="text-align: right;">2.1</td>
-<td style="text-align: right;">47.6</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">22.0</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">49.6</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">7.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Zou</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">27.7</td>
-<td style="text-align: right;">7.2</td>
-<td style="text-align: right;">26.8</td>
-<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">37.1</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">19.6</td>
+<td style="text-align: right;">2.6</td>
 <td style="text-align: right;">0.5</td>
-<td style="text-align: right;">18.1</td>
-<td style="text-align: right;">1.7</td>
-<td style="text-align: right;">7.1</td>
-<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">4.9</td>
 <td style="text-align: right;">NA</td>
 </tr>
 </tbody>
@@ -1545,14 +1575,14 @@ Joining, by = "j"</code></pre>
 </div>
 </div>
 <ul>
-<li><strong>Commentaire :</strong> Si l’on prend l’exemple des personnes nées à <em>Alibori</em> qui résident dans un autre département en 2013, on constate que plus de la moitié d’entre elles (55.5%) on été recensés dans le département de <em>Borgou</em>, 11.9% dans le département voisin d’Atacora et seulement 6.6% vers Cotonou (département de l’<em>Atlantique</em>). Inversement, les personnes nées dans le département du <em>Mono</em> qui résident dans un autre département en 2013 ont choisi majoritairement la capitale Cotonou (44.1%) et sa périphérie proche du département du <em>Littoral</em> (25.9%). On voit donc bien apparaître des clivages liés à la distance aux métropoles principales du pays qui polarisent chacune un espace migratoire distinct.</li>
+<li><strong>Commentaire :</strong> Si l’on prend l’exemple des personnes nées à <em>Alibori</em> qui résident dans un autre département en 2013, on constate que plus de la moitié d’entre elles (52%) on été recensés dans le département de <em>Borgou</em>, 14.3% dans le département voisin d’Atacora et seulement 8.9 % vers Cotonou (département de l’<em>Atlantique</em>). Inversement, les personnes nées dans le département du <em>Mono</em> qui résident dans un autre département en 2013 ont choisi majoritairement la capitale Cotonou (52.3%) et sa périphérie proche du département du <em>Littoral</em> (24.1%). On voit donc bien apparaître des clivages liés à la distance aux métropoles principales du pays qui polarisent chacune un espace migratoire distinct.</li>
 </ul>
 <p>Procédons à l’opération inverse de calcul des origines mais en ne retirant pas cette fois-ci la diagonale afin de voir la part des populations autchtones</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>int5<span class="ot">&lt;-</span><span class="fu">t</span>(int3)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>int5 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>int5<span class="sc">/</span><span class="fu">apply</span>(int5,<span class="dv">1</span>,sum, <span class="at">na.rm=</span>T)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>int5<span class="ot">&lt;-</span><span class="fu">t</span>(int5)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int5, <span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption =</span> <span class="st">"Département de naissance des individus en 2013 (en %)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>int5<span class="ot">&lt;-</span><span class="fu">t</span>(int3)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>int5 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>int5<span class="sc">/</span><span class="fu">apply</span>(int5,<span class="dv">1</span>,sum, <span class="at">na.rm=</span>T)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>int5<span class="ot">&lt;-</span><span class="fu">t</span>(int5)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int5, <span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption =</span> <span class="st">"Département de naissance des individus en 2013 (en %)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Département de naissance des individus en 2013 (en %)</caption>
@@ -1591,190 +1621,190 @@ Joining, by = "j"</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Alibori</td>
-<td style="text-align: right;">98.2</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">1.2</td>
-<td style="text-align: right;">0.3</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">97.7</td>
+<td style="text-align: right;">0.6</td>
 <td style="text-align: right;">0.2</td>
+<td style="text-align: right;">1.4</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.3</td>
 <td style="text-align: right;">0.1</td>
 <td style="text-align: right;">0.1</td>
 <td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.2</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Atacora</td>
-<td style="text-align: right;">0.2</td>
-<td style="text-align: right;">96.8</td>
 <td style="text-align: right;">0.3</td>
-<td style="text-align: right;">3.0</td>
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">96.5</td>
 <td style="text-align: right;">0.4</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">0.5</td>
 <td style="text-align: right;">0.1</td>
-<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.2</td>
 <td style="text-align: right;">0.1</td>
 <td style="text-align: right;">0.2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Atlantique</td>
-<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.1</td>
 <td style="text-align: right;">0.2</td>
-<td style="text-align: right;">74.2</td>
-<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">68.1</td>
+<td style="text-align: right;">0.3</td>
 <td style="text-align: right;">0.3</td>
 <td style="text-align: right;">0.3</td>
 <td style="text-align: right;">0.1</td>
-<td style="text-align: right;">5.5</td>
-<td style="text-align: right;">1.2</td>
-<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">1.7</td>
 <td style="text-align: right;">0.3</td>
-<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.8</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Borgou</td>
 <td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">88.0</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">0.1</td>
 <td style="text-align: right;">1.0</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">90.0</td>
-<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">1.5</td>
 <td style="text-align: right;">0.2</td>
-<td style="text-align: right;">1.3</td>
-<td style="text-align: right;">1.2</td>
-<td style="text-align: right;">0.3</td>
-<td style="text-align: right;">0.3</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.4</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Collines</td>
-<td style="text-align: right;">0.2</td>
 <td style="text-align: right;">0.3</td>
-<td style="text-align: right;">1.1</td>
-<td style="text-align: right;">1.5</td>
-<td style="text-align: right;">89.2</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">88.8</td>
 <td style="text-align: right;">0.2</td>
 <td style="text-align: right;">0.7</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">0.2</td>
-<td style="text-align: right;">0.2</td>
-<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.3</td>
 <td style="text-align: right;">1.3</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Couffo</td>
 <td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">0.2</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">97.3</td>
-<td style="text-align: right;">0.2</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">2.3</td>
 <td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">97.5</td>
 <td style="text-align: right;">0.2</td>
-<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">1.7</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">1.1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Donga</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">1.8</td>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">95.4</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.2</td>
 <td style="text-align: right;">0.1</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.2</td>
-<td style="text-align: right;">1.4</td>
-<td style="text-align: right;">1.1</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">95.3</td>
-<td style="text-align: right;">1.1</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.2</td>
-<td style="text-align: right;">0.0</td>
 <td style="text-align: right;">0.1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Littoral</td>
 <td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: right;">17.2</td>
-<td style="text-align: right;">1.1</td>
-<td style="text-align: right;">1.5</td>
-<td style="text-align: right;">0.8</td>
-<td style="text-align: right;">0.8</td>
-<td style="text-align: right;">78.3</td>
-<td style="text-align: right;">3.4</td>
-<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">14.9</td>
 <td style="text-align: right;">0.9</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">65.7</td>
 <td style="text-align: right;">2.2</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">1.4</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Mono</td>
 <td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">1.6</td>
 <td style="text-align: right;">0.1</td>
+<td style="text-align: right;">3.5</td>
 <td style="text-align: right;">0.2</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">2.1</td>
-<td style="text-align: right;">91.6</td>
-<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.7</td>
 <td style="text-align: right;">0.1</td>
-<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">91.7</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.4</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Oueme</td>
 <td style="text-align: right;">0.1</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">2.0</td>
 <td style="text-align: right;">0.4</td>
-<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.3</td>
 <td style="text-align: right;">0.2</td>
 <td style="text-align: right;">0.1</td>
-<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">7.8</td>
 <td style="text-align: right;">0.5</td>
-<td style="text-align: right;">87.8</td>
-<td style="text-align: right;">2.2</td>
-<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">86.1</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">0.6</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Plateau</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.1</td>
 <td style="text-align: right;">0.3</td>
-<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.9</td>
 <td style="text-align: right;">0.2</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">1.4</td>
-<td style="text-align: right;">95.0</td>
+<td style="text-align: right;">2.4</td>
+<td style="text-align: right;">93.5</td>
 <td style="text-align: right;">0.4</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Zou</td>
 <td style="text-align: right;">0.1</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">4.8</td>
 <td style="text-align: right;">0.6</td>
-<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">5.4</td>
 <td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">3.1</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: right;">0.7</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">92.6</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">93.2</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <ul>
-<li><strong>Commentaire</strong> : La diagonale de cette matrice montre le degré de diversité des origines départementales des population qui résident dans chaque département en 2013. Les départements isolés et peu attractifs ont des taux très élevés de populations nées dans le même département, ce que l’on peut voir avec les départements d’<em>Alibori</em> (98.3%), de <em>Couffo</em> (97.3%)ou d’<em>Atacora</em> (96.8%). Inversement les départements métropolitains qui ont attiré des migrants de tous le pays affichent des taux plus faibles de populations nées dans le même département ce que l’on peut voir pour les départements de l’<em>Atlantique</em> (74.2%), du <em>Littoral</em> (78.3%), des <em>Collines</em> (89.2%) ou de <em>Borgou</em> (90.0%).</li>
+<li><strong>Commentaire</strong> : La diagonale de cette matrice montre le degré de diversité des origines départementales des population qui résident dans chaque département en 2013. Les départements isolés et peu attractifs ont des taux très élevés de populations nées dans le même département, ce que l’on peut voir avec les départements d’<em>Alibori</em> (97.7%), de <em>Couffo</em> (97.5%)ou d’<em>Atacora</em> (96.5%). Inversement les départements métropolitains qui ont attiré des migrants de tous le pays affichent des taux plus faibles de populations nées dans le même département ce que l’on peut voir pour les départements de l’<em>Atlantique</em> (68.1%), du <em>Littoral</em> (65.7%), des <em>Collines</em> (88.8%) ou de <em>Borgou</em> (88.0%).</li>
 </ul>
 </section>
 <section id="flux-entre-communes" class="level3" data-number="8.4.2">
@@ -1782,54 +1812,54 @@ Joining, by = "j"</code></pre>
 <p>Les flux entre départements sont intéressants d’un point de vue pédagogique puisqu’ils permettent de montrer facilement les tableaux de format 10 x 10 aux étudiants et de leur expliquer les différentes transformations que l’on peut faire subir à une matrice de flux. Mais ils constituent une grille d’analyse assez grossière qui masque notamment tous les flux de proximité. Il est donc plus intéressant, dans un deuxième temps d’attaquer des données plus précises en commençant par étudier les flux vers une seule destinations mais à plusieurs dates.</p>
 <p>A titre d’exemple, nous allons essayer ici de reconstituer l’évolution de l’aire d’attraction de la commune de Parakou au cours du temps.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load individual data</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load map and extract name of units</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>map<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/cartog_lev2_bj2013.shp"</span>, <span class="at">quiet=</span>T)</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>codename <span class="ot">&lt;-</span> map <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(code,nom)</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute total departure</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>dep_tot <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_2<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">group_by</span>(<span class="at">i =</span> LEV2_NAI,</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">t =</span> YEAR) <span class="sc">%&gt;%</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarize</span>(<span class="at">Fij =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>                   reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> i<span class="sc">~</span>t,<span class="at">value.var=</span><span class="st">"Fij"</span>,<span class="at">fill =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'i'. You can override using the `.groups`
-argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dep_tot)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"code"</span>,<span class="st">"tot79"</span>,<span class="st">"tot92"</span>,<span class="st">"tot02"</span>,<span class="st">"tot13"</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load individual data</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute departure to Parakou</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>dep_par <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_2<span class="sc">==</span><span class="dv">1</span>,</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>                     LEV2_RES <span class="sc">==</span><span class="st">"204004005"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">group_by</span>(<span class="at">i =</span> LEV2_NAI,</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">t =</span> YEAR) <span class="sc">%&gt;%</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarize</span>(<span class="at">Fij =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>                   reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> i<span class="sc">~</span>t,<span class="at">value.var=</span><span class="st">"Fij"</span>,<span class="at">fill =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load map and extract name of units</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>map<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/cartog_lev2_bj2013.shp"</span>, <span class="at">quiet=</span>T)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>codename <span class="ot">&lt;-</span> map <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(code,nom)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute total departure</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>dep_tot <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_2<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">group_by</span>(<span class="at">i =</span> LEV2_NAI,</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">t =</span> YEAR) <span class="sc">%&gt;%</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarize</span>(<span class="at">Fij =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>                   reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> i<span class="sc">~</span>t,<span class="at">value.var=</span><span class="st">"Fij"</span>,<span class="at">fill =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'i'. You can override using the `.groups`
 argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dep_par)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"code"</span>,<span class="st">"par79"</span>,<span class="st">"par92"</span>,<span class="st">"par02"</span>,<span class="st">"par13"</span>)</span>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dep_tot)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"code"</span>,<span class="st">"tot79"</span>,<span class="st">"tot92"</span>,<span class="st">"tot02"</span>,<span class="st">"tot13"</span>)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge tables</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>tab<span class="ot">&lt;-</span><span class="fu">left_join</span>(codename,dep_tot) <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(dep_par)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute departure to Parakou</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>dep_par <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_2<span class="sc">==</span><span class="dv">1</span>,</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>                     LEV2_RES <span class="sc">==</span><span class="st">"204004005"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">group_by</span>(<span class="at">i =</span> LEV2_NAI,</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">t =</span> YEAR) <span class="sc">%&gt;%</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarize</span>(<span class="at">Fij =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>                   reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> i<span class="sc">~</span>t,<span class="at">value.var=</span><span class="st">"Fij"</span>,<span class="at">fill =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'i'. You can override using the `.groups`
+argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dep_par)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"code"</span>,<span class="st">"par79"</span>,<span class="st">"par92"</span>,<span class="st">"par02"</span>,<span class="st">"par13"</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge tables</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>tab<span class="ot">&lt;-</span><span class="fu">left_join</span>(codename,dep_tot) <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(dep_par)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Joining, by = "code"
 Joining, by = "code"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add probabilities</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> tab <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pct79 =</span> <span class="dv">100</span><span class="sc">*</span>par79<span class="sc">/</span>tot79,</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pct92 =</span> <span class="dv">100</span><span class="sc">*</span>par92<span class="sc">/</span>tot92,</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pct02 =</span> <span class="dv">100</span><span class="sc">*</span>par02<span class="sc">/</span>tot02,</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pct13 =</span> <span class="dv">100</span><span class="sc">*</span>par13<span class="sc">/</span>tot13)</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(tab), <span class="at">digits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Migrations durée de vie vers Parakou en 1979, 1992, 2002 et 2013"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add probabilities</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> tab <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pct79 =</span> <span class="dv">100</span><span class="sc">*</span>par79<span class="sc">/</span>tot79,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pct92 =</span> <span class="dv">100</span><span class="sc">*</span>par92<span class="sc">/</span>tot92,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pct02 =</span> <span class="dv">100</span><span class="sc">*</span>par02<span class="sc">/</span>tot02,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pct13 =</span> <span class="dv">100</span><span class="sc">*</span>par13<span class="sc">/</span>tot13)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(tab), <span class="at">digits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Migrations durée de vie vers Parakou en 1979, 1992, 2002 et 2013"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Migrations durée de vie vers Parakou en 1979, 1992, 2002 et 2013</caption>
@@ -1871,106 +1901,106 @@ Joining, by = "code"</code></pre>
 <tr class="odd">
 <td style="text-align: left;">204001001</td>
 <td style="text-align: left;">Banikorara</td>
-<td style="text-align: right;">3360</td>
-<td style="text-align: right;">6130</td>
-<td style="text-align: right;">4150</td>
-<td style="text-align: right;">7200</td>
-<td style="text-align: right;">410</td>
-<td style="text-align: right;">720</td>
-<td style="text-align: right;">750</td>
-<td style="text-align: right;">1440</td>
-<td style="text-align: right;">12.2</td>
-<td style="text-align: right;">11.7</td>
-<td style="text-align: right;">18.1</td>
-<td style="text-align: right;">20.0</td>
+<td style="text-align: right;">3460</td>
+<td style="text-align: right;">5820</td>
+<td style="text-align: right;">5150</td>
+<td style="text-align: right;">10340</td>
+<td style="text-align: right;">420</td>
+<td style="text-align: right;">610</td>
+<td style="text-align: right;">1020</td>
+<td style="text-align: right;">1800</td>
+<td style="text-align: right;">12.1</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">17.4</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">204001002</td>
 <td style="text-align: left;">Gogounou</td>
-<td style="text-align: right;">3000</td>
-<td style="text-align: right;">4200</td>
-<td style="text-align: right;">2930</td>
-<td style="text-align: right;">5620</td>
+<td style="text-align: right;">2920</td>
+<td style="text-align: right;">6570</td>
+<td style="text-align: right;">3380</td>
+<td style="text-align: right;">6510</td>
 <td style="text-align: right;">110</td>
-<td style="text-align: right;">430</td>
-<td style="text-align: right;">350</td>
-<td style="text-align: right;">1000</td>
-<td style="text-align: right;">3.7</td>
-<td style="text-align: right;">10.2</td>
-<td style="text-align: right;">11.9</td>
-<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">440</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">1070</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">14.8</td>
+<td style="text-align: right;">16.4</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">204001003</td>
 <td style="text-align: left;">Kandi</td>
-<td style="text-align: right;">8060</td>
-<td style="text-align: right;">9290</td>
-<td style="text-align: right;">8700</td>
-<td style="text-align: right;">9690</td>
-<td style="text-align: right;">1200</td>
-<td style="text-align: right;">1710</td>
-<td style="text-align: right;">1440</td>
-<td style="text-align: right;">2670</td>
-<td style="text-align: right;">14.9</td>
-<td style="text-align: right;">18.4</td>
-<td style="text-align: right;">16.6</td>
-<td style="text-align: right;">27.6</td>
+<td style="text-align: right;">6910</td>
+<td style="text-align: right;">9140</td>
+<td style="text-align: right;">9210</td>
+<td style="text-align: right;">11350</td>
+<td style="text-align: right;">910</td>
+<td style="text-align: right;">1530</td>
+<td style="text-align: right;">1760</td>
+<td style="text-align: right;">2750</td>
+<td style="text-align: right;">13.2</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">19.1</td>
+<td style="text-align: right;">24.2</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">204001004</td>
 <td style="text-align: left;">Karimama</td>
-<td style="text-align: right;">580</td>
-<td style="text-align: right;">1230</td>
-<td style="text-align: right;">1790</td>
-<td style="text-align: right;">1960</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">70</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">260</td>
-<td style="text-align: right;">6.9</td>
-<td style="text-align: right;">5.7</td>
-<td style="text-align: right;">11.2</td>
-<td style="text-align: right;">13.3</td>
+<td style="text-align: right;">430</td>
+<td style="text-align: right;">1080</td>
+<td style="text-align: right;">1920</td>
+<td style="text-align: right;">3090</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">280</td>
+<td style="text-align: right;">340</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">14.6</td>
+<td style="text-align: right;">11.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">204001005</td>
 <td style="text-align: left;">Malanville</td>
-<td style="text-align: right;">1950</td>
-<td style="text-align: right;">4110</td>
-<td style="text-align: right;">4580</td>
-<td style="text-align: right;">6750</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">600</td>
-<td style="text-align: right;">370</td>
-<td style="text-align: right;">830</td>
-<td style="text-align: right;">5.6</td>
-<td style="text-align: right;">14.6</td>
-<td style="text-align: right;">8.1</td>
-<td style="text-align: right;">12.3</td>
+<td style="text-align: right;">1250</td>
+<td style="text-align: right;">3930</td>
+<td style="text-align: right;">3360</td>
+<td style="text-align: right;">7660</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">310</td>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">950</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">12.4</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">204001006</td>
 <td style="text-align: left;">Segbana</td>
-<td style="text-align: right;">790</td>
-<td style="text-align: right;">1920</td>
-<td style="text-align: right;">2520</td>
-<td style="text-align: right;">3100</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">150</td>
-<td style="text-align: right;">160</td>
-<td style="text-align: right;">570</td>
-<td style="text-align: right;">13.9</td>
-<td style="text-align: right;">7.8</td>
-<td style="text-align: right;">6.3</td>
-<td style="text-align: right;">18.4</td>
+<td style="text-align: right;">760</td>
+<td style="text-align: right;">1750</td>
+<td style="text-align: right;">2770</td>
+<td style="text-align: right;">3310</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">310</td>
+<td style="text-align: right;">710</td>
+<td style="text-align: right;">13.2</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">11.2</td>
+<td style="text-align: right;">21.5</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tab,<span class="st">"mobil/all/mob_dv_parakou_lev2.RDS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tab,<span class="st">"mobil/all/mob_dv_parakou_lev2.RDS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li><strong>Exemple de lecture</strong> : Au recensement de 1979, 3360 personnes natives de la commune de <em>Banikorara</em> résidaient dans une autre commune du Bénin. Parmi ces émigrants, on en trouvait 410 qui résidaient dans la commune de <em>Parakou</em> soit 12.2% des personnes ayant quitté la commune de <em>Banikorara</em>. Au recensement de 2013, on constatait la présence de 7200 personnes natives de la commune de <em>Banikorara</em> qui résidaient dans une autre commune, dont 1440 (20%) à <em>Parakou</em>. Il y a donc eu un renforcement de l’attraction de <em>Parakou</em> sur <em>Banikorara</em>, lié soit à de nouvelles migrations, soit à un cumul progressif du nombre d’arrivants qui ne sont pas repartis vers d’autres destinations et ont survécu. Les chiffres doivent toutefois être considérés avec précaution lorsqu’ils concernent de petits effectifs comme dans le cas de la commune de <em>Karimama</em> où le chiffre affiché de 40 migrants vers Parakou en 1979 ne correspond en réalité qu’à 4 cas de l’échantillon de recensement à 10%.</li>
+<li><strong>Exemple de lecture</strong> : Au recensement de 1979, 3460 personnes natives de la commune de <em>Banikorara</em> résidaient dans une autre commune du Bénin. Parmi ces émigrants, on en trouvait 420 qui résidaient dans la commune de <em>Parakou</em> soit 12.1% des personnes ayant quitté la commune de <em>Banikorara</em>. Au recensement de 2013, on constatait la présence de 10340 personnes natives de la commune de <em>Banikorara</em> qui résidaient dans une autre commune, dont 1800 (17.4%) à <em>Parakou</em>. Il y a donc eu un renforcement de l’attraction de <em>Parakou</em> sur <em>Banikorara</em>, lié soit à de nouvelles migrations, soit à un cumul progressif du nombre d’arrivants qui ne sont pas repartis vers d’autres destinations et ont survécu. Les chiffres doivent toutefois être considérés avec précaution lorsqu’ils concernent de petits effectifs comme dans le cas de la commune de <em>Karimama</em> où le chiffre affiché de 90 migrants vers Parakou en 1992 ne correspond en réalité qu’à 9 cas de l’échantillon de recensement à 10%.</li>
 </ul>
 <p>A partir de ce tableau, on peut réaliser tout d’abord une cartographie des communes d’origine des personne qui résident à Parakou mais sont nés dans une autre commune pour chacune des dates de recensement</p>
 <div class="cell">
@@ -2120,8 +2150,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./d09_01_references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./d03_03_mobil_preced.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Migrations antérieures</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
