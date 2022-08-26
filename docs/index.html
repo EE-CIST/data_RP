@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Claude GRASLAND">
 <meta name="dcterms.date" content="2023-10-08">
 
 <title>L’INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL</title>
@@ -26,7 +27,7 @@ ul.task-list{list-style: none;}
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./d00_02_intro_resume.html" rel="next">
+<link href="./credits.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -95,7 +96,7 @@ ul.task-list{list-style: none;}
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./d00_02_intro_resume.html" class="sidebar-item-text sidebar-link">Résumé</a>
+  <a href="./credits.html" class="sidebar-item-text sidebar-link">CREDITS</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -167,7 +168,12 @@ ul.task-list{list-style: none;}
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#préface" id="toc-préface" class="nav-link active" data-scroll-target="#préface">Préface</a></li>
+  <li><a href="#préface" id="toc-préface" class="nav-link active" data-scroll-target="#préface">Préface</a>
+  <ul class="collapse">
+  <li><a href="#comment-utiliser-ipums" id="toc-comment-utiliser-ipums" class="nav-link" data-scroll-target="#comment-utiliser-ipums">Comment utiliser IPUMS ?</a></li>
+  <li><a href="#comparaison-des-recensements-de-cinq-pays-africains" id="toc-comparaison-des-recensements-de-cinq-pays-africains" class="nav-link" data-scroll-target="#comparaison-des-recensements-de-cinq-pays-africains">Comparaison des recensements de cinq pays africains</a></li>
+  <li><a href="#comparaison-des-recensements-dun-pays-à-plusieurs-dates" id="toc-comparaison-des-recensements-dun-pays-à-plusieurs-dates" class="nav-link" data-scroll-target="#comparaison-des-recensements-dun-pays-à-plusieurs-dates">Comparaison des recensements d’un pays à plusieurs dates</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -184,6 +190,12 @@ ul.task-list{list-style: none;}
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Claude GRASLAND </p>
+          </div>
+  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
@@ -199,9 +211,45 @@ ul.task-list{list-style: none;}
 
 <section id="préface" class="level1 unnumbered">
 <h1 class="unnumbered">Préface</h1>
-<p>tbd : rappel des objectifs de l’EE CIST 2023</p>
+<p><br></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="img/EECIST_WP1.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+</div>
+<p>Ce document de travail vise à explorer les possibilités d’utilisation de la base de données IPUMS International dans le cadre de l’école d’été CIST 2022-2023 “<em>Outils et méthodes des sciences territoriales : une perspective Nord-Sud</em>”.Il s’agit plus précisément de constituer des jeux de données statistiques et cartographiques permettant de comparer les recensements de plusieurs pays ou d’un pays à différentes dates.</p>
+<section id="comment-utiliser-ipums" class="level2">
+<h2 class="anchored" data-anchor-id="comment-utiliser-ipums">Comment utiliser IPUMS ?</h2>
+<p>La première partie du document rappelle les conditions générales d’utilisation des données IPUMS International et les modalités spécifiques d’emploi dans le cadre de préparation d’enseignements ou de formations professionnelles (<a href="d01_01_import_conditions.html"><span>Chapter&nbsp;1</span></a>). Elle détaille ensuite à l’aide d’un exemple les étapes d’acquisition d’échantillons de données décrivant les individus ou les ménages issues d’un ou plusieurs recensements (<a href="d01_02_import_individus.html"><span>Chapter&nbsp;2</span></a>). Enfin, elle montre comment importer les fonds de carte correspondant soit à un recensement précis, soit à un ensemble de dates de recensement d’un même pays ce qui suppose une harmonisation des découpages (<a href="d01_03_import_geometries.html"><span>Chapter&nbsp;3</span></a>).</p>
+</section>
+<section id="comparaison-des-recensements-de-cinq-pays-africains" class="level2">
+<h2 class="anchored" data-anchor-id="comparaison-des-recensements-de-cinq-pays-africains">Comparaison des recensements de cinq pays africains</h2>
+<p>La seconde partie du document propose de vérifier la possibilité de construire des jeux de données comparables pour plusieurs pays. On a retenu pour cela les derniers recensements disponibles sur IPUMS pour les pays africains participant à l’EE CIST2023. Le Niger et la Côte d’Ivoire ne font malheureusment pas partie actuellement des pays présents dans la base IPUMS International mais ils pourront faire l’objet d’extraction à partir d’autres sources. Au total nous avons donc récupéré des échantillons de 10% de la population et des ménages pour les pays et les années suivantes :</p>
+<ul>
+<li>RP Bénin, 2013</li>
+<li>RP Burkina Faso, 2006</li>
+<li>RP Mali, 2009,</li>
+<li>RP Sénégal, 2013</li>
+<li>RP Togo, 2009</li>
+</ul>
+<p>En nous limitant aux variables harmonisées par IPUMS qui sont présentes dans les cinq pays, nous avons procédé à une série de test permettant de vérifier la possibilité de reproduire les mêmes analyses sur chacun des pays. Ces tests concernent des analyses simples débouchant sur des jeux de données qui pourraient fournir une matière première utile à de nombreux modules :</p>
+<ul>
+<li><p>Populations, superficie et densité. Nous avons construit ces indicateurs pour chaque pays à deux niveaux territoriaux d’agrégation. Après les avoir visualisé sous forme de cartes classiques, nous avons testé la possibilité de construire des cartogrammes démographiques de chaque pays où la surface des unités territoriales est proportionelle à leur population (<a href="d02_01_indicateurs_popsup.html"><span>Chapter&nbsp;4</span></a>)</p></li>
+<li><p>Indicateurs de développement. En se limitant au cas de l’électrification des ménages, nous avons testé la possibilité de constituer des cartes comparables du taux d’électrification pour chacun des cinq pays et à deux niveaux d’agrégation administrative (<a href="d02_02_indicateurs_equipt.html"><span>Chapter&nbsp;5</span></a>)</p></li>
+<li><p>Age, sexe, urbanisation. Nous avons testé la possibilité de créer des tableaux de contingence multidimensionnelles permettant de définir des sous-population en fonction de leur âge, de leur sexe et de leur milieu urbain ou rural. Ces tableaux permettent de créer des images simples comme des pyramides des âges ou des cartographies du % de jeunes en milieu urbain ou rural.Mais ils permettent aussi d’évaluer les effectifs disponibles dans chaque cas de croisement structurel afin d’estimer les erreurs d’e calcul’estimation que cela impliquerait si l’on voulait calculer d’autres indicateurs (<a href="d02_03_indicateurs_tabcont.html"><span>Chapter&nbsp;6</span></a>)</p></li>
+</ul>
+</section>
+<section id="comparaison-des-recensements-dun-pays-à-plusieurs-dates" class="level2">
+<h2 class="anchored" data-anchor-id="comparaison-des-recensements-dun-pays-à-plusieurs-dates">Comparaison des recensements d’un pays à plusieurs dates</h2>
+<p>La dernière partie examine la possibilié de comparer les évolutions d’un pays à plusieurs dates de recensement grâce au travail d’harmonisation des indicateurs et des niveaux territoriaux réalisé par IPUMS. Nous avons pris l’exemple des recensements du Bénin de 1979, 1992, 2002 et 2013 pour tester une méthode qui serait reproductible dans d’autres pays comme le Burkina Faso (1996 et 2006), le Mali (1987, 1998, 2009) ou le Sénégal (1998, 2002, 2013).</p>
+<ul>
+<li><p>l’extraction des données. Elle a été menée en se focalisant sur un jeu de variables relatifs à la mobilité des personnes au cours du temps puisque c’est précisément un sujet où le temps joue un rôle décisif. En dehors des caractéristiques individuelles, nous avons extrait les variables permettant de reconstituer à la fois les migrations durée de vie (depuis la naissance) et les dernières migrations déduite du domicile précédent et de la durée de présence dans la résidence actuelle (<a href="d03_01_mobil_data.html"><span>Chapter&nbsp;7</span></a>).</p></li>
+<li><p>Les migrations durée de vie. Elles ont été utilisés pour un premier test de création d’indicateurs comparables aux quatres dates de recensement. Pour chaque département ou commune, nous avons calculé pour chaque recensement les personnes “stables” (nées dans l’unité territoriales de recensement), “immigrantes” (nées dans une autre unité territoriale) et “émigrantes” (présentes dans une autre unité territoriale que celle de leur naissance). Nous en avons déduite ensuite un certain nombre d’indicateurs cartographiables tels que le solde ou le volume migratoire apparents (<a href="d03_02_mobil_durvie.html"><span>Chapter&nbsp;8</span></a>).</p></li>
+<li><p>Les parcours de vie. Ils ont fait l’objet d’une analyse plus complexe visant à combiner ce que l’on peut savoir des parcours de vie (lieu de naissance, dernière résidence, résidence actuelle) avec des critères individuels tels que l’âge, le sexe, le niveau de diplôme, etc (Chapitre 9)</p></li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -306,8 +354,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./d00_02_intro_resume.html" class="pagination-link">
-        <span class="nav-page-text">Résumé</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./credits.html" class="pagination-link">
+        <span class="nav-page-text">CREDITS</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

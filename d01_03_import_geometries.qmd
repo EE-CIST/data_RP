@@ -1,4 +1,4 @@
-# Données géométriques
+# Données géométriques {#sec-3}
 
 ```{r, echo=FALSE}
 library(knitr)
@@ -18,8 +18,7 @@ Une fois que vous êtes connecté en tant qu'utilisateur, vous pouvez accéder a
 
 ![Lien vers les données géométriques](img/ipums_012.png)
 
-Ce dernier vous conduit à une page comportant de nombreuses possibilités d'obtention de données géométriques pour chacun des recensements de tous les pays à toutes les dates. On utilisera ici uniquement les géométries associées aux données de recensement, mais la page offre d'autres possibilités, notamment pour la constitution de découpages à plusieurs dates ou pour les liens vers les données DHS.
-Pour assurer une correspondance exacte avec les données de recensement, on utilise uniquement les shapefile correspondant aux indicateurs contenus dans les données individuelles :
+Ce dernier vous conduit à une page comportant de nombreuses possibilités d'obtention de données géométriques pour chacun des recensements de tous les pays à toutes les dates. On utilisera ici uniquement les géométries associées aux données de recensement, mais la page offre d'autres possibilités, notamment pour la constitution de découpages à plusieurs dates ou pour les liens vers les données DHS. Pour assurer une correspondance exacte avec les données de recensement, on utilise uniquement les shapefile correspondant aux indicateurs contenus dans les données individuelles :
 
 ![Lien vers les données géométriques](img/ipums_013.png)
 
@@ -50,8 +49,6 @@ plot(map2$geometry, col="lightyellow", border="gray80", lwd=0.4, main=census)
 plot(map1$geometry,add=T, col=NA, border = "black",lwd=0.8)
 ```
 
-
-
 ### Burkina Faso RP 2006
 
 ```{r map_bf2006, echo=FALSE, eval=TRUE}
@@ -70,8 +67,6 @@ par(mar=c(0,0,2,0))
 plot(map2$geometry, col="lightyellow", border="gray80", lwd=0.4, main=census)
 plot(map1$geometry,add=T, col=NA, border = "black",lwd=0.8)
 ```
-
-
 
 ### Mali RP 2009
 
@@ -92,8 +87,6 @@ plot(map2$geometry, col="lightyellow", border="gray80", lwd=0.4, main=census)
 plot(map1$geometry,add=T, col=NA, border = "black",lwd=0.8)
 ```
 
-
-
 ### Sénégal RP 2013
 
 ```{r map_sn2013, echo=FALSE, eval=TRUE}
@@ -112,8 +105,6 @@ par(mar=c(0,0,2,0))
 plot(map2$geometry, col="lightyellow", border="gray80", lwd=0.4, main=census)
 plot(map1$geometry,add=T, col=NA, border = "black",lwd=0.8)
 ```
-
-
 
 ### Togo RP 2010
 
@@ -134,22 +125,17 @@ plot(map2$geometry, col="lightyellow", border="gray80", lwd=0.4, main=census)
 plot(map1$geometry,add=T, col=NA, border = "black",lwd=0.8)
 ```
 
-
-
 ## Géométries harmonisées dans le temps
 
 IPUMS propose pour chaque pays des géométries harmonisées permettant de comparer les situations à plusieurs dates et, du même coup, de procéder à des analyses de migrations. La résolution spatiale est évidemment plus faible mais l'intérêt beaucoup plus grand si l'on souhaite par exemple construire des séries chronologiques ou étudier les migrations entre deux dates. L'inconvénient est évidemment d'aboutir parfois à des unités administratives fictives qui sont un compromis entre plusieurs redécoupages.
 
-
 ### Accès aux données
 
-
-La procédure est la même que précédemment mais en suivant un autre chemin pour accéder aux fonds de carte harmonisés dans le temps. Le lien avec les données individuelles de recnsement sera désormais effectué à l'aide de codes standard portant les noms respectifs de **GEOLEV1** et **GEOLEV2**. 
+La procédure est la même que précédemment mais en suivant un autre chemin pour accéder aux fonds de carte harmonisés dans le temps. Le lien avec les données individuelles de recnsement sera désormais effectué à l'aide de codes standard portant les noms respectifs de **GEOLEV1** et **GEOLEV2**.
 
 ![Lien vers les données géométriques harmonisées](img/ipums_016.png)
 
-Pour les pays qui n'ont pas connu de changement administratif, les données harmonisées correspondent au données du dernier recensement (*Bénin*). Dans le cas où il y a eu des fragmentations mais sans remise en cause des limites, le découpage harmonisé sera en général celui d'un recensement plus ancien (*Sénégal*). Enfin, dans le cas où le redécoupage conduit à des découpages avec interesections, il faut agréger les unités problématiques en ensembles plus vastes qui ne correspondent à aucune date précise de recensement (*Togo*). Lorsqu'un recensement est manifestement non compatible avec les précédents, IPUMS renonce à chercher un plus petit commun dénominateur 
-
+Pour les pays qui n'ont pas connu de changement administratif, les données harmonisées correspondent au données du dernier recensement (*Bénin*). Dans le cas où il y a eu des fragmentations mais sans remise en cause des limites, le découpage harmonisé sera en général celui d'un recensement plus ancien (*Sénégal*). Enfin, dans le cas où le redécoupage conduit à des découpages avec interesections, il faut agréger les unités problématiques en ensembles plus vastes qui ne correspondent à aucune date précise de recensement (*Togo*). Lorsqu'un recensement est manifestement non compatible avec les précédents, IPUMS renonce à chercher un plus petit commun dénominateur
 
 ### Bénin harmonisé : RP 1979, 1992, 2002 & 2013
 
@@ -170,9 +156,9 @@ plot(map2$geometry, col="lightyellow", border="gray80", lwd=0.4, main=census)
 plot(map1$geometry,add=T, col=NA, border = "black",lwd=0.8)
 ```
 
-- **Validation ?** : à faire par les formateurs du pays concernés
+-   **Validation ?** : à faire par les formateurs du pays concernés
 
-### Burkina Faso harmonisé : RP  1996 & 2006
+### Burkina Faso harmonisé : RP 1996 & 2006
 
 ```{r map_bf1996_2006, echo=FALSE, eval=TRUE}
 library(sf)
@@ -191,9 +177,9 @@ plot(map2$geometry, col="lightyellow", border="gray80", lwd=0.4, main=census)
 plot(map1$geometry,add=T, col=NA, border = "black",lwd=0.8)
 ```
 
-- **Validation ?** : à faire par les formateurs du pays concernés
+-   **Validation ?** : à faire par les formateurs du pays concernés
 
-### Mali harmonisé : RP  1987, 1998 & 2009
+### Mali harmonisé : RP 1987, 1998 & 2009
 
 ```{r map_ml1987_2009, echo=FALSE, eval=TRUE}
 library(sf)
@@ -212,9 +198,9 @@ plot(map2$geometry, col="lightyellow", border="gray80", lwd=0.4, main=census)
 plot(map1$geometry,add=T, col=NA, border = "black",lwd=0.8)
 ```
 
-- **Validation ?** : à faire par les formateurs du pays concernés
+-   **Validation ?** : à faire par les formateurs du pays concernés
 
-### Sénégal harmonisé : RP  1988, 2002 & 2013
+### Sénégal harmonisé : RP 1988, 2002 & 2013
 
 ```{r map_sn1988_2013, echo=FALSE, eval=TRUE}
 library(sf)
@@ -233,11 +219,11 @@ plot(map2$geometry, col="lightyellow", border="gray80", lwd=0.4, main=census)
 plot(map1$geometry,add=T, col=NA, border = "black",lwd=0.8)
 ```
 
-- **Validation ?** : à faire par les formateurs du pays concernés
+-   **Validation ?** : à faire par les formateurs du pays concernés
 
-### Togo harmonisé : RP 1970 & 2010  
+### Togo harmonisé : RP 1970 & 2010
 
-Dans le cas du Togo, il n'est pas possible d'harmoniser le niveau géographique II entre les différentes dates de recensement. Le seul découpage haronisé concerne le niveau I mais il réduit le pays à trois régions seulement. On peut donc estimer que, dans ce cas il n'est pas vraiment possible de constituer des séries chronologiques. 
+Dans le cas du Togo, il n'est pas possible d'harmoniser le niveau géographique II entre les différentes dates de recensement. Le seul découpage haronisé concerne le niveau I mais il réduit le pays à trois régions seulement. On peut donc estimer que, dans ce cas il n'est pas vraiment possible de constituer des séries chronologiques.
 
 ```{r map_tg1970_2010, echo=FALSE, eval=TRUE}
 library(sf)
@@ -257,4 +243,4 @@ plot(map2$geometry, col="lightyellow", border="gray80", lwd=0.4, main=census1)
 plot(map1$geometry,add=T, col=NA, border = "black",lwd=0.8)
 ```
 
-- **Validation ?** : à faire par les formateurs du pays concernés
+-   **Validation ?** : à faire par les formateurs du pays concernés

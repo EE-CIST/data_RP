@@ -1,6 +1,4 @@
-# Sexe, âge et urbanité
-
-
+# Sexe, âge et urbanité {#sec-6}
 
 ```{r, echo=TRUE}
 library(knitr)
@@ -15,25 +13,23 @@ library(explor)
 
 ```
 
+Nous allons prendre ici un exemple de croisement de trois indicateurs classiques auquels on ajoute une dimension territoriale :
 
+-   AGE3 : Distribution de la population en trois classes d'âges
+-   SEX : Répartition de la population entre hommes et femmes
+-   URBAN : Classification du logement en zone rurale ou urbaine
+-   GEOLEV1 ou GEOLEV2 : code de l'unité géographique
 
-Nous allons prendre ici un exemple de croisement de trois indicateurs classiques auquels on ajoute une dimension territoriale : 
+On y ajoute deux autres variables facilitant le tri ultérieur du tableau
 
-- AGE3 : Distribution de la population en trois classes d'âges 
-- SEX : Répartition de la population entre hommes et femmes 
-- URBAN : Classification du logement en zone rurale ou urbaine
-- GEOLEV1 ou GEOLEV2 : code de l'unité géographique
+-   COUNTRY : nom du pays
+-   YEAR : date de recensement
 
- On y ajoute deux autres variables facilitant le tri ultérieur du tableau
- 
- - COUNTRY : nom du pays
- - YEAR : date de recensement
- 
- Après avoir stocké le tableau de contingence en format "long" ou "large" on donne un exemple d'utilisation avec la réalisation d'une analyse factorielle des correspondance (AFC) et une classification ascendante hiararchique (CAH) sur la structure par âge et par sexe des populations au niveau administratif I. 
- 
+Après avoir stocké le tableau de contingence en format "long" ou "large" on donne un exemple d'utilisation avec la réalisation d'une analyse factorielle des correspondance (AFC) et une classification ascendante hiararchique (CAH) sur la structure par âge et par sexe des populations au niveau administratif I.
+
 ## Création des tableaux
 
-La première étape consiste à établir des tableaux croisés qui énumèrent tous les croisements possibles en ayant retirer les individus auxquels il manque une des caractéristique. Il s'agit en général d'un petit nombre de cas. 
+La première étape consiste à établir des tableaux croisés qui énumèrent tous les croisements possibles en ayant retirer les individus auxquels il manque une des caractéristique. Il s'agit en général d'un petit nombre de cas.
 
 ### niveau I
 
@@ -58,7 +54,6 @@ kable(head(tc1))
 ```
 
 Ce tableau qui est au format "long" est pratique pour certaines application mais pas pour d'autres où l'on préférera un format "large". On va donc le transformer en une seconde version qui conserve les valeurs mais les range différemment dans les colonnes. Dans ce nouveau format le nom des colonnes permet de repérer le croisement opéré (e.g. *HU0014* est la population d'hommes résidant en milieu urbain d'âge 0-14 ans, *FR85XX* est la population de femmes de 85ans et plus résidant en milieu rural, etc)
-
 
 ```{r, tabcont_wide_1, eval=TRUE, echo=TRUE}
 library(tidyr)
@@ -117,8 +112,6 @@ kable(head(tab1))
               
 ```
 
-
-
 ### niveau II
 
 On reprend les mêmes procédure exactement, en changeant juste le niveau d'agrégation territoriale
@@ -144,7 +137,6 @@ saveRDS(tc2, "indic/all/GEOLEV2_POP_AGE_SEX_URB_long.RDS")
 
 kable(head(tc2))
 ```
-
 
 ```{r tabcont_wide_2, eval=TRUE, echo=FALSE, comment=FALSE, warning=FALSE}
 
@@ -206,6 +198,3 @@ kable(head(tab2))
 ## Utilisation pédagogique
 
 On peut tirer de nombreux indicateurs du tableau de contingence multiple pour des analyses univariées, bivariées ou multivariées. L'intérêt de ce type de tableau est leur compacité et leur faible taille comparativement au tableau inital des individus. Ils peuvent en particulier être utilisé pour des applications interactives de visualisaton développées sous Shiny où l'utilisateur pourra choisir par exemple de visualiser le % de jeunes, pour un pays donné, à une date donnée, pour un genre donné, en milieu rura ou urbai, etc.
-
-
-

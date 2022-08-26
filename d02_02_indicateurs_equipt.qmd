@@ -1,4 +1,4 @@
-# Equipement des ménages
+# Equipement des ménages {#sec-5}
 
 ```{r, echo=TRUE}
 library(knitr)

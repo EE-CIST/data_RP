@@ -1,4 +1,4 @@
-# Migrations durée de vie
+# Migrations durée de vie {#sec-8}
 
 ```{r, echo=FALSE}
 library(knitr, quiet=T)
@@ -14,9 +14,9 @@ library(RColorBrewer)
 
 Nous proposons dans ce chapitre une analyse des *migrations durée de vie* c'est-à-dire des différences entre le lieu de naissance et le lieu de résidence déclarés au moment du recensement. Il s'agit évidemment d'une mesure assez grossière puisqu'elle conduit à ignorer toutes les étapes suivies par le migrant au cours de sa vie et dépend étroitement de l'âge de l'individu. La mesure peut de plus s'avérer trompeuse puisqu'une personne née en un lieu A peut avoir vécu dans les lieux B, C, D avant de revenir en A au moment du recensement qui concluera à l'absence de mobilité...
 
-![Exemple théorique de parcours migratoire](img/mobil001.png){heigth=50%}
+![Exemple théorique de parcours migratoire](img/mobil001.png){heigth="50%"}
 
-Dans l'exemple théorique présenté ci-dessus, l'individu concerné qui est né dans la commune de Malanville (département Alibori) sera réputé avoir effectué une migration durée de vie lors des recensements de 1979 où il est recensé à Parakou (département de Borgou), en 1992 où il est recensé à Abomey-Calavi (département Atlantique) et en 2002 où iest recensé à Grand-Popo (département du Mono). En revanche il ne sera pas considéré comme migrant en 2013 puisqu'il réside à nouveau dans la commune et le département de son lieu de naissance. 
+Dans l'exemple théorique présenté ci-dessus, l'individu concerné qui est né dans la commune de Malanville (département Alibori) sera réputé avoir effectué une migration durée de vie lors des recensements de 1979 où il est recensé à Parakou (département de Borgou), en 1992 où il est recensé à Abomey-Calavi (département Atlantique) et en 2002 où iest recensé à Grand-Popo (département du Mono). En revanche il ne sera pas considéré comme migrant en 2013 puisqu'il réside à nouveau dans la commune et le département de son lieu de naissance.
 
 ## Variables IPUMS
 
@@ -28,33 +28,29 @@ La page de description de [la variable BPLBJ1](https://international.ipums.org/i
 
 ![Disponibilité de la variable département de naissance](img/mobil002.png)
 
-
 Comme on peut le voir dans l'image ci-dessous, il n'y a pas de difficultés particulières concernant les mouvements internes au pays mais il y a une absence d'information sur les personnes nées à l'étranger lors des recensements de 1979 et 1992. Ils sont rangés à cette date dans la catégorie inconnue dont on voit en 2002 qu'elle ne concerne pas forcément les étrangers.
 
 Les onglets suivants précisent la définition de la variable en anglais (*BPLBJ1 indicates the person's department of birth within Benin.*) et indiquent le degré de comparabilité entre les dates (*There have not been any changes in boundaries for all sample years in BPLBJ1 and is comparable across all available sample years.*). Ils fournissent ensuite un document précisant les questions exactes qui ont été posées dans le questionnaire de recnsement et les instructions données aux agents recenseurs.
 
-![Questionnaire de la variable département de naissance au RP 1979](img/mobil003.png)
-Mieux encore, on peut accéder à un fac similé du document papier de recensemet qui a permis d'établir les statistiques de lieu de résidence (en vert), de lieu de naissance (en rouge) et de lieu de résidence antérieure (en bleu)
+![Questionnaire de la variable département de naissance au RP 1979](img/mobil003.png) Mieux encore, on peut accéder à un fac similé du document papier de recensemet qui a permis d'établir les statistiques de lieu de résidence (en vert), de lieu de naissance (en rouge) et de lieu de résidence antérieure (en bleu)
 
-![Formulaire ménage du RP1979 au Bénin - Recto](img/mobilrp1979_recto.png)
-![Formulaire ménage du RP 1979 au Bénin - Verso](img/mobilrp1979_verso.png)
+![Formulaire ménage du RP1979 au Bénin - Recto](img/mobilrp1979_recto.png) ![Formulaire ménage du RP 1979 au Bénin - Verso](img/mobilrp1979_verso.png)
 
 ### Commune de naissance (BPLBJ2)
 
-Cette variable permet une localisation plus précise des lieux de naissance mais elle comporte un certain degré d'incertitude puisque pour certains individus on ne connaît que le département de naissance mais pas la commune à l'intérieur de ceux-ci. Ces cas de localisation du leiu de naissance uniquement au niveau du département ne se présentent qu'en 2002 et 2013 et concernent un effectif limité. Dans le cas des recensements de 1979 et 1992, ils sont comptabilisés dans la catégorie "Inconnu" dont nous avons vu précédemment qu'elle concernait aussi les personnes nées à l'étranger. 
+Cette variable permet une localisation plus précise des lieux de naissance mais elle comporte un certain degré d'incertitude puisque pour certains individus on ne connaît que le département de naissance mais pas la commune à l'intérieur de ceux-ci. Ces cas de localisation du leiu de naissance uniquement au niveau du département ne se présentent qu'en 2002 et 2013 et concernent un effectif limité. Dans le cas des recensements de 1979 et 1992, ils sont comptabilisés dans la catégorie "Inconnu" dont nous avons vu précédemment qu'elle concernait aussi les personnes nées à l'étranger.
 
 ![Questionnaire de la variable département de naissance au RP 1979](img/mobil004.png)
 
-Au final, et dans la perspective comparative que nous suivons, il semble préférable de travailler sur un échantillon limité aux individus dont on connait la commune de naissance en éliminant ceux qui sont nés à l'étranger. 
+Au final, et dans la perspective comparative que nous suivons, il semble préférable de travailler sur un échantillon limité aux individus dont on connait la commune de naissance en éliminant ceux qui sont nés à l'étranger.
 
 ## Création d'indicateurs
 
-Nous allons maintenant compléter la base de donnée en y ajoutant deux indicateurs relatifs aux migrations durée de vie entre départments et communes. Nous allons dans le même temps éliminer du fichier les observations manquantes ou non disponibles aux deux niveaux. 
+Nous allons maintenant compléter la base de donnée en y ajoutant deux indicateurs relatifs aux migrations durée de vie entre départments et communes. Nous allons dans le même temps éliminer du fichier les observations manquantes ou non disponibles aux deux niveaux.
 
 ### Nouvelles variables
 
-Une petite difficulté concerne le type des variables GEOLEV1 ou GEOLEV2 et MIG1_B_BJ ou MIG2_B_BJ qui ne sont pas du même type *factor* ou *haven_labelled* et qui ont des modalités différentes. Nous suggérons donc fortement de convertir immédiatement toutes ces variables en type *character* pour en faire de nouvelles en les nommant LEV1_NAI et LEV2_NAI pour les départements et communes de naissance, LEV1_RES et LEV2_RES pour les départements et communes de résidence.
-
+Une petite difficulté concerne le type des variables GEOLEV1 ou GEOLEV2 et MIG1_B\_BJ ou MIG2_B\_BJ qui ne sont pas du même type *factor* ou *haven_labelled* et qui ont des modalités différentes. Nous suggérons donc fortement de convertir immédiatement toutes ces variables en type *character* pour en faire de nouvelles en les nommant LEV1_NAI et LEV2_NAI pour les départements et communes de naissance, LEV1_RES et LEV2_RES pour les départements et communes de résidence.
 
 ```{r, echo=TRUE, eval=FALSE}
 ### Load data
@@ -76,11 +72,9 @@ saveRDS(rp,"ipums/rp/mobil_benin_4dates_samp10pct.RDS" )
         
 ```
 
-
 ### Indicateurs globaux
 
 Pour vérifier la fiabilité de nos résultats, on calcule pour chaque date le nombre de personnes qui résident dans un autre département ou une autre commune qu'au moment de leur naissance.
-
 
 ```{r, warning=F, comment=F}
 rp <- readRDS("ipums/rp/mobil_benin_4dates_samp10pct.RDS" )
@@ -112,32 +106,29 @@ kable(tab, caption = "Mobilité durée de vie au Bénin / Communes"  )
 
 ```
 
-
-- **Commentaire : ** Pour les deux niveaux administratifs on constate un accroissement régulier de la mobilité durée de vie lors des recensements de 1979, 1992 et 2002. Mais on assiste ensuite à une baisse significative en 2013. S'agit-il d'un biais ou d'une réalité ?
-
+-   **Commentaire :** Pour les deux niveaux administratifs on constate un accroissement régulier de la mobilité durée de vie lors des recensements de 1979, 1992 et 2002. Mais on assiste ensuite à une baisse significative en 2013. S'agit-il d'un biais ou d'une réalité ?
 
 ### Indicateurs départementaux
 
 On calcule pour chaque département les trois variables de stock suivantes :
 
-- **STA** : le nombre de personnes recensées dans un département qui y sont né
-- **EMI** : le nombre de personnes nées dans un département qui ont té recensées dans un autre
-- **IMM** : le nombre de personnes recensées dans un département qui sont nées dans un autre.
+-   **STA** : le nombre de personnes recensées dans un département qui y sont né
+-   **EMI** : le nombre de personnes nées dans un département qui ont té recensées dans un autre
+-   **IMM** : le nombre de personnes recensées dans un département qui sont nées dans un autre.
 
 On en déduit trois autres variables de stock :
 
-- **VOL = EMI+IMM** : le volume de personnes qui sont nées ou résident dans un département.
-- **SOL = IMM-EMI ** : le solde des arrivées et des départs d'un département parmi les survivants à la date du recensement
-- **POMOY = STA + (EMI+IMM)/2** : Une estimation (très imparfaite) de la population moyenne du département entre la date du recensement et la date de naissance de personnes. 
+-   **VOL = EMI+IMM** : le volume de personnes qui sont nées ou résident dans un département.
+-   **SOL = IMM-EMI** : le solde des arrivées et des départs d'un département parmi les survivants à la date du recensement
+-   **POMOY = STA + (EMI+IMM)/2** : Une estimation (très imparfaite) de la population moyenne du département entre la date du recensement et la date de naissance de personnes.
 
-Ce qui permet finalement d'établir les indicateurs de taux suivants : 
+Ce qui permet finalement d'établir les indicateurs de taux suivants :
 
-- **txEMI = 100 x EMI/POPMOY**  : taux d'émigration (en %)
-- **txIMM = 100 x IMM/POPMOY**  : taux d'immigration (en %)
-- **txMOB = 100 x VOL/POPMOY**  : taux de mobilité (en %)
-- **txACM = 100 x SOL/POPMOY**  : taux d'ac. migratoire (en %)
-- **txASY = SOL/VOL** : indicateur d'asymétrie des flux (compris entre -1 et +1)
-
+-   **txEMI = 100 x EMI/POPMOY** : taux d'émigration (en %)
+-   **txIMM = 100 x IMM/POPMOY** : taux d'immigration (en %)
+-   **txMOB = 100 x VOL/POPMOY** : taux de mobilité (en %)
+-   **txACM = 100 x SOL/POPMOY** : taux d'ac. migratoire (en %)
+-   **txASY = SOL/VOL** : indicateur d'asymétrie des flux (compris entre -1 et +1)
 
 ```{r}
 # Load code and name of units
@@ -188,10 +179,7 @@ kable(head(tab1),
       caption = "Indicateurs départementaux de migration durée de vie au Bénin (1979, 1992, 2002, 2013)")
 ```
 
-
 il est ensuite facile d'établir une cartographie des indicateurs de son choix pour comparer l'évolution à chacune des quatre dates de recensement :
-
-
 
 ```{r mig_dv_lev1_sol,eval=TRUE, echo=FALSE, fig.cap="Solde des migrations durée de vie par département au Bénin"}
 
@@ -250,9 +238,7 @@ mf_layout(title = "Bénin, RP 2013",
 
 ```
 
-- **Commentaire** : A première vue la série de carte proposée semble cohérente avec les conaissances empiriques. On voit notamment bien comment la capitale Cotonou (département du Littoral) commence par attirer les populations des départements voisins en 1979 avant d'arriver à saturation et de resdistribuer la population vers les départements voisins d'Atlantique et de Ouémé pour aboutir à une inversion du solde en 2013. On note par ailleurs le solde positif permanent du département de Borgou et à un moindre degré du departement des Collines. 
-
-
+-   **Commentaire** : A première vue la série de carte proposée semble cohérente avec les conaissances empiriques. On voit notamment bien comment la capitale Cotonou (département du Littoral) commence par attirer les populations des départements voisins en 1979 avant d'arriver à saturation et de resdistribuer la population vers les départements voisins d'Atlantique et de Ouémé pour aboutir à une inversion du solde en 2013. On note par ailleurs le solde positif permanent du département de Borgou et à un moindre degré du departement des Collines.
 
 ```{r mig_dv_lev1_asy,fig.cap="Asymétrie des migrations durée de vie par département au Bénin", eval=TRUE, echo=FALSE}
 
@@ -319,13 +305,11 @@ mf_layout(title = "Benin, RP 2013",
 
 ```
 
-- **Commentaire : ** L'indice d'asymétrie (rapport entre le solde et le volume des echanges) est un bon indicateur d'attractivité migratoire. Il est normalisé entre -1 (uniquement des départs) et +1 (uniquement des arrivées) avec une valeur de référence 0 (égalité entre les départs et les arrivées). Appliqué aux migrations durée de vie, il montre bien l'attractivité permanente de certains départements comme le Borgou et la répulsivité permanente d'autres comme Atacora. Mais il souligne également des évolution de ces niveaux voire des retrournements de situation notamment dans le sud entre Cotonou et sa périphérie. 
+-   **Commentaire :** L'indice d'asymétrie (rapport entre le solde et le volume des echanges) est un bon indicateur d'attractivité migratoire. Il est normalisé entre -1 (uniquement des départs) et +1 (uniquement des arrivées) avec une valeur de référence 0 (égalité entre les départs et les arrivées). Appliqué aux migrations durée de vie, il montre bien l'attractivité permanente de certains départements comme le Borgou et la répulsivité permanente d'autres comme Atacora. Mais il souligne également des évolution de ces niveaux voire des retrournements de situation notamment dans le sud entre Cotonou et sa périphérie.
 
 ### Indicateurs communaux
 
 On peut répliquer la même procédure sur les données communales afin d'obtenir des informations de résolution spatiale plus fine. On doit toutefois faire attention à l'incertitude statistique plus grande des calculs puisque les analyses ne concernent qu'un échantillon de 10%. Il peut donc y avoir une marge d'erreur élevé, d'autant plus importante pour les recensements anciens que la population (et donc l'échantillon) était moins importante.
-
-
 
 ```{r, echo=FALSE, eval=FALSE}
 # Load code and name of units
@@ -377,7 +361,6 @@ kable(head(tab2),
 ```
 
 A ce niveau d'analyse, il devent difficile de visualiser les résultats sur une carte géographique normale et il peut être intéressant de proposer conjointement une représentation sous forme de cartogramme dont la surface est proportionnelle à la population de la commune à la date du recensement. On peut illustrer cette solution à l'aide du RP 2013 pour lequel nous disposons d'un tel cartogramme (il serait évidemment incorrect de l'utiliser pour les autres dates, la population ayant changé).
-
 
 ```{r mig_dv_lev2_sol,eval=TRUE, echo=FALSE, fig.cap="Solde des migrations durée de vie par département au Bénin"}
 
@@ -433,6 +416,272 @@ mf_layout(title = "Cartogramme démographique (RP 2013)",
 
 ```
 
-- **Commentaire** : Le passage au niveau communal permet de mettre à jour des inégalités considérables entre les communes d'un même département. La représentation sous forme de cartogramme permet de mieux visualiser les dynamiques à l'oeuvre dans la région métropolitaine côtière et l'intense redistribution qui s'opère de Cotonou vers Abomey-Calavi ou Porto-Novo
+-   **Commentaire** : Le passage au niveau communal permet de mettre à jour des inégalités considérables entre les communes d'un même département. La représentation sous forme de cartogramme permet de mieux visualiser les dynamiques à l'oeuvre dans la région métropolitaine côtière et l'intense redistribution qui s'opère de Cotonou vers Abomey-Calavi ou Porto-Novo
+
+
+## Matrices Origine-Destination
+
+Au delà des indicateurs simples décrits dans la section précédente, on peut procéder à une analyse spatiale des déplacements en construisant des matrices origine-destination qui mesurent le flux de personnes entre leurs lieux de naissance et leurs lieux de résidence. Cela ouvre une vaste gamme de possibilités de traitements que nous allons illustrer par l'exemple du recensement de 2013 mais que l'on pourrait évidemment reproduire aux autres dates.
+
+
+### Flux entre départements
+
+L'établissement de la matrice de flux est très facile. Elle suppose d'établir d'abord un tableau d'interactions au format "long" 
+
+```{r}
+# Load individual data
+rp <- readRDS("ipums/rp/mobil_benin_4dates_samp10pct.RDS" )
+
+# Load map and extract name of units
+map<-st_read("mobil/geom/cartog_lev1_bj2013.shp", quiet=T)
+codei <- map %>% st_drop_geometry() %>% select(i=code,name_i=nom)
+codej <- map %>% st_drop_geometry() %>% select(j=code,name_j=nom)
+
+# Compute interactions
+int <- rp %>% filter(YEAR == 2013) %>% 
+                   group_by(i = LEV1_NAI,
+                            j = LEV1_RES) %>%
+                   summarize(Fij = sum(PERWT)) %>%
+                   left_join(codei) %>%
+                   left_join(codej) %>%
+                   select(i,j,name_i,name_j, Fij)
+# Visualize
+kable(head(int), caption = "Migrations durée de vie au Bénin en 2013 (format long)")
+  
+```
+
+On peut ensuite transformer le tableau d'interaction en format large en utilisant au choix la fonction `dcast()` (des packages reshape2 et data.table ) ou la procédure `pivot_wider()` du package tidyr qui fait partie de l'univers tidyverse.
+
+```{r}
+int2<- reshape2::dcast(int, formula = name_i~name_j, values.var=Fij)
+kable(int2, caption ="Migrations durée de vie au Bénin en 2013 (format large)")
+```
+
+On peut enfin transformer le tableau en un objet de type matrice ce qui suppose de transformer la variable name_i en nom des lignes :
+
+```{r}
+int3 <- as.matrix(int2[,-1])
+row.names(int3)<-int2[[1]]
+kable(int3, caption ="Migrations durée de vie au Bénin en 2013 (matrice)")
+```
+
+L'intérêt du format matriciel est de faciliter des opérations mathématiques telles que le calcul de pourcentage en ligne  ou le pourcentage en colonnes qui vont indiquer respectivement des probabilités de destination ou des probabilités d'origines.On va illustrer ces possibilités sur une matrice dont on a retiré la diagonale
+
+
+```{r}
+int4<-int3
+diag(int4)<-NA
+int4 <- 100*int4/apply(int4,1,sum, na.rm=T)
+kable(int4, digits=1, caption = "Probabilité de destination des migrants durée de vie en 2013 (en %)")
+```
+
+- **Commentaire :** Si l'on prend l'exemple des personnes nées à *Alibori* qui résident dans un autre département en 2013, on constate que plus de la moitié d'entre elles (55.5%) on été recensés dans le département de *Borgou*, 11.9% dans le département voisin d'Atacora et seulement 6.6% vers Cotonou (département de l'*Atlantique*). Inversement, les personnes nées dans le département du *Mono* qui résident dans un autre département en 2013 ont choisi majoritairement la capitale Cotonou (44.1%) et sa périphérie proche du département du *Littoral* (25.9%). On voit donc bien apparaître des clivages liés à la distance aux métropoles principales du pays qui polarisent chacune un espace migratoire distinct. 
+
+
+
+Procédons à l'opération inverse de calcul des origines mais en ne retirant pas cette fois-ci la diagonale afin de voir la part des populations autchtones
+
+
+```{r}
+int5<-t(int3)
+int5 <- 100*int5/apply(int5,1,sum, na.rm=T)
+int5<-t(int5)
+kable(int5, digits=1, caption = "Département de naissance des individus en 2013 (en %)")
+```
+
+- **Commentaire** : La diagonale de cette matrice montre le degré de diversité des origines départementales des population qui résident dans chaque département en 2013. Les départements isolés et peu attractifs ont des taux très élevés de populations nées dans le même département, ce que l'on peut voir avec les départements d'*Alibori* (98.3%), de *Couffo* (97.3%)ou d'*Atacora* (96.8%). Inversement les départements métropolitains qui ont attiré des migrants de tous le pays affichent des taux plus faibles de populations nées dans le même département ce que l'on peut voir pour les départements de l'*Atlantique* (74.2%), du *Littoral* (78.3%), des *Collines* (89.2%) ou de *Borgou* (90.0%).
+
+
+### Flux entre communes
+
+Les flux entre départements sont intéressants d'un point de vue pédagogique puisqu'ils permettent de montrer facilement les tableaux de format 10 x 10 aux étudiants et de leur expliquer les différentes transformations que l'on peut faire subir à une matrice de flux. Mais ils constituent une grille d'analyse assez grossière qui masque notamment tous les flux de proximité. Il est donc plus intéressant, dans un deuxième temps d'attaquer des données plus précises en commençant par étudier les flux vers une seule destinations mais à plusieurs dates.
+
+A titre d'exemple, nous allons essayer ici de reconstituer l'évolution de l'aire d'attraction de la commune de Parakou au cours du temps. 
+
+```{r}
+
+# Load individual data
+rp <- readRDS("ipums/rp/mobil_benin_4dates_samp10pct.RDS" )
+
+# Load map and extract name of units
+map<-st_read("mobil/geom/cartog_lev2_bj2013.shp", quiet=T)
+codename <- map %>% st_drop_geometry() %>% select(code,nom)
+
+# Compute total departure
+dep_tot <- rp %>% filter(MIG_DV_2==1) %>% 
+                   group_by(i = LEV2_NAI,
+                            t = YEAR) %>%
+                   summarize(Fij = sum(PERWT)) %>%
+                   reshape2::dcast(formula = i~t,value.var="Fij",fill = 0)
+names(dep_tot)<-c("code","tot79","tot92","tot02","tot13")
+
+
+# Compute departure to Parakou
+dep_par <- rp %>% filter(MIG_DV_2==1,
+                     LEV2_RES =="204004005") %>% 
+                   group_by(i = LEV2_NAI,
+                            t = YEAR) %>%
+                   summarize(Fij = sum(PERWT)) %>%
+                   reshape2::dcast(formula = i~t,value.var="Fij",fill = 0)
+names(dep_par)<-c("code","par79","par92","par02","par13")
+
+# Merge tables
+tab<-left_join(codename,dep_tot) %>% left_join(dep_par)
+  
+# Add probabilities
+tab <- tab %>% mutate(pct79 = 100*par79/tot79,
+                      pct92 = 100*par92/tot92,
+                      pct02 = 100*par02/tot02,
+                      pct13 = 100*par13/tot13)
+
+
+kable(head(tab), digits=c(0,0,0,0,0,0,0,0,0,0,1,1,1,1),
+      caption = "Migrations durée de vie vers Parakou en 1979, 1992, 2002 et 2013")
+  
+
+saveRDS(tab,"mobil/all/mob_dv_parakou_lev2.RDS")
+```
+
+- **Exemple de lecture** : Au recensement de 1979, 3360 personnes natives de la commune de *Banikorara* résidaient dans une autre commune du Bénin. Parmi ces émigrants, on en trouvait 410 qui résidaient dans la commune de *Parakou* soit 12.2% des personnes ayant quitté la commune de *Banikorara*. Au recensement de 2013, on constatait la présence de 7200 personnes natives de la commune de *Banikorara* qui résidaient dans une autre commune, dont 1440 (20%) à *Parakou*. Il y a donc eu un renforcement de l'attraction de *Parakou* sur *Banikorara*, lié soit à de nouvelles migrations, soit à un cumul progressif du nombre d'arrivants qui ne sont pas repartis vers d'autres destinations et ont survécu. Les chiffres doivent toutefois être considérés avec précaution lorsqu'ils concernent de petits effectifs comme dans le cas de la commune de *Karimama* où le chiffre affiché de 40 migrants vers Parakou  en 1979 ne correspond en réalité qu'à 4 cas de l'échantillon de recensement à 10%. 
+
+
+A partir de ce tableau, on peut réaliser tout d'abord une cartographie des communes d'origine des personne qui résident à Parakou mais sont nés dans une autre commune pour chacune des dates de recensement
+
+```{r mig_dv_lev2_parakou_vol,eval=TRUE, echo=FALSE, fig.cap="Commune d'origine des personnes recensées à Parakou mais nées ailleurs"}
+
+tab<-readRDS("mobil/all/mob_dv_parakou_lev2.RDS")
+map2<-st_read("mobil/geom/map_lev2_bj2013.shp",quiet=T)
+map1<-st_read("mobil/geom/map_lev1_bj2013.shp",quiet=T)
+parak<-map2 %>% filter(nom=="Parakou")
+mapdon<-left_join(map2,tab) 
+
+par(mfrow=c(1,4))
+
+## 1979##
+mf_map(mapdon,type="base", col="lightyellow",lwd=0.1, border="gray50")
+mf_map(map1,type="base", col=NA,lwd=0.5, border="black", add=T)
+mf_map(parak,type="base", col="lightblue",lwd=0.1, border="blue", add=T)
+mf_map(mapdon, type="prop",var="par79",inches = 0.1,leg_title = "nb. natifs")
+mf_layout(title = "Bénin, RP 1979",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,1979",
+          scale = FALSE, arrow=FALSE)
+
+## 1992##
+mf_map(mapdon,type="base", col="lightyellow",lwd=0.1, border="gray50")
+mf_map(map1,type="base", col=NA,lwd=0.5, border="black", add=T)
+mf_map(parak,type="base", col="lightblue",lwd=0.1, border="blue", add=T)
+mf_map(mapdon, type="prop",var="par92",inches = 0.1,leg_title = "nb. natifs")
+mf_layout(title = "Bénin, RP 1992",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,1992",
+          scale = FALSE, arrow=FALSE)
+
+## 2002##
+mf_map(mapdon,type="base", col="lightyellow",lwd=0.1, border="gray50")
+mf_map(map1,type="base", col=NA,lwd=0.5, border="black", add=T)
+mf_map(parak,type="base", col="lightblue",lwd=0.1, border="blue", add=T)
+mf_map(mapdon, type="prop",var="par02",inches = 0.1,leg_title = "nb. natifs")
+mf_layout(title = "Bénin, RP 2002",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,2002",
+          scale = FALSE, arrow=FALSE)
+
+## 2013##
+mf_map(mapdon,type="base", col="lightyellow",lwd=0.1, border="gray50")
+mf_map(map1,type="base", col=NA,lwd=0.5, border="black", add=T)
+mf_map(parak,type="base", col="lightblue",lwd=0.1, border="blue", add=T)
+mf_map(mapdon, type="prop",var="par13",inches = 0.1,leg_title = "nb. natifs")
+mf_layout(title = "Bénin, RP 2013",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,2013",
+          scale = FALSE, arrow=FALSE)
+
+
+```
+
+- **Commentaire**: Les personnes qui résident à Parakou mais sont originaires d'un autre département viennent principalement des cinq départements du nord, de quelques communes du Couffo et de l'agglomération constituée par  Cotonou, Abomey-Calavi et Porto-Novo. Cette géographie est apparemment assez stable au cours du temps, ce qui s'expique en partie par le choix de la variable de mobilité durée de vie qui produit des effets cumulatifs. Ces cartes ne permettent cependant pas de bien visualiser les effets de polarisation puisqu'elles subissent un effet de taille : plus une commune est peuplée, plus elle a de chance d'avoir envoyé des migrants vers Parakou. 
+
+
+```{r mig_dv_lev2_parakou_pct,eval=TRUE, echo=FALSE, fig.cap="Probabilité de résider à Parakou pour les individus ayant quitté leur commune de naissance"}
+
+tab<-readRDS("mobil/all/mob_dv_parakou_lev2.RDS")
+map2<-st_read("mobil/geom/map_lev2_bj2013.shp",quiet=T)
+map1<-st_read("mobil/geom/map_lev1_bj2013.shp",quiet=T)
+parak<-map2 %>% filter(nom=="Parakou")
+mapdon<-left_join(map2,tab) 
+
+mybreaks=c(0,1,2,5,10,20,100)
+mycols = brewer.pal(6,"YlOrBr")
+
+par(mfrow=c(1,4))
+
+## 1979##
+mapdon$pct79[is.na(mapdon$pct79)]<-0
+mf_map(mapdon,type="choro", 
+            var="pct79",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "en %",
+            border=NA,
+            leg_val_rnd = 0)
+mf_map(map1,type="base", col=NA,lwd=0.5, border="black", add=T)
+mf_map(parak,type="base", col="lightblue",lwd=0.1, border="blue", add=T)
+mf_layout(title = "Benin, RP 1979",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,1979",
+                    scale = FALSE, arrow=FALSE)
+
+## 1992##
+mapdon$pct92[is.na(mapdon$pct92)]<-0
+mf_map(mapdon,type="choro", 
+            var="pct92",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "en %",
+            border=NA,
+            leg_val_rnd = 0)
+mf_map(map1,type="base", col=NA,lwd=0.5, border="black", add=T)
+mf_map(parak,type="base", col="lightblue",lwd=0.1, border="blue", add=T)
+mf_layout(title = "Bénin, RP 1992",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,1992",
+          scale = FALSE, arrow=FALSE)
+
+## 2002##
+mapdon$pct02[is.na(mapdon$pct02)]<-0
+mf_map(mapdon,type="choro", 
+            var="pct02",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "en %",
+            border=NA,
+            leg_val_rnd = 0)
+mf_map(map1,type="base", col=NA,lwd=0.5, border="black", add=T)
+mf_map(parak,type="base", col="lightblue",lwd=0.1, border="blue", add=T)
+mf_layout(title = "Bénin, RP 2002",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,2002",
+          scale = FALSE, arrow=FALSE)
+
+## 2013##
+mapdon$pct13[is.na(mapdon$pct13)]<-0
+mf_map(mapdon,type="choro", 
+            var="pct13",
+            breaks=mybreaks,
+            pal=mycols,
+            leg_title = "en %",
+            border=NA,
+            leg_val_rnd = 0)
+mf_map(map1,type="base", col=NA,lwd=0.5, border="black", add=T)
+mf_map(parak,type="base", col="lightblue",lwd=0.1, border="blue", add=T)
+mf_layout(title = "Bénin, RP 2013",
+          credits = "Sources :  IPUMS, 2020 & INS Bénin,2013",
+          scale = FALSE, arrow=FALSE)
+
+
+```
+
+- **Commentaire** : Cette seconde visualisation montre de façon beaucoup plus nette l'existence d'une coupure entre les cinq départements du nord du pays qui envoient une proportion élevée de leurs migrants vers Parakou et le reste du pays. La tendance générale est au renforcement et à l'homogénéisation spatiale de l'attraction de la ville de Parakou sur la partie nord du pays. Si cette attraction est évidemment liée à la distance (ce que pourra confirmer le *modèle gravitaire*), elle semble aussi révéler un *effet de barrière* au vu de la netteté de la coupure qui appraît brutalement au sud du département des Collines.  Il s'agit en bref d'un excellent exemple pédagogique pour construire des modules d'analyse de l'interaction spatiale. 
+
+## Prolongements possibles
+
+Les exemples présentés ci-dessus concernent les *migration durée de vie* mais ils pourront être reproduit sur d'autres matrices de migration concernant les mobilités effectuées au cours des années antérieures. Ils pourront également être appliqués facilement à d'autres pays, les migrations durée de vie étant presque toujours disponibles dans le recensement (ce qui n'est pas le cas des autres mesures de mobilité).
+
+Un point important est la possibilité d'étudier les *mobilités de sous-populations* plutôt que de populations entières comme nous l'avons fait ici. Il est en effet évident que la probabilité d'avoir effectué une migration durée de vie dépend de l'âge de la personne et augmente globalement avec celui-ci (même si un effet de génération peut entraîner une baisse aux âges plus élevés). On peut donc imaginer d'étudier par exemple la matrice de migrations des femmes de 15 à 30 ans célibataires ou celle des hommes chef de ménage de plus de 50 ans, ou celle des étudiants disposant d'un diplôme de l'enseignement supérieur, etc. La seule limite à ce type d'analyse réside dans la taille des échantillons obtenus et du niveau de découpage territorial retenu. Une sous-population de taille trop réduite ne pourra vraismeblablement pas être analysée valablement au niveau communal et il faudra dans ce cas retenir plutôt le niveau départemental.
+
 
 

@@ -1,4 +1,4 @@
-# Conditions d'utilisation
+# Conditions d'utilisation {#sec-1}
 
 ```{r, echo=FALSE}
 library(knitr)
@@ -52,22 +52,18 @@ Les données fournies par IPUMS sont soumises à des [conditions d'utilisation](
 
 -   **Commentaire** : sans commentaires ... il serait catastrophique pour le projet d'EE CIST 2023 de voir l'ensemble des cours mis à l'index ...
 
-
 ## Conditions pour l'enseignement
 
-Les règles générales sont assouplies dans le cas de formations pédagogiques qu'IPUMS encourage particulièrement. Le site web fournit d'ailleurs un certain nombre de ressources pédagogiques sous la forme de videos ou de programmes corrigés écrits en R ou Stata. 
+Les règles générales sont assouplies dans le cas de formations pédagogiques qu'IPUMS encourage particulièrement. Le site web fournit d'ailleurs un certain nombre de ressources pédagogiques sous la forme de videos ou de programmes corrigés écrits en R ou Stata.
 
 ![Ressources pédagogiques offertes par IPUMS](img/ipums_015.png)
 
-Mais le point le plus intéressant pour l'EE CIST2023 est la possibilité de créer des *classrooms* c'est-à-dire des groupes d'utilisateurs (enseignants ou stagiaires) qui peuvent partager les mêmes fichiers de données pour une période de temps. Les conditions d'utilisation sont particulièrement intéressantes comme le montre la traduction en français de la [page correspondante](https://international.ipums.org/international/classroom_accounts.shtml). 
+Mais le point le plus intéressant pour l'EE CIST2023 est la possibilité de créer des *classrooms* c'est-à-dire des groupes d'utilisateurs (enseignants ou stagiaires) qui peuvent partager les mêmes fichiers de données pour une période de temps. Les conditions d'utilisation sont particulièrement intéressantes comme le montre la traduction en français de la [page correspondante](https://international.ipums.org/international/classroom_accounts.shtml).
 
 ### Conditions générales
 
-> Les utilisateurs d'IPUMS peuvent créer des comptes de classe. Les comptes ont trois caractéristiques principales : 
-    Les instructeurs peuvent partager des extraits de données en ligne avec les étudiants, 
-    Les étudiants peuvent s'inscrire plus facilement que les utilisateurs réguliers.
-    Les instructeurs peuvent voir une liste de ceux qui sont inscrits et donc capables de recevoir des données IPUMS.
-    
+> Les utilisateurs d'IPUMS peuvent créer des comptes de classe. Les comptes ont trois caractéristiques principales : Les instructeurs peuvent partager des extraits de données en ligne avec les étudiants, Les étudiants peuvent s'inscrire plus facilement que les utilisateurs réguliers. Les instructeurs peuvent voir une liste de ceux qui sont inscrits et donc capables de recevoir des données IPUMS.
+
 -   **Commentaire** : Ces conditions sont parfaitement en adéquation avec les objectifs de l'EE CIST 2023. Il suffira donc que tous les formateurs se créent un compte IPUMS puis rejoignent la salle de classe commune. Quant aux autres participants (étudiants, doctorants) on aura juste à leur forunir un code d'accès.
 
 ### Création d'une classe
@@ -78,35 +74,24 @@ Mais le point le plus intéressant pour l'EE CIST2023 est la possibilité de cr�
 
 ### Inscription des participants
 
-> L'inscription des étudiants est similaire à l'inscription des utilisateurs réguliers. Les étudiants se rendent sur la [page d'inscription](https://international.ipums.org/international-action/menu) et cliquent sur "demander l'accès". Les étudiants entrent le code de classe fourni par l'instructeur dans le champ appelé "Code de groupe d'inscription". Lorsque les étudiants cliquent sur "Soumettre le code", 3 champs du formulaire de candidature (institution, domaine de recherche et description de la recherche) sont pré-remplis pour faciliter une approbation rapide par le personnel de l'IPUMS.
-Si un étudiant potentiel est déjà un utilisateur IPUMS enregistré, il lui suffit de se connecter et de cliquer sur le lien pour "rejoindre un cours", auquel cas il sera invité à saisir le code de la classe.
+> L'inscription des étudiants est similaire à l'inscription des utilisateurs réguliers. Les étudiants se rendent sur la [page d'inscription](https://international.ipums.org/international-action/menu) et cliquent sur "demander l'accès". Les étudiants entrent le code de classe fourni par l'instructeur dans le champ appelé "Code de groupe d'inscription". Lorsque les étudiants cliquent sur "Soumettre le code", 3 champs du formulaire de candidature (institution, domaine de recherche et description de la recherche) sont pré-remplis pour faciliter une approbation rapide par le personnel de l'IPUMS. Si un étudiant potentiel est déjà un utilisateur IPUMS enregistré, il lui suffit de se connecter et de cliquer sur le lien pour "rejoindre un cours", auquel cas il sera invité à saisir le code de la classe.
 
 -   **Commentaire** : On pourra tester cette méthode lors d'une prochaine réunion des formateurs.
 
 ### Gestion des classes
 
-> Les instructeurs peuvent cliquez sur le lien de la page d'inscription pour  sélectionner un cours. Il peut  voir qui est enregistré et donc autorisé à recevoir des données IPUMS.
-Les instructeurs peuvent partager des extraits avec les membres de la classe via le site Web IPUMS. Tout extrait contenant des données sur la page de téléchargement de l'instructeur peut être partagé avec les étudiants (il peut être nécessaire de régénérer d'abord les extraits plus anciens). Les extraits partagés apparaîtront dans un onglet séparé sur les pages de téléchargement d'extraits personnels des étudiants. Les extraits partagés ne seront pas supprimés du serveur IPUMS pendant la durée du cours, il n'y a donc aucun risque que les données soient altérées.
-    Remarque : Les étudiants peuvent créer leurs propres extraits de données, comme n'importe quel autre utilisateur. Ainsi, les instructeurs ne sont pas limités uniquement au partage des ensembles de données qu'ils construisent. Le processus d'extraction peut faire partie de l'expérience d'apprentissage.
-    
--   **Commentaire** : Le fait que les étudiants puissent créer leurs propres extraits est pédagogiquement très intéressant. 
- 
+> Les instructeurs peuvent cliquez sur le lien de la page d'inscription pour sélectionner un cours. Il peut voir qui est enregistré et donc autorisé à recevoir des données IPUMS. Les instructeurs peuvent partager des extraits avec les membres de la classe via le site Web IPUMS. Tout extrait contenant des données sur la page de téléchargement de l'instructeur peut être partagé avec les étudiants (il peut être nécessaire de régénérer d'abord les extraits plus anciens). Les extraits partagés apparaîtront dans un onglet séparé sur les pages de téléchargement d'extraits personnels des étudiants. Les extraits partagés ne seront pas supprimés du serveur IPUMS pendant la durée du cours, il n'y a donc aucun risque que les données soient altérées. Remarque : Les étudiants peuvent créer leurs propres extraits de données, comme n'importe quel autre utilisateur. Ainsi, les instructeurs ne sont pas limités uniquement au partage des ensembles de données qu'ils construisent. Le processus d'extraction peut faire partie de l'expérience d'apprentissage.
+
+-   **Commentaire** : Le fait que les étudiants puissent créer leurs propres extraits est pédagogiquement très intéressant.
 
 ### Obligations
 
-> Les données doivent être conservées en toute sécurité quelle que soit leur distribution. Les étudiants sont soumis aux mêmes contraintes que tout autre utilisateur à cet égard. Ils ne peuvent pas partager les données avec quiconque n'est pas un utilisateur enregistré. Les instructeurs doivent s'assurer que les étudiants comprennent les exigences concernant la sécurité et le partage des données.
-Les instructeurs doivent retirer de la liste de classe toute personne qui n'est pas un étudiant ou qui abandonne la classe. Ces personnes perdront l'accès jusqu'à ce qu'elles s'inscrivent sur leur propre compte.
+> Les données doivent être conservées en toute sécurité quelle que soit leur distribution. Les étudiants sont soumis aux mêmes contraintes que tout autre utilisateur à cet égard. Ils ne peuvent pas partager les données avec quiconque n'est pas un utilisateur enregistré. Les instructeurs doivent s'assurer que les étudiants comprennent les exigences concernant la sécurité et le partage des données. Les instructeurs doivent retirer de la liste de classe toute personne qui n'est pas un étudiant ou qui abandonne la classe. Ces personnes perdront l'accès jusqu'à ce qu'elles s'inscrivent sur leur propre compte.
 
 -   **Commentaire** : Les facilités offertes par cette solution ne doivent pas nous dispenser d'une grande rigueur dans la sécurité sur le stockage et le partage des données.
- 
 
 ### Remarques complémentaires
 
->L'inscription expirera à la fin de la classe, qui doit avoir lieu dans l'année suivant son lancement.
-Les cours expirés seront conservés indéfiniment dans le compte de l'instructeur, mais ils disparaîtront des comptes des étudiants.
-Les étudiants qui souhaitent se connecter après l'expiration du compte de classe doivent se réinscrire et être approuvés en tant qu'utilisateur régulier.
+> L'inscription expirera à la fin de la classe, qui doit avoir lieu dans l'année suivant son lancement. Les cours expirés seront conservés indéfiniment dans le compte de l'instructeur, mais ils disparaîtront des comptes des étudiants. Les étudiants qui souhaitent se connecter après l'expiration du compte de classe doivent se réinscrire et être approuvés en tant qu'utilisateur régulier.
 
-- **Commentaire** : La classe créée par Claude Grasland en Août 2022 demeure valide jusqu'en juin 2023 ce qui est suffisant pour la seconde phase de l'école d'été. On réfléchira ultérieurement aux moyens de pérenniser les accès. 
-
- 
-
+-   **Commentaire** : La classe créée par Claude Grasland en Août 2022 demeure valide jusqu'en juin 2023 ce qui est suffisant pour la seconde phase de l'école d'été. On réfléchira ultérieurement aux moyens de pérenniser les accès.

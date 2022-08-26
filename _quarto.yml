@@ -5,10 +5,11 @@ project:
 book:
   title: "L'INTERET PEDAGOGIQUE DES DONNEES IPUMS INTERNATIONAL"
   subtitle: "Une ressource majeure pour l'EE CIST 2023 ?"
+  author: "Claude GRASLAND"
   date: "22/08/2022"
   chapters:
     - index.qmd
-    - d00_02_intro_resume.qmd
+    - credits.qmd
     - d01_00_import_introduction.qmd
     - d01_01_import_conditions.qmd
     - d01_02_import_individus.qmd  

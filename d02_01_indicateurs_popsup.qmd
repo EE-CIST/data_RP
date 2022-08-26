@@ -1,4 +1,4 @@
-# Population, surface, densité
+# Population, surface, densité {#sec-4}
 
 Le premier exemple de création d'indicateur concerne l'établissement de cartes de densité ce qui suppose de mobiliser à la fois les données individuelles (pour agréger la population) et les données géographiques (pour calculer la superficie).
 

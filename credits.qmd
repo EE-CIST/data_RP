@@ -1,0 +1,26 @@
+# CREDITS {.unnumbered}
+
+## IPUMS International
+
+L'ensemble des données statistiques ou cartographiques utilisées dans ce document sont issues de la base de données IPUMS International qui est maintenue par l'oganisation suivante :
+
+
+> **Minnesota Population Center**. Integrated Public Use Microdata Series, International: Version 7.3 [dataset]. Minneapolis, MN: IPUMS, 2020. https://doi.org/10.18128/D020.V7.3
+
+## Instituts statistiques nationaux
+
+A travers IPUMS International, les données mises à disposition sont à mettre au crédit des organismes statistiques nationaux des pays qui ont réalisé les recensements et dont la liste suit ; 
+
+- **Benin** : National Institute of Statistics and Economic Analysis
+
+- **Burkina Faso** : National Institute of Statistics and Demography
+
+- **Mali** : National Directorate of Statistics and Informatics
+
+- **Senegal** : National Agency of Statistics and Demography
+
+- **Togo** : National Institute of Statistics (INSEED)
+
+## Ecole d'été CIST 2022-2023
+
+Les traitements des données ont été réalisés par les formateurs de l'Ecole d'Eté CIST2022-2023. 

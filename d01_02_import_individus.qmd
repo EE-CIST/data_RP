@@ -1,12 +1,10 @@
-# Données individuelles
+# Données individuelles {#sec-2}
 
 ```{r, echo=FALSE}
 library(knitr)
 library(data.table)
 library(readxl)
 ```
-
-
 
 Après avoir créé votre compte, vous pourrez accéder à l'onglet appelé "*browse and select data*" dans la barre latérale gauche :
 
@@ -46,7 +44,7 @@ En cliquant sur la colonne ("*Add to cart*") on choisit les autres variables que
 
 ![Exemple de sélection de variables sur l'équipement des ménages](img/ipums_005.png)
 
-Nous avons effectué une sélection assez large de variables pour l'EE CIST 2023 en privilégiant celles qui étaient disponibles pour chacun des recensements des 5 pays. Nous y avons ajouté pour chaque pays le code géographique des unités de niveau I et II spécifique à l'année concernée. Ces codes spécifiques qui commencent par GEO1 ou GEO2  sont en effet indispensable si l'on souhaite utiliser la géographie administraive précise de l'année du recensement plutôt que la géographie harmonisée commune à plusieurs dates qui est fournie par défaut dans les variables GEOLEV1 et GEOLEV2.  
+Nous avons effectué une sélection assez large de variables pour l'EE CIST 2023 en privilégiant celles qui étaient disponibles pour chacun des recensements des 5 pays. Nous y avons ajouté pour chaque pays le code géographique des unités de niveau I et II spécifique à l'année concernée. Ces codes spécifiques qui commencent par GEO1 ou GEO2 sont en effet indispensable si l'on souhaite utiliser la géographie administraive précise de l'année du recensement plutôt que la géographie harmonisée commune à plusieurs dates qui est fournie par défaut dans les variables GEOLEV1 et GEOLEV2.
 
 ```{r, echo = FALSE}
 selvar <- read_excel("ipums/rp/selvar.xls")
@@ -57,9 +55,9 @@ kable(selvar, caption = "Liste de variables retenus pour les 5 recensements")
 
 Une fois définis les échantillons et les variables vous êtes prêts à télécharger les données mais il reste encore à définir le niveau d'échantillonnage souhaité.
 
-![Exemple de sélection de variables sur l\'équipement des ménages](img/ipums_008.png) La valeur initiale qui correspond au maximum autorisé par IPUMS et les organismes producteurs des recensement est en générale égale à 10% des individus et/ou des ménages. Mais on peut opter pour un échantillon plus réduit en fixant un autre pourcentage ou un nombre précis d'individus. On peut par exemple se ramener à 1% seulement des observations ce qui divise par 10 la taille du fichier :
+![Exemple de sélection de variables sur l'équipement des ménages](img/ipums_008.png) La valeur initiale qui correspond au maximum autorisé par IPUMS et les organismes producteurs des recensement est en générale égale à 10% des individus et/ou des ménages. Mais on peut opter pour un échantillon plus réduit en fixant un autre pourcentage ou un nombre précis d'individus. On peut par exemple se ramener à 1% seulement des observations ce qui divise par 10 la taille du fichier :
 
-![Exemple de réduction de la densité d\'échantillonage de 10% à 1%](img/ipums_009.png) \### Récupération des données et métadonnées
+![Exemple de réduction de la densité d'échantillonage de 10% à 1%](img/ipums_009.png) \### Récupération des données et métadonnées
 
 Une fois lancée la requête à l'aide du bouton "*SUBMIT EXTRACT*" il faut attendre quelques minutes (généralement 2 ou 3) pour accèder au résultat. Celui-ci est annoncé par un courriel mais peut aussi être suivi directement par le navigateur :
 
