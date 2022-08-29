@@ -2,8 +2,11 @@
 
 ```{r, echo=FALSE}
 library(knitr)
-library(data.table)
+library(dplyr, warn.conflicts = FALSE)
+options(dplyr.summarise.inform = FALSE)
 library(readxl)
+library(ipumsr)
+library(haven)
 ```
 
 La méthode d'acquisitio des données est la même que celle qui a été décrite pour la comparaison des derniers recensements de cinq pays d'Afrique de l'Ouest mais la liste des variables est différente puisque l'objectif est ici d'analyser les mobilités des individus. Il est important de préciser pour chaque variable les définitions exactes et les métadonnées fournies par IPUMS concernant les procédures d'harmonisation entre les dates
@@ -39,7 +42,7 @@ Pour pouvoir charger ensuite les données dans R ou un autre logiciel, nous avon
 Pour importer les données dans R, il faut installer le package *ipumsr* qui va nous permettre de lire les métadonnées puis d'importer les données en une seule opération.
 
 ```{r import_ipums, echo=TRUE, eval=FALSE}
-library(ipumsr)
+
 
 # Importation de l'échantillon à 10%
 ddi <- read_ipums_ddi("ipums/rp/ipumsi_00019.xml")
@@ -54,8 +57,6 @@ Nous reviendrons ultérieurement sur le format du tableau R obtenu qui n'est pas
 A titre d'exemple, le petit programme ci-dessous convertit l'ensemble des données en factor et affiche les premières lignes.
 
 ```{r}
-library(haven)
-
 # Lit le fichier enregistré
 rp<-readRDS("ipums/rp/rp_benin_4dates_samp10pct.RDS")
 

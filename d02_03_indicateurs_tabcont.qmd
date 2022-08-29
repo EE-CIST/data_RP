@@ -2,12 +2,14 @@
 
 ```{r, echo=TRUE}
 library(knitr)
-library(dplyr)
-library(sf)
+library(dplyr, warn.conflicts = FALSE)
+options(dplyr.summarise.inform = FALSE)
+library(sf, quietly=T)
 library(mapsf)
 library(RColorBrewer)
 library(haven)
-library(tidyr)
+library(tidyr,quietly = T,warn.conflicts = FALSE)
+options(tidyr.summarise.inform = FALSE)
 library(FactoMineR)
 library(explor)
 

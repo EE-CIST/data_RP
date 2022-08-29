@@ -29,8 +29,14 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
-  pdf:
-    documentclass: scrreprt
+
+knitr:
+  opts_chunk: 
+    comment: ">" 
+    warning: false
+    error: false
+    message: false
+
 
 editor: visual
 

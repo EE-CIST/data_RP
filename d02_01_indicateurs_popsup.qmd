@@ -4,8 +4,9 @@ Le premier exemple de création d'indicateur concerne l'établissement de cartes
 
 ```{r, echo=TRUE}
 library(knitr)
-library(dplyr)
-library(sf)
+library(dplyr, warn.conflicts = FALSE)
+options(dplyr.summarise.inform = FALSE)
+library(sf, quietly=T)
 library(mapsf)
 library(RColorBrewer)
 ```
@@ -353,14 +354,14 @@ map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
 map1$sup<-as.numeric(st_area(map1)/(1000*1000))
 map1$den<- map1$pop/map1$sup
 saveRDS(map1, paste0("indic/",census,"/","map_lev1_",census,".RDS"))
-st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T)
+st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T, quiet=T)
 
 # calcul des indicateurs au niveau II
 map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
 map2$sup<-as.numeric(st_area(map2)/(1000*1000))
 map2$den<- map2$pop/map2$sup
 saveRDS(map2, paste0("indic/",census,"/","map_lev2_",census,".RDS"))
-st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T)
+st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T, quiet=T)
 
 # Vérification
 
@@ -407,14 +408,14 @@ map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
 map1$sup<-as.numeric(st_area(map1)/(1000*1000))
 map1$den<- map1$pop/map1$sup
 saveRDS(map1, paste0("indic/",census,"/","map_lev1_",census,".RDS"))
-st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T)
+st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T, quiet=T)
 
 # calcul des indicateurs au niveau II
 map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
 map2$sup<-as.numeric(st_area(map2)/(1000*1000))
 map2$den<- map2$pop/map2$sup
 saveRDS(map2, paste0("indic/",census,"/","map_lev2_",census,".RDS"))
-st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T)
+st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T, quiet=T)
 
 # Vérification
 
@@ -460,14 +461,14 @@ map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
 map1$sup<-as.numeric(st_area(map1)/(1000*1000))
 map1$den<- map1$pop/map1$sup
 saveRDS(map1, paste0("indic/",census,"/","map_lev1_",census,".RDS"))
-st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T)
+st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T, quiet=T)
 
 # calcul des indicateurs au niveau II
 map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
 map2$sup<-as.numeric(st_area(map2)/(1000*1000))
 map2$den<- map2$pop/map2$sup
 saveRDS(map2, paste0("indic/",census,"/","map_lev2_",census,".RDS"))
-st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T)
+st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T, quiet=T)
 
 # Vérification
 
@@ -513,14 +514,14 @@ map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
 map1$sup<-as.numeric(st_area(map1)/(1000*1000))
 map1$den<- map1$pop/map1$sup
 saveRDS(map1, paste0("indic/",census,"/","map_lev1_",census,".RDS"))
-st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T)
+st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T, quiet=T)
 
 # calcul des indicateurs au niveau II
 map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
 map2$sup<-as.numeric(st_area(map2)/(1000*1000))
 map2$den<- map2$pop/map2$sup
 saveRDS(map2, paste0("indic/",census,"/","map_lev2_",census,".RDS"))
-st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T)
+st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T, quiet=T)
 
 # Vérification
 
@@ -566,14 +567,14 @@ map1<-readRDS(paste0("indic/",census,"/","pop_lev1_",census,".RDS"))
 map1$sup<-as.numeric(st_area(map1)/(1000*1000))
 map1$den<- map1$pop/map1$sup
 saveRDS(map1, paste0("indic/",census,"/","map_lev1_",census,".RDS"))
-st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T)
+st_write(map1, paste0("indic/",census,"/","map_lev1_",census,".shp"),delete_dsn = T, quiet=T)
 
 # calcul des indicateurs au niveau II
 map2<-readRDS(paste0("indic/",census,"/","pop_lev2_",census,".RDS"))
 map2$sup<-as.numeric(st_area(map2)/(1000*1000))
 map2$den<- map2$pop/map2$sup
 saveRDS(map2, paste0("indic/",census,"/","map_lev2_",census,".RDS"))
-st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T)
+st_write(map2, paste0("indic/",census,"/","map_lev2_",census,".shp"),delete_dsn = T, quiet=T)
 
 # Vérification
 

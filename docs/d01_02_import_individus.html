@@ -158,7 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./credits.html" class="sidebar-item-text sidebar-link">CREDITS</a>
+  <a href="./credits.html" class="sidebar-item-text sidebar-link">Sources</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -597,8 +597,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="choix-du-niveau-déchantillonage" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="choix-du-niveau-déchantillonage"><span class="header-section-number">2.3</span> Choix du niveau d’échantillonage</h2>
 <p>Une fois définis les échantillons et les variables vous êtes prêts à télécharger les données mais il reste encore à définir le niveau d’échantillonnage souhaité.</p>
-<p><img src="img/ipums_008.png" class="img-fluid" alt="Exemple de sélection de variables sur l’équipement des ménages"> La valeur initiale qui correspond au maximum autorisé par IPUMS et les organismes producteurs des recensement est en générale égale à 10% des individus et/ou des ménages. Mais on peut opter pour un échantillon plus réduit en fixant un autre pourcentage ou un nombre précis d’individus. On peut par exemple se ramener à 1% seulement des observations ce qui divise par 10 la taille du fichier :</p>
-<p><img src="img/ipums_009.png" class="img-fluid" alt="Exemple de réduction de la densité d’échantillonage de 10% à 1%"> ### Récupération des données et métadonnées</p>
+<p><img src="img/ipums_008.png" class="img-fluid" alt="Exemple de sélection de variables sur l'équipement des ménages"> La valeur initiale qui correspond au maximum autorisé par IPUMS et les organismes producteurs des recensement est en générale égale à 10% des individus et/ou des ménages. Mais on peut opter pour un échantillon plus réduit en fixant un autre pourcentage ou un nombre précis d’individus. On peut par exemple se ramener à 1% seulement des observations ce qui divise par 10 la taille du fichier :</p>
+<p><img src="img/ipums_009.png" class="img-fluid" alt="Exemple de réduction de la densité d'échantillonage de 10% à 1%"> ### Récupération des données et métadonnées</p>
 <p>Une fois lancée la requête à l’aide du bouton “<em>SUBMIT EXTRACT</em>” il faut attendre quelques minutes (généralement 2 ou 3) pour accèder au résultat. Celui-ci est annoncé par un courriel mais peut aussi être suivi directement par le navigateur :</p>
 </section>
 <section id="récupération-des-fichiers" class="level2" data-number="2.4">
@@ -642,13 +642,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span><span class="fu">as_factor</span>(rp, <span class="at">only_labelled=</span>T)</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(rp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+<pre><code>&gt; [1] "tbl_df"     "tbl"        "data.frame"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertit le tableau en pur data.frame</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(rp)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(rp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "data.frame"</code></pre>
+<pre><code>&gt; [1] "data.frame"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Affiche les 10 premières lignes (soit 2 ménages de 5 personnes )</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(rp,<span class="dv">10</span>), <span class="at">caption =</span> <span class="st">"Extrait des données IPUMS International"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

@@ -158,7 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./credits.html" class="sidebar-item-text sidebar-link">CREDITS</a>
+  <a href="./credits.html" class="sidebar-item-text sidebar-link">Sources</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -277,28 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attachement du package : 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Les objets suivants sont masqués depuis 'package:data.table':
 
-    between, first, last</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Les objets suivants sont masqués depuis 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Les objets suivants sont masqués depuis 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Linking to GEOS 3.9.1, GDAL 3.4.3, PROJ 7.2.1; sf_use_s2() is TRUE</code></pre>
-</div>
 </div>
 <section id="définition-générale" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="définition-générale"><span class="header-section-number">8.1</span> Définition générale</h2>
@@ -347,71 +326,57 @@ Attachement du package : 'dplyr'</code></pre>
 <h3 data-number="8.3.1" class="anchored" data-anchor-id="nouvelles-variables"><span class="header-section-number">8.3.1</span> Nouvelles variables</h3>
 <p>Le programme qui suit est un peu compliqué car les variables relatives aux lieux de naissance ne sont pas codés de la même façon que les variables de résidence. Il faut donc reconstituer les codes avant de pouvoir tester leur égalité …</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Load data</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"ipums/rp/rp_benin_4dates_samp10pct.RDS"</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">### Recode and filter</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="do">### Level I : Create new variables and filter</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>code1<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"ipums/geom/geo1_bj2013.RDS"</span>) <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>()</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>recode1<span class="ot">&lt;-</span>code1<span class="sc">$</span>DEPT2013</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(recode1)<span class="ot">&lt;-</span><span class="fu">paste0</span>(code1<span class="sc">$</span>CNTRY_CODE,code1<span class="sc">$</span>IPUM2013)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">as_factor</span>(<span class="fu">as.numeric</span>(rp<span class="sc">$</span>BPLBJ1))</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">fct_recode</span>(test,<span class="sc">!!!</span>recode1)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>rp<span class="sc">$</span>LEV1_NAI<span class="ot">&lt;-</span><span class="fu">as.character</span>(test)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(rp<span class="sc">$</span>LEV1_NAI)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>code2<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"ipums/geom/geo2_bj2013.RDS"</span>) <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>()</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>recode2<span class="ot">&lt;-</span>code2<span class="sc">$</span>COMN2013</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(recode2)<span class="ot">&lt;-</span><span class="fu">paste0</span>(code2<span class="sc">$</span>CNTRY_CODE,code2<span class="sc">$</span>IPUM2013)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">as_factor</span>(<span class="fu">as.numeric</span>(rp<span class="sc">$</span>BPLBJ2))</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">fct_recode</span>(test,<span class="sc">!!!</span>recode2)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>rp<span class="sc">$</span>LEV2_NAI<span class="ot">&lt;-</span><span class="fu">as.character</span>(test)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span>rp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">LEV1_RES =</span> <span class="fu">as.character</span>(<span class="fu">as_factor</span>(GEOLEV1))) <span class="sc">%&gt;%</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(<span class="fu">nchar</span>(LEV1_NAI) <span class="sc">==</span><span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">MIG_DV_1 =</span> <span class="fu">as.numeric</span>(LEV1_RES<span class="sc">!=</span>LEV1_NAI))</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="do">### Level II Create new variables and filter </span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span>rp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">LEV2_RES =</span> <span class="fu">as.character</span>(<span class="fu">as_factor</span>(GEOLEV2))) <span class="sc">%&gt;%</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(<span class="fu">nchar</span>(LEV2_NAI) <span class="sc">==</span><span class="dv">9</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">MIG_DV_2 =</span> <span class="fu">as.numeric</span>(LEV2_RES<span class="sc">!=</span>LEV2_NAI))</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rp,<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Load data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"ipums/rp/rp_benin_4dates_samp10pct.RDS"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">### Recode and filter</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">### Level I : Create new variables and filter</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>code1<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"ipums/geom/geo1_bj2013.RDS"</span>) <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>recode1<span class="ot">&lt;-</span>code1<span class="sc">$</span>DEPT2013</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(recode1)<span class="ot">&lt;-</span><span class="fu">paste0</span>(code1<span class="sc">$</span>CNTRY_CODE,code1<span class="sc">$</span>IPUM2013)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">as_factor</span>(<span class="fu">as.numeric</span>(rp<span class="sc">$</span>BPLBJ1))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">fct_recode</span>(test,<span class="sc">!!!</span>recode1)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>rp<span class="sc">$</span>LEV1_NAI<span class="ot">&lt;-</span><span class="fu">as.character</span>(test)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(rp<span class="sc">$</span>LEV1_NAI)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>code2<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"ipums/geom/geo2_bj2013.RDS"</span>) <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>()</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>recode2<span class="ot">&lt;-</span>code2<span class="sc">$</span>COMN2013</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(recode2)<span class="ot">&lt;-</span><span class="fu">paste0</span>(code2<span class="sc">$</span>CNTRY_CODE,code2<span class="sc">$</span>IPUM2013)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">as_factor</span>(<span class="fu">as.numeric</span>(rp<span class="sc">$</span>BPLBJ2))</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span><span class="fu">fct_recode</span>(test,<span class="sc">!!!</span>recode2)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>rp<span class="sc">$</span>LEV2_NAI<span class="ot">&lt;-</span><span class="fu">as.character</span>(test)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span>rp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">LEV1_RES =</span> <span class="fu">as.character</span>(<span class="fu">as_factor</span>(GEOLEV1))) <span class="sc">%&gt;%</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(<span class="fu">nchar</span>(LEV1_NAI) <span class="sc">==</span><span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">MIG_DV_1 =</span> <span class="fu">as.numeric</span>(LEV1_RES<span class="sc">!=</span>LEV1_NAI))</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="do">### Level II Create new variables and filter </span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>rp<span class="ot">&lt;-</span>rp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">LEV2_RES =</span> <span class="fu">as.character</span>(<span class="fu">as_factor</span>(GEOLEV2))) <span class="sc">%&gt;%</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(<span class="fu">nchar</span>(LEV2_NAI) <span class="sc">==</span><span class="dv">9</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">MIG_DV_2 =</span> <span class="fu">as.numeric</span>(LEV2_RES<span class="sc">!=</span>LEV2_NAI))</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rp,<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="indicateurs-globaux" class="level3" data-number="8.3.2">
 <h3 data-number="8.3.2" class="anchored" data-anchor-id="indicateurs-globaux"><span class="header-section-number">8.3.2</span> Indicateurs globaux</h3>
 <p>Pour vérifier la fiabilité de nos résultats, on calcule pour chaque date le nombre de personnes qui résident dans un autre département ou une autre commune qu’au moment de leur naissance.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>FALSE  [1] "COUNTRY"   "YEAR"      "SAMPLE"    "SERIAL"    "HHWT"      "URBAN"    
-FALSE  [7] "GEOLEV1"   "GEOLEV2"   "ELECTRIC"  "WATSUP"    "PERNUM"    "PERWT"    
-FALSE [13] "RESIDENT"  "RELATE"    "RELATED"   "AGE"       "AGE2"      "SEX"      
-FALSE [19] "MARST"     "MARSTD"    "BIRTHYR"   "CITIZEN"   "BPLBJ1"    "BPLBJ2"   
-FALSE [25] "EDATTAIN"  "EDATTAIND" "YRSCHOOL"  "EDUCBJ"    "EMPSTAT"   "EMPSTATD" 
-FALSE [31] "LABFORCE"  "MIGRATEP"  "MIGCTRYP"  "GEOMIG1_P" "MIGYRS1"   "MIG1_P_BJ"
-FALSE [37] "MIG2_P_BJ" "LEV1_NAI"  "LEV2_NAI"  "LEV1_RES"  "MIG_DV_1"  "LEV2_RES" 
-FALSE [43] "MIG_DV_2"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Check results</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(YEAR, MIG_DV_1) <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>              reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> YEAR<span class="sc">~</span>MIG_DV_1, <span class="at">value.var=</span><span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">Recensement =</span> YEAR,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Immobile =</span> <span class="dv">2</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Mobile =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">Total =</span> Immobile<span class="sc">+</span>Mobile,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">TxMobil =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>Mobile<span class="sc">/</span>Total,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>FALSE `summarise()` has grouped output by 'YEAR'. You can override using the
-FALSE `.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tab, <span class="at">caption =</span> <span class="st">"Mobilité durée de vie au Bénin / Départements"</span>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">### Check results</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(YEAR, MIG_DV_1) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>              reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> YEAR<span class="sc">~</span>MIG_DV_1, <span class="at">value.var=</span><span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">Recensement =</span> YEAR,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Immobile =</span> <span class="dv">2</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Mobile =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">Total =</span> Immobile<span class="sc">+</span>Mobile,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">TxMobil =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>Mobile<span class="sc">/</span>Total,<span class="dv">2</span>))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tab, <span class="at">caption =</span> <span class="st">"Mobilité durée de vie au Bénin / Départements"</span>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Mobilité durée de vie au Bénin / Départements</caption>
@@ -456,20 +421,16 @@ FALSE `.groups` argument.</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Check results</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(YEAR, MIG_DV_2) <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>              reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> YEAR<span class="sc">~</span>MIG_DV_2, <span class="at">value.var=</span><span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">Recensement =</span> YEAR,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Immobile =</span> <span class="dv">2</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Mobile =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">Total =</span> Immobile<span class="sc">+</span>Mobile,</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">TxMobil =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>Mobile<span class="sc">/</span>Total,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>FALSE `summarise()` has grouped output by 'YEAR'. You can override using the
-FALSE `.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tab, <span class="at">caption =</span> <span class="st">"Mobilité durée de vie au Bénin / Communes"</span>  )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Check results</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(YEAR, MIG_DV_2) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarise</span>(<span class="at">N =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>              reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> YEAR<span class="sc">~</span>MIG_DV_2, <span class="at">value.var=</span><span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">Recensement =</span> YEAR,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Immobile =</span> <span class="dv">2</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Mobile =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">Total =</span> Immobile<span class="sc">+</span>Mobile,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">TxMobil =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>Mobile<span class="sc">/</span>Total,<span class="dv">2</span>))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tab, <span class="at">caption =</span> <span class="st">"Mobilité durée de vie au Bénin / Communes"</span>  )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Mobilité durée de vie au Bénin / Communes</caption>
@@ -542,66 +503,52 @@ FALSE `.groups` argument.</code></pre>
 <li><strong>txASY = SOL/VOL</strong> : indicateur d’asymétrie des flux (compris entre -1 et +1)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load code and name of units</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>map1<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/map_lev1_bj2013.shp"</span>,<span class="at">quiet=</span>T)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>tab1<span class="ot">&lt;-</span>map1 <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(code,nom)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Non migrant</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>STA <span class="ot">&lt;-</span>  rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_NAI) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_NAI,</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">STA =</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'YEAR'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Departures</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>EMI <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_NAI) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_NAI,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">EMI =</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'YEAR'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrivals</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>IMM <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_RES) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_RES,</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">IMM =</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'YEAR'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Put together</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>tab1 <span class="ot">&lt;-</span> tab1 <span class="sc">%&gt;%</span> <span class="fu">right_join</span>(STA) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">left_join</span>(EMI) <span class="sc">%&gt;%</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>               <span class="fu">left_join</span>(IMM) <span class="sc">%&gt;%</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mutate</span>(<span class="at">VOL=</span>EMI<span class="sc">+</span>IMM,</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">SOL=</span>IMM<span class="sc">-</span>EMI,</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">POPMOY=</span> STA<span class="sc">+</span>(EMI<span class="sc">+</span>IMM)<span class="sc">/</span><span class="dv">2</span>,</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txEMI =</span> <span class="dv">100</span><span class="sc">*</span>EMI<span class="sc">/</span>POPMOY,</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txIMM =</span> <span class="dv">100</span><span class="sc">*</span>IMM<span class="sc">/</span>POPMOY,</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txMOB =</span> <span class="dv">100</span><span class="sc">*</span>VOL<span class="sc">/</span>POPMOY,</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txACM =</span> <span class="dv">100</span><span class="sc">*</span>SOL<span class="sc">/</span>POPMOY,</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txASY =</span> SOL<span class="sc">/</span>VOL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining, by = "code"
-Joining, by = c("code", "date")
-Joining, by = c("code", "date")</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sauvegarde</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tab1, <span class="st">"mobil/all/mob_dv_lev1.RDS"</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(tab1),</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>),</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Indicateurs départementaux de migration durée de vie au Bénin (1979, 1992, 2002, 2013)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load code and name of units</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>map1<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/map_lev1_bj2013.shp"</span>,<span class="at">quiet=</span>T)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>tab1<span class="ot">&lt;-</span>map1 <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(code,nom)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Non migrant</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>STA <span class="ot">&lt;-</span>  rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_NAI) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_NAI,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">STA =</span> N)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Departures</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>EMI <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_NAI) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_NAI,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                     <span class="at">EMI =</span> N)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrivals</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>IMM <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_1 <span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(YEAR,LEV1_RES) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>              <span class="fu">summarize</span>(<span class="at">N=</span><span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">date =</span> YEAR,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                     <span class="at">code =</span> LEV1_RES,</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                     <span class="at">IMM =</span> N)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Put together</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>tab1 <span class="ot">&lt;-</span> tab1 <span class="sc">%&gt;%</span> <span class="fu">right_join</span>(STA) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>               <span class="fu">left_join</span>(EMI) <span class="sc">%&gt;%</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>               <span class="fu">left_join</span>(IMM) <span class="sc">%&gt;%</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mutate</span>(<span class="at">VOL=</span>EMI<span class="sc">+</span>IMM,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>                       <span class="at">SOL=</span>IMM<span class="sc">-</span>EMI,</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>                       <span class="at">POPMOY=</span> STA<span class="sc">+</span>(EMI<span class="sc">+</span>IMM)<span class="sc">/</span><span class="dv">2</span>,</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txEMI =</span> <span class="dv">100</span><span class="sc">*</span>EMI<span class="sc">/</span>POPMOY,</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txIMM =</span> <span class="dv">100</span><span class="sc">*</span>IMM<span class="sc">/</span>POPMOY,</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txMOB =</span> <span class="dv">100</span><span class="sc">*</span>VOL<span class="sc">/</span>POPMOY,</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txACM =</span> <span class="dv">100</span><span class="sc">*</span>SOL<span class="sc">/</span>POPMOY,</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>                       <span class="at">txASY =</span> SOL<span class="sc">/</span>VOL)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Sauvegarde</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tab1, <span class="st">"mobil/all/mob_dv_lev1.RDS"</span>)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(tab1),</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>),</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Indicateurs départementaux de migration durée de vie au Bénin (1979, 1992, 2002, 2013)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Indicateurs départementaux de migration durée de vie au Bénin (1979, 1992, 2002, 2013)</caption>
@@ -742,12 +689,6 @@ Joining, by = c("code", "date")</code></pre>
 </div>
 <p>il est ensuite facile d’établir une cartographie des indicateurs de son choix pour comparer l’évolution à chacune des quatre dates de recensement :</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining, by = c("code", "nom")
-Joining, by = c("code", "nom")
-Joining, by = c("code", "nom")
-Joining, by = c("code", "nom")</code></pre>
-</div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -761,12 +702,6 @@ Joining, by = c("code", "nom")</code></pre>
 <li><strong>Commentaire</strong> : A première vue la série de carte proposée semble cohérente avec les conaissances empiriques. On voit notamment bien comment la capitale Cotonou (département du Littoral) commence par attirer les populations des départements voisins en 1979 avant d’arriver à saturation et de resdistribuer la population vers les départements voisins d’Atlantique et de Ouémé pour aboutir à une inversion du solde en 2013. On note par ailleurs le solde positif permanent du département de Borgou et à un moindre degré du departement des Collines.</li>
 </ul>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining, by = c("code", "nom")
-Joining, by = c("code", "nom")
-Joining, by = c("code", "nom")
-Joining, by = c("code", "nom")</code></pre>
-</div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -788,10 +723,6 @@ Joining, by = c("code", "nom")</code></pre>
 </div>
 <p>A ce niveau d’analyse, il devent difficile de visualiser les résultats sur une carte géographique normale et il peut être intéressant de proposer conjointement une représentation sous forme de cartogramme dont la surface est proportionnelle à la population de la commune à la date du recensement. On peut illustrer cette solution à l’aide du RP 2013 pour lequel nous disposons d’un tel cartogramme (il serait évidemment incorrect de l’utiliser pour les autres dates, la population ayant changé).</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining, by = c("code", "nom")
-Joining, by = c("code", "nom")</code></pre>
-</div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -813,30 +744,24 @@ Joining, by = c("code", "nom")</code></pre>
 <h3 data-number="8.4.1" class="anchored" data-anchor-id="flux-entre-départements"><span class="header-section-number">8.4.1</span> Flux entre départements</h3>
 <p>L’établissement de la matrice de flux est très facile. Elle suppose d’établir d’abord un tableau d’interactions au format “long”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load individual data</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load map and extract name of units</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>map<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/cartog_lev1_bj2013.shp"</span>, <span class="at">quiet=</span>T)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>codei <span class="ot">&lt;-</span> map <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="at">i=</span>code,<span class="at">name_i=</span>nom)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>codej <span class="ot">&lt;-</span> map <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="at">j=</span>code,<span class="at">name_j=</span>nom)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute interactions</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>int <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(YEAR <span class="sc">==</span> <span class="dv">2013</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">group_by</span>(<span class="at">i =</span> LEV1_NAI,</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">j =</span> LEV1_RES) <span class="sc">%&gt;%</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarize</span>(<span class="at">Fij =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">left_join</span>(codei) <span class="sc">%&gt;%</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">left_join</span>(codej) <span class="sc">%&gt;%</span></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">select</span>(i,j,name_i,name_j, Fij)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'i'. You can override using the `.groups`
-argument.
-Joining, by = "i"
-Joining, by = "j"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(int), <span class="at">caption =</span> <span class="st">"Migrations durée de vie au Bénin en 2013 (format long)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load individual data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load map and extract name of units</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>map<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/cartog_lev1_bj2013.shp"</span>, <span class="at">quiet=</span>T)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>codei <span class="ot">&lt;-</span> map <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="at">i=</span>code,<span class="at">name_i=</span>nom)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>codej <span class="ot">&lt;-</span> map <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="at">j=</span>code,<span class="at">name_j=</span>nom)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute interactions</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>int <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(YEAR <span class="sc">==</span> <span class="dv">2013</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">group_by</span>(<span class="at">i =</span> LEV1_NAI,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">j =</span> LEV1_RES) <span class="sc">%&gt;%</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarize</span>(<span class="at">Fij =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">left_join</span>(codei) <span class="sc">%&gt;%</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">left_join</span>(codej) <span class="sc">%&gt;%</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">select</span>(i,j,name_i,name_j, Fij)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(int), <span class="at">caption =</span> <span class="st">"Migrations durée de vie au Bénin en 2013 (format long)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Migrations durée de vie au Bénin en 2013 (format long)</caption>
@@ -898,11 +823,8 @@ Joining, by = "j"</code></pre>
 </div>
 <p>On peut ensuite transformer le tableau d’interaction en format large en utilisant au choix la fonction <code>dcast()</code> (des packages reshape2 et data.table ) ou la procédure <code>pivot_wider()</code> du package tidyr qui fait partie de l’univers tidyverse.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>int2<span class="ot">&lt;-</span> reshape2<span class="sc">::</span><span class="fu">dcast</span>(int, <span class="at">formula =</span> name_i<span class="sc">~</span>name_j, <span class="at">values.var=</span>Fij)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Using Fij as value column: use value.var to override.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int2, <span class="at">caption =</span><span class="st">"Migrations durée de vie au Bénin en 2013 (format large)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>int2<span class="ot">&lt;-</span> reshape2<span class="sc">::</span><span class="fu">dcast</span>(int, <span class="at">formula =</span> name_i<span class="sc">~</span>name_j, <span class="at">values.var=</span>Fij)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int2, <span class="at">caption =</span><span class="st">"Migrations durée de vie au Bénin en 2013 (format large)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Migrations durée de vie au Bénin en 2013 (format large)</caption>
@@ -1125,9 +1047,9 @@ Joining, by = "j"</code></pre>
 </div>
 <p>On peut enfin transformer le tableau en un objet de type matrice ce qui suppose de transformer la variable name_i en nom des lignes :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>int3 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(int2[,<span class="sc">-</span><span class="dv">1</span>])</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(int3)<span class="ot">&lt;-</span>int2[[<span class="dv">1</span>]]</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int3, <span class="at">caption =</span><span class="st">"Migrations durée de vie au Bénin en 2013 (matrice)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>int3 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(int2[,<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(int3)<span class="ot">&lt;-</span>int2[[<span class="dv">1</span>]]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int3, <span class="at">caption =</span><span class="st">"Migrations durée de vie au Bénin en 2013 (matrice)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Migrations durée de vie au Bénin en 2013 (matrice)</caption>
@@ -1350,10 +1272,10 @@ Joining, by = "j"</code></pre>
 </div>
 <p>L’intérêt du format matriciel est de faciliter des opérations mathématiques telles que le calcul de pourcentage en ligne ou le pourcentage en colonnes qui vont indiquer respectivement des probabilités de destination ou des probabilités d’origines.On va illustrer ces possibilités sur une matrice dont on a retiré la diagonale</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>int4<span class="ot">&lt;-</span>int3</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(int4)<span class="ot">&lt;-</span><span class="cn">NA</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>int4 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>int4<span class="sc">/</span><span class="fu">apply</span>(int4,<span class="dv">1</span>,sum, <span class="at">na.rm=</span>T)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int4, <span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption =</span> <span class="st">"Probabilité de destination des migrants durée de vie en 2013 (en %)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>int4<span class="ot">&lt;-</span>int3</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(int4)<span class="ot">&lt;-</span><span class="cn">NA</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>int4 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>int4<span class="sc">/</span><span class="fu">apply</span>(int4,<span class="dv">1</span>,sum, <span class="at">na.rm=</span>T)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int4, <span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption =</span> <span class="st">"Probabilité de destination des migrants durée de vie en 2013 (en %)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Probabilité de destination des migrants durée de vie en 2013 (en %)</caption>
@@ -1579,10 +1501,10 @@ Joining, by = "j"</code></pre>
 </ul>
 <p>Procédons à l’opération inverse de calcul des origines mais en ne retirant pas cette fois-ci la diagonale afin de voir la part des populations autchtones</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>int5<span class="ot">&lt;-</span><span class="fu">t</span>(int3)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>int5 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>int5<span class="sc">/</span><span class="fu">apply</span>(int5,<span class="dv">1</span>,sum, <span class="at">na.rm=</span>T)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>int5<span class="ot">&lt;-</span><span class="fu">t</span>(int5)</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int5, <span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption =</span> <span class="st">"Département de naissance des individus en 2013 (en %)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>int5<span class="ot">&lt;-</span><span class="fu">t</span>(int3)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>int5 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>int5<span class="sc">/</span><span class="fu">apply</span>(int5,<span class="dv">1</span>,sum, <span class="at">na.rm=</span>T)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>int5<span class="ot">&lt;-</span><span class="fu">t</span>(int5)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(int5, <span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption =</span> <span class="st">"Département de naissance des individus en 2013 (en %)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Département de naissance des individus en 2013 (en %)</caption>
@@ -1812,54 +1734,43 @@ Joining, by = "j"</code></pre>
 <p>Les flux entre départements sont intéressants d’un point de vue pédagogique puisqu’ils permettent de montrer facilement les tableaux de format 10 x 10 aux étudiants et de leur expliquer les différentes transformations que l’on peut faire subir à une matrice de flux. Mais ils constituent une grille d’analyse assez grossière qui masque notamment tous les flux de proximité. Il est donc plus intéressant, dans un deuxième temps d’attaquer des données plus précises en commençant par étudier les flux vers une seule destinations mais à plusieurs dates.</p>
 <p>A titre d’exemple, nous allons essayer ici de reconstituer l’évolution de l’aire d’attraction de la commune de Parakou au cours du temps.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load individual data</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load map and extract name of units</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>map<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/cartog_lev2_bj2013.shp"</span>, <span class="at">quiet=</span>T)</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>codename <span class="ot">&lt;-</span> map <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(code,nom)</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute total departure</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>dep_tot <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_2<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">group_by</span>(<span class="at">i =</span> LEV2_NAI,</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">t =</span> YEAR) <span class="sc">%&gt;%</span></span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarize</span>(<span class="at">Fij =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>                   reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> i<span class="sc">~</span>t,<span class="at">value.var=</span><span class="st">"Fij"</span>,<span class="at">fill =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'i'. You can override using the `.groups`
-argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dep_tot)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"code"</span>,<span class="st">"tot79"</span>,<span class="st">"tot92"</span>,<span class="st">"tot02"</span>,<span class="st">"tot13"</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute departure to Parakou</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>dep_par <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_2<span class="sc">==</span><span class="dv">1</span>,</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>                     LEV2_RES <span class="sc">==</span><span class="st">"204004005"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">group_by</span>(<span class="at">i =</span> LEV2_NAI,</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">t =</span> YEAR) <span class="sc">%&gt;%</span></span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarize</span>(<span class="at">Fij =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>                   reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> i<span class="sc">~</span>t,<span class="at">value.var=</span><span class="st">"Fij"</span>,<span class="at">fill =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'i'. You can override using the `.groups`
-argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dep_par)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"code"</span>,<span class="st">"par79"</span>,<span class="st">"par92"</span>,<span class="st">"par02"</span>,<span class="st">"par13"</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge tables</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>tab<span class="ot">&lt;-</span><span class="fu">left_join</span>(codename,dep_tot) <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(dep_par)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining, by = "code"
-Joining, by = "code"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add probabilities</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> tab <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pct79 =</span> <span class="dv">100</span><span class="sc">*</span>par79<span class="sc">/</span>tot79,</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pct92 =</span> <span class="dv">100</span><span class="sc">*</span>par92<span class="sc">/</span>tot92,</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pct02 =</span> <span class="dv">100</span><span class="sc">*</span>par02<span class="sc">/</span>tot02,</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pct13 =</span> <span class="dv">100</span><span class="sc">*</span>par13<span class="sc">/</span>tot13)</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(tab), <span class="at">digits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Migrations durée de vie vers Parakou en 1979, 1992, 2002 et 2013"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load individual data</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"ipums/rp/mobil_benin_4dates_samp10pct.RDS"</span> )</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load map and extract name of units</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>map<span class="ot">&lt;-</span><span class="fu">st_read</span>(<span class="st">"mobil/geom/cartog_lev2_bj2013.shp"</span>, <span class="at">quiet=</span>T)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>codename <span class="ot">&lt;-</span> map <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(code,nom)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute total departure</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>dep_tot <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_2<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">group_by</span>(<span class="at">i =</span> LEV2_NAI,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">t =</span> YEAR) <span class="sc">%&gt;%</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarize</span>(<span class="at">Fij =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                   reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> i<span class="sc">~</span>t,<span class="at">value.var=</span><span class="st">"Fij"</span>,<span class="at">fill =</span> <span class="dv">0</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dep_tot)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"code"</span>,<span class="st">"tot79"</span>,<span class="st">"tot92"</span>,<span class="st">"tot02"</span>,<span class="st">"tot13"</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute departure to Parakou</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>dep_par <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MIG_DV_2<span class="sc">==</span><span class="dv">1</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                     LEV2_RES <span class="sc">==</span><span class="st">"204004005"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">group_by</span>(<span class="at">i =</span> LEV2_NAI,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                            <span class="at">t =</span> YEAR) <span class="sc">%&gt;%</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">summarize</span>(<span class="at">Fij =</span> <span class="fu">sum</span>(PERWT)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>                   reshape2<span class="sc">::</span><span class="fu">dcast</span>(<span class="at">formula =</span> i<span class="sc">~</span>t,<span class="at">value.var=</span><span class="st">"Fij"</span>,<span class="at">fill =</span> <span class="dv">0</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dep_par)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"code"</span>,<span class="st">"par79"</span>,<span class="st">"par92"</span>,<span class="st">"par02"</span>,<span class="st">"par13"</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge tables</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>tab<span class="ot">&lt;-</span><span class="fu">left_join</span>(codename,dep_tot) <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(dep_par)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Add probabilities</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> tab <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pct79 =</span> <span class="dv">100</span><span class="sc">*</span>par79<span class="sc">/</span>tot79,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pct92 =</span> <span class="dv">100</span><span class="sc">*</span>par92<span class="sc">/</span>tot92,</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pct02 =</span> <span class="dv">100</span><span class="sc">*</span>par02<span class="sc">/</span>tot02,</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pct13 =</span> <span class="dv">100</span><span class="sc">*</span>par13<span class="sc">/</span>tot13)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(tab), <span class="at">digits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Migrations durée de vie vers Parakou en 1979, 1992, 2002 et 2013"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Migrations durée de vie vers Parakou en 1979, 1992, 2002 et 2013</caption>
@@ -1997,16 +1908,13 @@ Joining, by = "code"</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tab,<span class="st">"mobil/all/mob_dv_parakou_lev2.RDS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tab,<span class="st">"mobil/all/mob_dv_parakou_lev2.RDS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><strong>Exemple de lecture</strong> : Au recensement de 1979, 3460 personnes natives de la commune de <em>Banikorara</em> résidaient dans une autre commune du Bénin. Parmi ces émigrants, on en trouvait 420 qui résidaient dans la commune de <em>Parakou</em> soit 12.1% des personnes ayant quitté la commune de <em>Banikorara</em>. Au recensement de 2013, on constatait la présence de 10340 personnes natives de la commune de <em>Banikorara</em> qui résidaient dans une autre commune, dont 1800 (17.4%) à <em>Parakou</em>. Il y a donc eu un renforcement de l’attraction de <em>Parakou</em> sur <em>Banikorara</em>, lié soit à de nouvelles migrations, soit à un cumul progressif du nombre d’arrivants qui ne sont pas repartis vers d’autres destinations et ont survécu. Les chiffres doivent toutefois être considérés avec précaution lorsqu’ils concernent de petits effectifs comme dans le cas de la commune de <em>Karimama</em> où le chiffre affiché de 90 migrants vers Parakou en 1992 ne correspond en réalité qu’à 9 cas de l’échantillon de recensement à 10%.</li>
 </ul>
 <p>A partir de ce tableau, on peut réaliser tout d’abord une cartographie des communes d’origine des personne qui résident à Parakou mais sont nés dans une autre commune pour chacune des dates de recensement</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining, by = c("code", "nom")</code></pre>
-</div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -2020,9 +1928,6 @@ Joining, by = "code"</code></pre>
 <li><strong>Commentaire</strong>: Les personnes qui résident à Parakou mais sont originaires d’un autre département viennent principalement des cinq départements du nord, de quelques communes du Couffo et de l’agglomération constituée par Cotonou, Abomey-Calavi et Porto-Novo. Cette géographie est apparemment assez stable au cours du temps, ce qui s’expique en partie par le choix de la variable de mobilité durée de vie qui produit des effets cumulatifs. Ces cartes ne permettent cependant pas de bien visualiser les effets de polarisation puisqu’elles subissent un effet de taille : plus une commune est peuplée, plus elle a de chance d’avoir envoyé des migrants vers Parakou.</li>
 </ul>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining, by = c("code", "nom")</code></pre>
-</div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">

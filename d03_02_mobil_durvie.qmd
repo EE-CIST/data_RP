@@ -4,8 +4,9 @@
 library(knitr, quiet=T)
 library(data.table)
 library(readxl)
-library(dplyr, quiet=T)
-library(sf, quiet=T)
+library(dplyr, warn.conflicts = FALSE)
+options(dplyr.summarise.inform = FALSE)
+library(sf,quietly = T)
 library(mapsf,quiet=T)
 library(RColorBrewer)
 library(forcats)
@@ -97,8 +98,6 @@ Pour vérifier la fiabilité de nos résultats, on calcule pour chaque date le n
 
 ```{r, warning=F, comment=F}
 rp <- readRDS("ipums/rp/mobil_benin_4dates_samp10pct.RDS" )
-names(rp)
-
 
 ### Check results
 tab <- rp %>% group_by(YEAR, MIG_DV_1) %>%
